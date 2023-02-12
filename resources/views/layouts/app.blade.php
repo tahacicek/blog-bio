@@ -58,7 +58,7 @@
     <script>
         Dashmix.helpersOnLoad('jq-sparkline');
     </script>
-    @method('script')
+    @stack('script')
 </body>
 
 </html>
