@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Custom\PostController;
+use App\Http\Controllers\custom\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
@@ -16,19 +17,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/',[ UserDashboardController::class, 'index'])->name('user.homepage');
+
 require __DIR__.'/auth.php';
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 //gelen $username'lar eğer bir yola uyuşuyorsa ona göre yönlendirme yapar.
 
 //sayfa yenilendiğinde cache clear edilir.
-Route::get('/', function() {
-    $exitCode = Artisan::call('cache:clear');
-    return 'DONE'; //Return anything
-});
+
 
 
 Route::get('/index', [HomeController::class, 'index'])->name('user.index');

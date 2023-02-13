@@ -16,45 +16,30 @@
 </head>
 
 <body>
-    <div id="page-container"
-        class="enable-page-overlay side-scroll page-header-dark page-header-glass main-content-boxed">
-        <!-- Side Overlay-->
-        <aside id="side-overlay">
-       @include('layouts.app.aside')
-        </aside>
-        <!-- END Side Overlay -->
-        <nav id="sidebar" aria-label="Main Navigation">
-            @include('layouts.app.sidebar')
-        </nav>
 
-        @include('layouts.app.header')
+    @if (Route::currentRouteName() != 'user.homepage')
+        <div id="page-container"
+            class="enable-page-overlay side-scroll page-header-dark page-header-glass main-content-boxed">
 
-        <!-- Main Container -->
-        <main id="main-container">
-            <!-- Hero -->
-            <div class="bg-image" style="background-image: url('assets/media/photos/photo10@2x.jpg');">
-                <div class="bg-black-75">
-                    <div class="content content-full content-top text-center">
-                        <div class="pt-4 pb-3">
-                            <h1 class="fw-light text-white mb-2">Dashboard</h1>
-                            <h2 class="h4 fw-light text-white-75">Welcome to your personal web application</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Hero -->
+            <aside id="side-overlay">
+                @include('layouts.app.aside')
+            </aside>
+            <nav id="sidebar" aria-label="Main Navigation">
+                @include('layouts.app.sidebar')
+            </nav>
+            @include('layouts.app.header')
+            <main id="main-container">
+                <!-- Hero -->
+                @include('layouts.app.main')
+                {{ $slot }}
+            </main>
 
-            <!-- Page Content -->
-            {{ $slot  }}
-            <!-- END Page Content -->
-        </main>
-        <!-- END Main Container -->
-
-        <!-- Footer -->
-        @include('layouts.app.footer')
-    </div>
-
-    <!-- Page JS Helpers (jQuery Sparkline Plugin) -->
+            @include('layouts.app.footer')
+        </div>
+    @endif
+    @if (Route::currentRouteName() == 'user.homepage')
+        {{ $slot }}
+    @endif
     <script>
         Dashmix.helpersOnLoad('jq-sparkline');
     </script>
