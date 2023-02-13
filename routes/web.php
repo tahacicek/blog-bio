@@ -3,6 +3,7 @@
 use App\Http\Controllers\Custom\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,11 @@ Route::get('/', function () {
 
 //gelen $username'lar eğer bir yola uyuşuyorsa ona göre yönlendirme yapar.
 
-
+//sayfa yenilendiğinde cache clear edilir.
+Route::get('/', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return 'DONE'; //Return anything
+});
 
 
 Route::get('/index', [HomeController::class, 'index'])->name('user.index');
@@ -32,7 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/ayarlar', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/ayarlar', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/ayarlar', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/olustur/{username}', [PostController::class, 'index'])->name('post.index');
+    Route::get('/post/{username}', [PostController::class, 'index'])->name('post.index');
+    Route::post('/post/olustur', [PostController::class, 'insert'])->name('post.insert');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');
