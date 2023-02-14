@@ -18,7 +18,8 @@ class PostController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $user->username != Auth::user()->username ? abort(404) : null;
         $id = $user->id;
-        return view('pages.post.index');
+        $tags = Tag::where('user_id', $id)->orderBy('count', 'desc')->get();
+        return view('pages.post.index', compact('tags'));
     }
 
     public function insert(Request $request){
@@ -46,17 +47,17 @@ class PostController extends Controller
             if($post->save()){
                 for($i = 0; $i < count($request->tags); $i++){
                     $tags = new Tag();
+                    $tags->user_id = Auth::user()->id;
                     $tags->post_id = $post->id;
                     $tags->name = $request->tags[$i];
                     $tags->slug = Str::slug($request->tags[$i]);
+                    $post->count += 1;
                     $tags->save();
                 }
             }
-
             return response()->json([
                 'message' => 'Post created successfully',
                 'post' => $post
             ], 201);
-
     }
 }

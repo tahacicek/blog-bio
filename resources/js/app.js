@@ -19,36 +19,3 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-$(document).ready(function() {
-
-
-    $('#postolsturyor').on('submit', function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            type: 'POST',
-            url: '/post/olustur',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: (data) => {
-                form.reset();
-                iziToast.success({
-                    title: 'Başarılı',
-                    message: 'Post başarıyla oluşturuldu.',
-                    position: 'topCenter'
-                });
-            },
-            error: function(data) {
-                iziToast.error({
-                    title: 'Hata',
-                    message: 'Post oluşturuldu.',
-                    position: 'topCenter'
-                });
-            }
-        });
-    });
-
-
-});

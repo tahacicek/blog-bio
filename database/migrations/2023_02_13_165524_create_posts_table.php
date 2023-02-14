@@ -16,12 +16,15 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-
             $table->string('title');
             $table->text('content');
             $table->text('excerpt')->nullable();
             $table->string('cover_image');
             $table->string('slug');
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
+            $table->integer('reading_time')->default(0)->nullable();
             $table->enum('status', ['draft', 'published', 'deleted'])->default('published');
             $table->enum('visibility', ['public', 'private'])->default('public');
             $table->time('published_at')->nullable();

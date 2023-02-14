@@ -5,6 +5,7 @@ use App\Http\Controllers\custom\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[ UserDashboardController::class, 'index'])->name('user.homepage');
+if(Auth::check()){
+    Route::get('/',[ UserDashboardController::class, 'index'])->name('user.homepage');
+
+}else{
+    Route::get('/', function () {
+        return view('welcome');
+    });
+}
 
 require __DIR__.'/auth.php';
 

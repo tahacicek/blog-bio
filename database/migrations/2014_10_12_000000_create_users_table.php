@@ -38,6 +38,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
 
             $table->string('email')->unique();
+            $table->string('invite_code')->unique()->default(substr(md5(microtime()),rand(0,26),9));
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
