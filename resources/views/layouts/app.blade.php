@@ -29,11 +29,11 @@
             </nav>
             @include('layouts.app.header')
             <main id="main-container">
-                <!-- Hero -->
-                @include('layouts.app.main')
+                @if (Route::currentRouteName() != 'post.show')
+                    @include('layouts.app.main')
+                @endif
                 {{ $slot }}
             </main>
-
             @include('layouts.app.footer')
         </div>
     @endif

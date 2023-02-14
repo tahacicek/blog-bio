@@ -44,29 +44,27 @@
                                     <div class="col-md-4 col-lg-5 overflow-hidden d-flex align-items-center">
                                         <a href="be_pages_blog_story.html">
                                             <img class="img-fluid img-link bg-image fixed"
-                                                src="{{ asset($post->cover_image) }}"
-                                                alt="">
+                                                src="{{ asset($post->cover_image) }}" alt="">
                                         </a>
                                     </div>
 
                                     <div class="col-md-8 col-lg-7 d-flex align-items-center">
                                         <div class="px-4 py-3">
                                             <h4 class="mb-1">
-                                                <a class="text-dark" href="be_pages_blog_story.html">{{ $post->title }}</a>
+                                                <a class="text-dark"
+                                                    href="{{
+                                                    url('post/' . $user->username . '/' . $post->slug)}}">{{ $post->title }}</a>
                                             </h4>
                                             <div class="fs-sm mb-2">
-                                                <a href="be_pages_generic_profile.html">{{ $user->name }} {{ $user->surname }}</a>  @php
-                                                $date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $post->created_at);
-                                            @endphp
-                                            {{ \Carbon\Carbon::parse($post->created_at)->format('d') . ' '. $date->format('F'); }},
+                                                @php
+                                                    $date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $post->created_at);
+                                                @endphp
+                                                {{ \Carbon\Carbon::parse($post->created_at)->format('d') . ' ' . $date->format('F') }},
                                                 {{ Carbon\Carbon::parse($post->created_at)->format('Y') }}
-                                                <em class="text-muted">13 min</em>
+                                                <em class="text-muted">{{ $post->reading_time }} dk.</em>
                                             </div>
                                             <p class="mb-0">
-                                                Anam commodo turpis id lectus scelerisque vulputate. Integer sed dolor
-                                                erat.
-                                                Fusce erat ipsum, varius vel euismod sed, tristique et lectus justo
-                                                amet..
+                                                {!! Str::limit($post->content, 195) !!}
                                                 <a href="be_pages_blog_story.html">Read on</a>
                                             </p>
                                         </div>
@@ -119,13 +117,13 @@
                     <!-- Search -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default">
-                            <h3 class="block-title">Search</h3>
+                            <h3 class="block-title">Ara</h3>
                         </div>
                         <div class="block-content block-content-full">
                             <form action="be_pages_blog_classic.html" method="POST">
                                 <div class="input-group">
                                     <input type="text" class="form-control form-control-alt"
-                                        placeholder="Type and hit enter..">
+                                        placeholder="Yaz ve enter'la..">
                                     <button type="button" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -138,7 +136,7 @@
                     <!-- Social -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default">
-                            <h3 class="block-title">Social</h3>
+                            <h3 class="block-title">Sosyal</h3>
                         </div>
                         <div class="block-content block-content-full">
                             <a class="btn btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip"
@@ -164,14 +162,14 @@
                     <!-- About -->
                     <a class="block block-rounded block-link-shadow" href="be_pages_generic_profile.html">
                         <div class="block-header block-header-default">
-                            <h3 class="block-title">About</h3>
+                            <h3 class="block-title">Hakkında</h3>
                         </div>
                         <div class="block-content block-content-full text-center">
                             <div class="mb-3">
-                                <img class="img-avatar" src="assets/media/avatars/avatar3.jpg" alt="">
+                                <img class="img-avatar" src="{{ asset($user->avatar) }}" alt="">
                             </div>
-                            <div class="fs-lg fw-semibold">Alice Moore</div>
-                            <div class="fs-sm text-muted">Web Developer</div>
+                            <div class="fs-lg fw-semibold">{{ $user->name }} {{ $user->surname }}</div>
+                            <div class="fs-sm text-muted">{{ $user->country }} {{ $user->city }}</div>
                         </div>
                         <div class="block-content bg-body-light">
                             <div class="row text-center">

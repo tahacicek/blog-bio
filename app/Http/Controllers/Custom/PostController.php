@@ -64,7 +64,16 @@ class PostController extends Controller
     public function blogboard($username){
         $user = User::where('username', $username)->firstOrFail();
         $id = $user->id;
-        $posts = Post::where('user_id', $id)->with('tags')->orderBy('created_at', 'desc')->paginate(1);
+        $posts = Post::where('user_id', $id)->with('tags')->orderBy('created_at', 'desc')->paginate(10);
         return view('pages.post.blogboard', compact('posts', 'user'));
+    }
+
+    public function show($username, $slug){
+        $user = User::where('username', $username)->firstOrFail();
+        $id = $user->id;
+        $post = Post::where('slug', $slug)->with('tags')->firstOrFail();
+        $tags = Tag::where('post_id', $post->id)->get();
+        $post->user_id != $id ? abort(404) : null;
+        return view('pages.post.show', compact('post', 'user', 'tags'));
     }
 }
