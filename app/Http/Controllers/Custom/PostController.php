@@ -60,4 +60,11 @@ class PostController extends Controller
                 'post' => $post
             ], 201);
     }
+
+    public function blogboard($username){
+        $user = User::where('username', $username)->firstOrFail();
+        $id = $user->id;
+        $posts = Post::where('user_id', $id)->with('tags')->orderBy('created_at', 'desc')->paginate(1);
+        return view('pages.post.blogboard', compact('posts', 'user'));
+    }
 }

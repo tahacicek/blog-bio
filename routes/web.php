@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/ayarlar', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/post/{username}', [PostController::class, 'index'])->name('post.index');
     Route::post('/post/olustur', [PostController::class, 'insert'])->name('post.insert');
+
+    Route::get('/blog/{username}', [PostController::class, 'blogboard'])->name('post.blogboard');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');
