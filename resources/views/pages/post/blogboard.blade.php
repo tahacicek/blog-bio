@@ -42,7 +42,7 @@
                             <div class="block-content p-0 overflow-hidden">
                                 <div class="row g-0">
                                     <div class="col-md-4 col-lg-5 overflow-hidden d-flex align-items-center">
-                                        <a href="be_pages_blog_story.html">
+                                        <a href="{{ url('post/' . $user->username . '/' . $post->slug) }}">
                                             <img class="img-fluid img-link bg-image fixed"
                                                 src="{{ asset($post->cover_image) }}" alt="">
                                         </a>
@@ -52,8 +52,7 @@
                                         <div class="px-4 py-3">
                                             <h4 class="mb-1">
                                                 <a class="text-dark"
-                                                    href="{{
-                                                    url('post/' . $user->username . '/' . $post->slug)}}">{{ $post->title }}</a>
+                                                    href="{{ url('post/' . $user->username . '/' . $post->slug) }}">{{ $post->title }}</a>
                                             </h4>
                                             <div class="fs-sm mb-2">
                                                 @php
@@ -71,20 +70,53 @@
                                     </div>
                                     <div class="block-content block-content-full bg-body-light">
                                         <div class="row g-0 fs-sm text-center">
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <span class="text-muted fw-semibold">
-                                                    <i class="fa fa-fw fa-eye opacity-50 me-1"></i> 890
+                                                    <i class="fa fa-fw fa-eye opacity-100 me-1"></i> 890
                                                 </span>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <span class="text-muted fw-semibold">
-                                                    <i class="fa fa-fw fa-heart opacity-50 me-1"></i> 56
+                                                    <i class="fa fa-fw fa-comments opacity-100 me-1"></i> 14
                                                 </span>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <span class="text-muted fw-semibold">
-                                                    <i class="fa fa-fw fa-comments opacity-50 me-1"></i> 14
+                                                    <i class="fa fa-fw fa-thumbs-up opacity-100 me-1"></i> 56
                                                 </span>
+                                            </div>
+                                            <div class="col-3">
+                                                <span class="text-muted fw-semibold">
+                                                    <i class="fa fa-fw fa-thumbs-down opacity-100 me-1"></i> 56
+                                                </span>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="block-options">
+                                                    <button type="button" class="btn-block-option"
+                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                                    </button>
+
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="far fa-fw fa-times-circle text-danger me-1"></i>
+                                                            Hide similar posts
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="far fa-fw fa-thumbs-down text-warning me-1"></i>
+                                                            Stop following this user
+                                                        </a>
+                                                        <div role="separator" class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-fw fa-exclamation-triangle me-1"></i> Report
+                                                            this post
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0)">
+                                                            <i class="fa fa-fw fa-bookmark me-1"></i> Bookmark this post
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -111,10 +143,8 @@
                             </li>
                         </ul>
                     </nav>
-                    <!-- END Pagination -->
                 </div>
                 <div class="col-xl-4">
-                    <!-- Search -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default">
                             <h3 class="block-title">Ara</h3>
@@ -131,9 +161,6 @@
                             </form>
                         </div>
                     </div>
-                    <!-- END Search -->
-
-                    <!-- Social -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default">
                             <h3 class="block-title">Sosyal</h3>
@@ -157,9 +184,6 @@
                             </a>
                         </div>
                     </div>
-                    <!-- END Social -->
-
-                    <!-- About -->
                     <a class="block block-rounded block-link-shadow" href="be_pages_generic_profile.html">
                         <div class="block-header block-header-default">
                             <h3 class="block-title">Hakkında</h3>
@@ -188,9 +212,6 @@
                             </div>
                         </div>
                     </a>
-                    <!-- END About -->
-
-                    <!-- Recent Comments -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default">
                             <h3 class="block-title">Recent Comments</h3>

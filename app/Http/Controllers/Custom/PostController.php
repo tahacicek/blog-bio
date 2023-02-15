@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\PostAction;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -72,8 +73,9 @@ class PostController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $id = $user->id;
         $post = Post::where('slug', $slug)->with('tags')->firstOrFail();
+        $postAction = PostAction::where('post_id', $post->id)->where('user_id', $id)->first();
         $tags = Tag::where('post_id', $post->id)->get();
         $post->user_id != $id ? abort(404) : null;
-        return view('pages.post.show', compact('post', 'user', 'tags'));
+        return view('pages.post.show', compact('post', 'user', 'tags', 'postAction'));
     }
 }

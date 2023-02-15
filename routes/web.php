@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Custom\PostActionController;
 use App\Http\Controllers\Custom\PostController;
 use App\Http\Controllers\custom\UserDashboardController;
 use App\Http\Controllers\HomeController;
@@ -47,6 +48,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/blog/{username}', [PostController::class, 'blogboard'])->name('post.blogboard');
     Route::get('/post/{username}/{slug}', [PostController::class, 'show'])->name('post.show');
+
+    Route::post('/post/begen', [PostActionController::class, 'likePost'])->name('post.like');
+    Route::post('/post/begenme', [PostActionController::class, 'dislikePost'])->name('post.dislike');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

@@ -54,11 +54,11 @@
                     </p>
                     <p>
                         @foreach ($tags as $tag)
-                        <a href="">
-                            <span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
-                                <i class="fa fa-hashtag me-1"></i> {{ $tag->name }}
-                            </span>
-                        </a>
+                            <a href="">
+                                <span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
+                                    <i class="fa fa-hashtag me-1"></i> {{ $tag->name }}
+                                </span>
+                            </a>
                         @endforeach
 
                     </p>
@@ -81,22 +81,50 @@
                     {!! $post->content !!}
                 </article>
                 <!-- END Story -->
-
                 <!-- Actions -->
                 <div class="mt-5 d-flex justify-content-between push">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-alt-secondary" data-bs-toggle="tooltip"
-                            title="Like Story">
-                            <i class="fa fa-thumbs-up text-primary"></i>
+                        <button data-id="{{ $post->id }}" data-user="{{ Auth::user()->id }}" id="like"
+                            type="button"
+                            class="btn btn-alt-secondary @if ($postAction->action == 'like')  text-primary @endif"
+                            data-bs-toggle="tooltip" title="Bu Yazıyı Beğendim">
+                            <i class="fa fa-thumbs-up"></i>
                         </button>
-                        <button type="button" class="btn btn-alt-secondary" data-bs-toggle="tooltip" title="Recommend">
-                            <i class="fa fa-heart text-danger"></i>
+                        <button id="dislike" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
+                            class="btn btn-alt-secondary @if ($postAction->action == 'dislike') text-primary @endif"
+                            data-bs-toggle="tooltip" title="Bunu Beğenmedim">
+                            <i class="fa fa-thumbs-down"></i>
                         </button>
+                        <button id="bookmark" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
+                            class="btn btn-alt-secondary
+                        @if ($postAction->action == 'bookmark') text-danger @endif"
+                            data-bs-toggle="tooltip" title="Bunu Kaydet">
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                        </button>
+                        <div class="btn-group float-end" role="group" data-bs-toggle="tooltip"
+                            title="Bunu Paylaşmak İstiyorum">
+                            <button type="button" class="btn btn-alt-secondary dropdown-toggle"
+                                id="dropdown-blog-report" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="fa fa-share-alt opacity-50 me-1"></i> Share
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-report">
+                                <a class="dropdown-item" href="javascript:void(0)">
+                                    <i class="fab fa-fw fa-facebook me-1"></i> Facebook
+                                </a>
+                                <a class="dropdown-item" href="javascript:void(0)">
+                                    <i class="fab fa-fw fa-twitter me-1"></i> Twitter
+                                </a>
+                                <a class="dropdown-item" href="javascript:void(0)">
+                                    <i class="fab fa-fw fa-linkedin me-1"></i> LinkedIn
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-blog-story"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-share-alt opacity-50 me-1"></i> Share
+                            <i class="fa fa-share-alt opacity-50 me-1"></i> Reply
                         </button>
                         <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-story">
                             <a class="dropdown-item" href="javascript:void(0)">
@@ -115,13 +143,14 @@
 
                 <!-- Comments -->
                 <div class="px-4 pt-4 rounded bg-body-extra-light">
-                    <p class="fs-sm">
-                        <i class="fa fa-thumbs-up text-info"></i>
-                        <i class="fa fa-heart text-danger"> </i>
 
-                        <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
-                        <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>,
-                        <a class="fw-semibold" href="javascript:void(0)">and 56 others</a>
+                    <p class="fs-sm">
+                        <i class="fa fa-thumbs-up text-info"></i><span id="likec" class="me-1">10</span>
+                        <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">10</span>
+                        <i class="fa fa-bookmark" aria-hidden="true"></i> <span id="bookc">10</span>
+                    liked    <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
+                        <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
+                        <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
                     </p>
                     <form action="be_pages_blog_story_cover.html" method="POST" onsubmit="return false;">
                         <input type="text" class="form-control form-control-alt" placeholder="Write a comment..">
@@ -194,5 +223,69 @@
     @push('script')
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
             crossorigin="anonymous"></script>
+
+        <script>
+            //if click like
+            $('#like').click(function() {
+                //data-id al
+                var id = $(this).data('id');
+                var user = $(this).data('user');
+                //ajax
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('post.like') }}",
+                    data: {
+                        id: id,
+                        user: user,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        //if success
+                        if (data.status == 'success') {
+                           //likec htmlini 1 arttır
+                            $('#likec').html(+data.likeCount);
+                            $('#like').addClass('text-primary');
+                        } else {
+                            $('#likec').html(+data.likeCount);
+                            $('#like').removeClass('text-primary');
+                            $('#dislike').text(data.dislikeCount);
+
+                        }
+                    }
+                });
+            });
+
+
+
+
+            $('#dislike').click(function() {
+                //data-id al
+                var id = $(this).data('id');
+                var user = $(this).data('user');
+                //ajax
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('post.dislike') }}",
+                    data: {
+                        id: id,
+                        user: user,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        //if success
+                        if (data.status == 'success') {
+                            //change text
+                            $('#dlikec').html(+data.disslikeCount);
+                            $('#dislike').addClass('btn-primary');
+                            $('#like').removeClass('text-primary');
+                        } else {
+                            $('#dislike').text(data.disslikeCount);
+                            $('#dislike').removeClass('btn-primary');
+                            $('#dislike').addClass('btn-outline-primary');
+                        }
+                    }
+                });
+            });
+        </script>
     @endpush
 </x-app-layout>
