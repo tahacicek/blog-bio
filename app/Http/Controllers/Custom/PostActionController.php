@@ -18,7 +18,11 @@ class PostActionController extends Controller
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
+        if($postAction){
 
+        if($postAction->action == 'like'){
+            return response()->json(['success' => false]);
+        }else{
         if ($postAction) {
             $postAction->action = 'like';
             $postAction->save();
@@ -31,7 +35,15 @@ class PostActionController extends Controller
             $postAction->action = 'like';
             $postAction->save();
         }
+        }
+    }else{
+        $postAction = new PostAction;
+        $postAction->post_id = $postId;
+        $postAction->user_id = $userId;
+        $postAction->action = 'like';
+        $postAction->save();
 
+    }
 
         $likeCount = PostAction::where('post_id', $postId)
             ->where('action', 'like')
@@ -48,11 +60,13 @@ class PostActionController extends Controller
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
-
+            if($postAction->action == 'dislike'){
+                return response()->json(['success' => false]);
+            }else{
         if ($postAction) {
             $postAction->action = 'dislike';
             $postAction->save();
-        }elseif($postAction)
+        } elseif ($postAction)
             $postAction->action == 'like' ? $postAction->action = 'dislike' : $postAction->action = 'like';
         else {
             $postAction = new PostAction;
@@ -61,12 +75,57 @@ class PostActionController extends Controller
             $postAction->action = 'dislike';
             $postAction->save();
         }
+        }
+
 
 
         $disslikeCount = PostAction::where('post_id', $postId)
             ->where('action', 'dislike')
             ->count();
-
-        return response()->json(['success' => true, 'disslikeCount' => $disslikeCount]);
+        if ($disslikeCount > 0) {
+            return response()->json(['success' => true, 'disslikeCount' => $disslikeCount]);
+        }else{
+            return response()->json(['success' => false, 'disslikeCount' => $disslikeCount]);
+        }
     }
+
+    public function bookmarkPost(Request $request)
+    {
+        $postId = $request->id;
+        $userId = $request->user;
+
+        $post = Post::find($postId);
+
+        if ($post->user_id == $userId) {
+            return response()->json(['success' => false, 'message' => 'Kendi yazdığınız yazıyı işaretleyemezsiniz.']);
+        }
+
+        $id = $post->id;
+
+        $postAction = PostAction::where('post_id', $postId)
+            ->where('user_id', $userId)
+            ->first();
+            if($postAction->bookmark_url != null){
+                return response()->json(['success' => false]);
+            }else{
+        if ($postAction) {
+            $postAction->bookmark_url = $id;
+            $postAction->save();
+        }else {
+            $postAction = new PostAction;
+            $postAction->post_id = $postId;
+            $postAction->user_id = $userId;
+            $postAction->bookmark_url = $id;
+            $postAction->save();
+        }
+        }
+
+
+        $bookmarkCount = PostAction::where('post_id', $postId)
+            ->where('action', 'bookmark')
+            ->count();
+
+        return response()->json(['success' => true, 'bookmarkCount' => $bookmarkCount]);
+        }
+
 }

@@ -80,24 +80,25 @@
                 <article class="js-gallery story">
                     {!! $post->content !!}
                 </article>
-                <!-- END Story -->
-                <!-- Actions -->
+
                 <div class="mt-5 d-flex justify-content-between push">
                     <div class="btn-group" role="group">
                         <button data-id="{{ $post->id }}" data-user="{{ Auth::user()->id }}" id="like"
                             type="button"
-                            class="btn btn-alt-secondary @if ($postAction->action == 'like')  text-primary @endif"
+                            class="btn btn-alt-secondary @if ($postAction->action == 'like') text-primary @endif"
                             data-bs-toggle="tooltip" title="Bu Yazıyı Beğendim">
                             <i class="fa fa-thumbs-up"></i>
                         </button>
-                        <button id="dislike" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
+                        <button id="dislike" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
+                            type="button"
                             class="btn btn-alt-secondary @if ($postAction->action == 'dislike') text-primary @endif"
                             data-bs-toggle="tooltip" title="Bunu Beğenmedim">
                             <i class="fa fa-thumbs-down"></i>
                         </button>
-                        <button id="bookmark" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
+                        <button id="bookmark" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
+                            type="button"
                             class="btn btn-alt-secondary
-                        @if ($postAction->action == 'bookmark') text-danger @endif"
+                        @if ($postAction->action != null) text-danger @endif"
                             data-bs-toggle="tooltip" title="Bunu Kaydet">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </button>
@@ -148,7 +149,7 @@
                         <i class="fa fa-thumbs-up text-info"></i><span id="likec" class="me-1">10</span>
                         <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">10</span>
                         <i class="fa fa-bookmark" aria-hidden="true"></i> <span id="bookc">10</span>
-                    liked    <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
+                        liked <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
                         <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
                         <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
                     </p>
@@ -241,28 +242,36 @@
                     },
                     success: function(data) {
                         //if success
-                        if (data.status == 'success') {
-                           //likec htmlini 1 arttır
-                            $('#likec').html(+data.likeCount);
-                            $('#like').addClass('text-primary');
+                        if (data.success == true) {
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Gönderi beğenildi..',
+                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
                         } else {
-                            $('#likec').html(+data.likeCount);
-                            $('#like').removeClass('text-primary');
-                            $('#dislike').text(data.dislikeCount);
-
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Bunu zaten beğendiğini düşünüyoruz..',
+                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
                         }
                     }
                 });
             });
 
-
-
-
             $('#dislike').click(function() {
-                //data-id al
                 var id = $(this).data('id');
                 var user = $(this).data('user');
-                //ajax
                 $.ajax({
                     type: "post",
                     url: "{{ route('post.dislike') }}",
@@ -272,16 +281,71 @@
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
-                        //if success
-                        if (data.status == 'success') {
-                            //change text
-                            $('#dlikec').html(+data.disslikeCount);
-                            $('#dislike').addClass('btn-primary');
-                            $('#like').removeClass('text-primary');
+                        if (data.success == true) {
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Başarıyla beğenmedin..',
+                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
                         } else {
-                            $('#dislike').text(data.disslikeCount);
-                            $('#dislike').removeClass('btn-primary');
-                            $('#dislike').addClass('btn-outline-primary');
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Bunu zaten beğenmediğini düşünüyoruz.. Ne istiyorsun ?',
+                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('#bookmark').click(function() {
+                //data-id al
+                var id = $(this).data('id');
+                var user = $(this).data('user');
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('post.bookmark') }}",
+                    data: {
+                        id: id,
+                        user: user,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        if (data.success == true) {
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Gönderi kaydedildi..',
+                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
+                            //change text
+                            $('#bookmark').addClass('btn-primary');
+                        } else {
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Kendi gönderini kaydedemezsin..',
+                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
+                            $('#bookmark').removeClass('btn-primary');
                         }
                     }
                 });
