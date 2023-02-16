@@ -24,4 +24,30 @@ class PostAction extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    //like count
+    public function likeCountPost($id)
+    {
+        return $this->where('action', 'like')->where('post_id', $id)->count();
+    }
+
+    //dislike count
+    public function dislikeCountPost($id)
+    {
+        return $this->where('action', 'dislike')->where('post_id', $id)->count();
+    }
+
+    //read count
+    public function readCountPost($id)
+    {
+        return $this->where('read_status', 'read')->where('post_id', $id)->count();
+    }
+
+    //bookmark_url count
+    public function bookmarkUrlCountPost($id)
+    {
+        return $this->where('bookmark_url', '!=', null)->where('post_id', $id)->count();
+    }
+
 }

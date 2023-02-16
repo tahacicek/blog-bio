@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('action', ['like', 'dislike', 'bookmark', 'report'])->nullable();
+            $table->enum('action', ['like', 'dislike'])->nullable();
+            $table->enum('read_status', ['read', 'unread'])->nullable();
+            $table->date('read_at')->nullable();
             $table->string('bookmark_url')->nullable();
             $table->string('report_reason')->nullable();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');

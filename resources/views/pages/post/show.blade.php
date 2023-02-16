@@ -98,7 +98,7 @@
                         <button id="bookmark" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
                             type="button"
                             class="btn btn-alt-secondary
-                        @if ($postAction->action != null) text-danger @endif"
+                        @if ($postAction->bookmark_url != null) text-danger @endif"
                             data-bs-toggle="tooltip" title="Bunu Kaydet">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </button>
@@ -146,9 +146,9 @@
                 <div class="px-4 pt-4 rounded bg-body-extra-light">
 
                     <p class="fs-sm">
-                        <i class="fa fa-thumbs-up text-info"></i><span id="likec" class="me-1">10</span>
-                        <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">10</span>
-                        <i class="fa fa-bookmark" aria-hidden="true"></i> <span id="bookc">10</span>
+                        <i class="fa fa-thumbs-up text-info"></i><span id="likec" class="me-1">{{ $like }}</span>
+                        <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">{{ $dislike }}</span>
+                        <i class="fa fa-bookmark" aria-hidden="true"></i> <span id="bookc">{{ $bookmark }}</span>
                         liked <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
                         <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
                         <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
@@ -241,7 +241,10 @@
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
-                        //if success
+                        console.log(data.likeCount);
+                        //likec +1
+                        $('#likec').html(+data.likeCount);
+
                         if (data.success == true) {
                             iziToast.show({
                                 theme: 'dark',
@@ -282,6 +285,7 @@
                     },
                     success: function(data) {
                         if (data.success == true) {
+                        $('#dlikec').html(+data.disslikeCount);
                             iziToast.show({
                                 theme: 'dark',
                                 icon: 'icon-person',
@@ -322,6 +326,7 @@
                     },
                     success: function(data) {
                         if (data.success == true) {
+                            $('#bookc').html(+data.bookmarkCount);
                             iziToast.show({
                                 theme: 'dark',
                                 icon: 'icon-person',

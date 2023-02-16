@@ -80,9 +80,16 @@ class PostController extends Controller
             $postAction = new PostAction();
             $postAction->post_id = $post->id;
             $postAction->user_id = Auth::user()->id;
+            $postAction->read_status = 'read';
+            $postAction->read_at = now();
             $postAction->save();
         }
-        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user'));
+        //get like count
+        $read = $postAction->readCountPost($post->id);
+        $like = $postAction->likeCountPost($post->id);
+        $dislike = $postAction->dislikeCountPost($post->id);
+        $bookmark = $postAction->bookmarkUrlCountPost($post->id);
+        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark'));
 
 
 

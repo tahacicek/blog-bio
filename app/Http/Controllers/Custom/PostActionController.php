@@ -14,37 +14,20 @@ class PostActionController extends Controller
         $postId = $request->id;
         $userId = $request->user;
 
-//eğer kullanıcı daha önce like yapmışsa beğendirme
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
-        if($postAction){
-
-        if($postAction->action == 'like'){
-            return response()->json(['success' => false]);
-        }else{
         if ($postAction) {
-            $postAction->action = 'like';
-            $postAction->save();
-        } elseif ($postAction)
-            $postAction->action == 'like' ? $postAction->action = 'dislike' : $postAction->action = 'like';
-        else {
-            $postAction = new PostAction;
-            $postAction->post_id = $postId;
-            $postAction->user_id = $userId;
-            $postAction->action = 'like';
-            $postAction->save();
+            if ($postAction->action == 'like') {
+                return response()->json(['success' => false]);
+            } else {
+                if ($postAction) {
+                    $postAction->action = 'like';
+                    $postAction->save();
+                } elseif ($postAction)
+                    $postAction->action == 'like' ? $postAction->action = 'dislike' : $postAction->action = 'like';
+            }
         }
-        }
-    }else{
-        $postAction = new PostAction;
-        $postAction->post_id = $postId;
-        $postAction->user_id = $userId;
-        $postAction->action = 'like';
-        $postAction->save();
-
-    }
-
         $likeCount = PostAction::where('post_id', $postId)
             ->where('action', 'like')
             ->count();
@@ -60,21 +43,14 @@ class PostActionController extends Controller
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
-            if($postAction->action == 'dislike'){
-                return response()->json(['success' => false]);
-            }else{
-        if ($postAction) {
-            $postAction->action = 'dislike';
-            $postAction->save();
-        } elseif ($postAction)
-            $postAction->action == 'like' ? $postAction->action = 'dislike' : $postAction->action = 'like';
-        else {
-            $postAction = new PostAction;
-            $postAction->post_id = $postId;
-            $postAction->user_id = $userId;
-            $postAction->action = 'dislike';
-            $postAction->save();
-        }
+        if ($postAction->action == 'dislike') {
+            return response()->json(['success' => false]);
+        } else {
+            if ($postAction) {
+                $postAction->action = 'dislike';
+                $postAction->save();
+            } elseif ($postAction)
+                $postAction->action == 'like' ? $postAction->action = 'dislike' : $postAction->action = 'like';
         }
 
 
@@ -84,7 +60,7 @@ class PostActionController extends Controller
             ->count();
         if ($disslikeCount > 0) {
             return response()->json(['success' => true, 'disslikeCount' => $disslikeCount]);
-        }else{
+        } else {
             return response()->json(['success' => false, 'disslikeCount' => $disslikeCount]);
         }
     }
@@ -105,19 +81,13 @@ class PostActionController extends Controller
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
-            if($postAction->bookmark_url != null){
-                return response()->json(['success' => false]);
-            }else{
-        if ($postAction) {
-            $postAction->bookmark_url = $id;
-            $postAction->save();
-        }else {
-            $postAction = new PostAction;
-            $postAction->post_id = $postId;
-            $postAction->user_id = $userId;
-            $postAction->bookmark_url = $id;
-            $postAction->save();
-        }
+        if ($postAction->bookmark_url != null) {
+            return response()->json(['success' => false]);
+        } else {
+            if ($postAction) {
+                $postAction->bookmark_url = $id;
+                $postAction->save();
+            }
         }
 
 
@@ -126,6 +96,5 @@ class PostActionController extends Controller
             ->count();
 
         return response()->json(['success' => true, 'bookmarkCount' => $bookmarkCount]);
-        }
-
+    }
 }
