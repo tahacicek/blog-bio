@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Custom\CommentController;
 use App\Http\Controllers\Custom\PostActionController;
 use App\Http\Controllers\Custom\PostController;
 use App\Http\Controllers\custom\UserDashboardController;
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/begen', [PostActionController::class, 'likePost'])->name('post.like');
     Route::post('/post/begenme', [PostActionController::class, 'dislikePost'])->name('post.dislike');
     Route::post('/post/bookmark', [PostActionController::class, 'bookmarkPost'])->name('post.bookmark');
+
+    Route::post('/post/yorum', [CommentController::class, 'comment'])->name('post.comment');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

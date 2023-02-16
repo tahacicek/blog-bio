@@ -153,66 +153,25 @@
                         <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
                         <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
                     </p>
-                    <form action="be_pages_blog_story_cover.html" method="POST" onsubmit="return false;">
-                        <input type="text" class="form-control form-control-alt" placeholder="Write a comment..">
+                    <form id="commentForm" method="POST" onsubmit="return false;">
+                       <div class="row">
+                        <div class="col-md-11">
+                        <input type="hidden" id="post_id" value="{{ $post->id }}">
+                        <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="parent_id" value="0">
+                        <input data-id="{{ Auth::user()->id }}" id="comment" type="text" class="form-control form-control-alt" name="body" placeholder="Bir yorum yaz..">
+                        </div>
+                        <div class="col-md-1">
+                        <button type="submit" class="btn btn-alt-primary"><i class="fa fa-comment" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
                     </form>
                     <div class="pt-3 fs-sm">
-                        <div class="d-flex">
-                            <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar32 img-avatar-thumb"
-                                    src="assets/media/avatars/avatar3.jpg" alt="">
-                            </a>
-                            <div class="flex-grow-1">
-                                <p class="mb-1">
-                                    <a class="fw-semibold" href="javascript:void(0)">Alice Moore</a>
-                                    Vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                    nisi vulputate fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit. Aliquam tincidunt sollicitudin sem nec ultrices. Sed at mi velit.
-                                </p>
-                                <p>
-                                    <a class="me-1" href="javascript:void(0)">Like</a>
-                                    <a href="javascript:void(0)">Comment</a>
-                                </p>
-                                <div class="d-flex">
-                                    <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
-                                        <img class="img-avatar img-avatar32 img-avatar-thumb"
-                                            src="assets/media/avatars/avatar9.jpg" alt="">
-                                    </a>
-                                    <div class="flex-grow-1">
-                                        <p class="mb-1">
-                                            <a class="fw-semibold" href="javascript:void(0)">Brian Cruz</a>
-                                            Odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                            condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                                            in faucibus.
-                                        </p>
-                                        <p>
-                                            <a class="me-1" href="javascript:void(0)">Like</a>
-                                            <a href="javascript:void(0)">Comment</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar32 img-avatar-thumb"
-                                    src="assets/media/avatars/avatar13.jpg" alt="">
-                            </a>
-                            <div class="flex-grow-1">
-                                <p class="mb-1">
-                                    <a class="fw-semibold" href="javascript:void(0)">Henry Harrison</a>
-                                    Leo mi nec lectus. Nam commodo turpis id lectus scelerisque vulputate. Integer
-                                    sed dolor erat. Fusce erat ipsum, varius vel euismod sed, tristique et lectus?
-                                    Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi,
-                                    gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus
-                                    facilisis scelerisque? Proin rhoncus dui at ligula vestibulum ut facilisis ante
-                                    sodales! Suspendisse potenti. Aliquam tincidunt sollicitudin sem nec ultrices.
-                                </p>
-                                <p>
-                                    <a class="me-1" href="javascript:void(0)">Like</a>
-                                    <a href="javascript:void(0)">Comment</a>
-                                </p>
-                            </div>
+                        @foreach ($comment as $comment)
+                        @include('pages.post.includes.comment')
+                        @endforeach
+                        <div id="comment_detail">
+
                         </div>
                     </div>
                 </div>
@@ -351,6 +310,71 @@
                                 progressBarColor: 'rgb(0, 255, 184)',
                             });
                             $('#bookmark').removeClass('btn-primary');
+                        }
+                    }
+                });
+            });
+
+            //comment form submit
+
+            $('#commentForm').submit(function(e) {
+                e.preventDefault();
+                var id = $('#post_id').val();
+                var user = $('#user_id').val();
+                var comment = $('#comment').val();
+                $.ajax({
+                    type: "post",
+                    url: '/post/yorum',
+                    data: {
+                        id: id,
+                        user: user,
+                        comment: comment,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        if (data.success == true) {
+                            console.log(data.comment.comment, data.user.avatar);
+                            //gelen datayı yazdır
+                            $('#comment_detail').html(`<div class="d-flex">
+                            <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
+                                <img class="img-avatar img-avatar32 img-avatar-thumb"
+                                    src="${data.user.avatar}" alt="">
+                            </a>
+                            <div class="flex-grow-1">
+                                <p class="mb-1">
+                                    <a class="fw-semibold" id="user" href="javascript:void(0)">${data.user.name +' '+ data.user.surname}</a> diyo ki
+                                    <br >
+                                   ${data.comment.comment}
+                                </p>
+                                <p>
+                                    <a class="me-1" href="javascript:void(0)">Beğen</a>
+                                    <a href="javascript:void(0)">Yorum</a>
+                                </p>
+                            </div>
+                        </div>`);
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Yorumun gönderildi..',
+                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
+                            $('#commentForm').addClass('btn-primary');
+                        } else {
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Bir şeyler ters gitti..',
+                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
+                            $('#commentForm').removeClass('btn-primary');
                         }
                     }
                 });
