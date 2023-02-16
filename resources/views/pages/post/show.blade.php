@@ -77,7 +77,7 @@
                 <!-- Story -->
                 <!-- Magnific Popup (.js-gallery class is initialized in Helpers.jqMagnific()) -->
                 <!-- For more info and examples you can check out http://dimsemenov.com/plugins/magnific-popup/ -->
-                <article class="js-gallery story">
+                <article id="article" class="js-gallery story">
                     {!! $post->content !!}
                 </article>
 
@@ -125,17 +125,17 @@
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-blog-story"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-share-alt opacity-50 me-1"></i> Reply
+                            <i class="fa  fa-flag opacity-50 me-1"></i> Raporla
                         </button>
                         <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-story">
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fab fa-fw fa-facebook me-1"></i> Facebook
+                            <a  class="dropdown-item" href="javascript:void(0)">
+                                <i class="fab fa-fw fa-facebook me-1"></i> Küfür, Hakaret
                             </a>
                             <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fab fa-fw fa-twitter me-1"></i> Twitter
+                                <i class="fab fa-fw fa-twitter me-1"></i> Tehdit, Şiddet
                             </a>
                             <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fab fa-fw fa-linkedin me-1"></i> LinkedIn
+                                <i class="fab fa-fw fa-linkedin me-1"></i> Yalan, Sahte
                             </a>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                         <i class="fa fa-thumbs-up text-info"></i><span id="likec" class="me-1">{{ $like }}</span>
                         <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">{{ $dislike }}</span>
                         <i class="fa fa-bookmark" aria-hidden="true"></i> <span id="bookc">{{ $bookmark }}</span>
-                        liked <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
+                        beğendi <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
                         <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
                         <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
                     </p>
@@ -355,6 +355,7 @@
                     }
                 });
             });
+
         </script>
     @endpush
 </x-app-layout>

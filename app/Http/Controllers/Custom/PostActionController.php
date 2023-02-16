@@ -13,7 +13,6 @@ class PostActionController extends Controller
     {
         $postId = $request->id;
         $userId = $request->user;
-
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
@@ -31,7 +30,6 @@ class PostActionController extends Controller
         $likeCount = PostAction::where('post_id', $postId)
             ->where('action', 'like')
             ->count();
-
         return response()->json(['success' => true, 'likeCount' => $likeCount]);
     }
 
@@ -39,7 +37,6 @@ class PostActionController extends Controller
     {
         $postId = $request->id;
         $userId = $request->user;
-
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
@@ -52,9 +49,6 @@ class PostActionController extends Controller
             } elseif ($postAction)
                 $postAction->action == 'like' ? $postAction->action = 'dislike' : $postAction->action = 'like';
         }
-
-
-
         $disslikeCount = PostAction::where('post_id', $postId)
             ->where('action', 'dislike')
             ->count();
@@ -69,15 +63,11 @@ class PostActionController extends Controller
     {
         $postId = $request->id;
         $userId = $request->user;
-
         $post = Post::find($postId);
-
         if ($post->user_id == $userId) {
             return response()->json(['success' => false, 'message' => 'Kendi yazdığınız yazıyı işaretleyemezsiniz.']);
         }
-
         $id = $post->id;
-
         $postAction = PostAction::where('post_id', $postId)
             ->where('user_id', $userId)
             ->first();
@@ -89,12 +79,9 @@ class PostActionController extends Controller
                 $postAction->save();
             }
         }
-
-
         $bookmarkCount = PostAction::where('post_id', $postId)
             ->where('action', 'bookmark')
             ->count();
-
         return response()->json(['success' => true, 'bookmarkCount' => $bookmarkCount]);
     }
 }
