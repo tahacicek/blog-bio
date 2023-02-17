@@ -128,7 +128,7 @@
                             <i class="fa  fa-flag opacity-50 me-1"></i> Raporla
                         </button>
                         <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-story">
-                            <a  class="dropdown-item" href="javascript:void(0)">
+                            <a class="dropdown-item" href="javascript:void(0)">
                                 <i class="fab fa-fw fa-facebook me-1"></i> Küfür, Hakaret
                             </a>
                             <a class="dropdown-item" href="javascript:void(0)">
@@ -143,32 +143,36 @@
                 <!-- END Actions -->
 
                 <!-- Comments -->
-                <div class="px-4 pt-4 rounded bg-body-extra-light">
+                <div class="px-4 pt-4 pb-4 rounded bg-body-extra-light">
 
                     <p class="fs-sm">
-                        <i class="fa fa-thumbs-up text-info"></i><span id="likec" class="me-1">{{ $like }}</span>
+                        <i class="fa fa-thumbs-up text-info"></i><span id="likec"
+                            class="me-1">{{ $like }}</span>
                         <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">{{ $dislike }}</span>
-                        <i class="fa fa-bookmark" aria-hidden="true"></i> <span id="bookc">{{ $bookmark }}</span>
+                        <i class="fa fa-bookmark" aria-hidden="true"></i> <span
+                            id="bookc">{{ $bookmark }}</span>
                         beğendi <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
                         <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
                         <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
                     </p>
                     <form id="commentForm" method="POST" onsubmit="return false;">
-                       <div class="row">
-                        <div class="col-md-11">
                         <input type="hidden" id="post_id" value="{{ $post->id }}">
                         <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="parent_id" value="0">
-                        <input data-id="{{ Auth::user()->id }}" id="comment" type="text" class="form-control form-control-alt" name="body" placeholder="Bir yorum yaz..">
+                        <div class="mb-4">
+                            <div class="input-group">
+                                <input data-id="{{ Auth::user()->id }}" id="comment" type="text"
+                                    class="form-control form-control-alt" name="body"
+                                    placeholder="Bir yorum yaz..">
+                                <button type="submit" class="btn btn-secondary"><i class="fa fa-comment"
+                                        aria-hidden="true"></i></button>
+                            </div>
                         </div>
-                        <div class="col-md-1">
-                        <button type="submit" class="btn btn-alt-primary"><i class="fa fa-comment" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
+
                     </form>
-                    <div class="pt-3 fs-sm">
+                    <div class="pt-1 fs-sm">
                         @foreach ($comment as $comment)
-                        @include('pages.post.includes.comment')
+                            @include('pages.post.includes.comment')
                         @endforeach
                         <div id="comment_detail">
 
@@ -244,7 +248,7 @@
                     },
                     success: function(data) {
                         if (data.success == true) {
-                        $('#dlikec').html(+data.disslikeCount);
+                            $('#dlikec').html(+data.disslikeCount);
                             iziToast.show({
                                 theme: 'dark',
                                 icon: 'icon-person',
@@ -343,12 +347,14 @@
                             <div class="flex-grow-1">
                                 <p class="mb-1">
                                     <a class="fw-semibold" id="user" href="javascript:void(0)">${data.user.name +' '+ data.user.surname}</a> diyo ki
+                                    <button class="float-end border-0 btn-outline-dark bg-white"><i class="fa text-danger fa-trash" aria-hidden="true"></i></button>
+                                    <button class="float-end border-0 me-1  bg-white"><i class="fa fa-pencil text-warning" aria-hidden="true"></i></button>
+                                    <button class="float-end border-0 me-1 bg-white"><i class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
+                                    <button class="float-end border-0 me-1  bg-white"><i class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
+                                    <button id="reply" class="float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
+
                                     <br >
                                    ${data.comment.comment}
-                                </p>
-                                <p>
-                                    <a class="me-1" href="javascript:void(0)">Beğen</a>
-                                    <a href="javascript:void(0)">Yorum</a>
                                 </p>
                             </div>
                         </div>`);
@@ -379,7 +385,17 @@
                     }
                 });
             });
-
         </script>
+
+
+<script>
+    $(document).ready(function(){
+        $('.reply').click(function(){
+            var id = $(this).attr('id');
+            var reply_form = $('#reply_form'+id);
+            reply_form.toggle();
+        });
+    });
+</script>
     @endpush
 </x-app-layout>

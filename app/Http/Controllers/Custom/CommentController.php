@@ -19,7 +19,7 @@ class CommentController extends Controller
         $comment->comment = $request->comment;
         $comment->save();
 
-        $user = User::where('id', $request->user)->first();
+        $user = User::where('id', $comment->user_id)->first();
 
         return response()->json([
             'comment' => $comment,
