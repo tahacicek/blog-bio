@@ -162,7 +162,7 @@
                         <div class="mb-4">
                             <div class="input-group">
                                 <input data-id="{{ Auth::user()->id }}" id="comment" type="text"
-                                    class="form-control form-control-alt" name="body"
+                                    class="form-control form-control-alt" name="comment"
                                     placeholder="Bir yorum yaz..">
                                 <button type="submit" class="btn btn-secondary"><i class="fa fa-comment"
                                         aria-hidden="true"></i></button>
@@ -346,12 +346,12 @@
                             </a>
                             <div class="flex-grow-1">
                                 <p class="mb-1">
-                                    <a class="fw-semibold" id="user" href="javascript:void(0)">${data.user.name +' '+ data.user.surname}</a> diyo ki
+                                    <a class="fw-semibold" id="user" href="javascript:void(0)">@${data.user.username}</a> diyo ki
                                     <button class="float-end border-0 btn-outline-dark bg-white"><i class="fa text-danger fa-trash" aria-hidden="true"></i></button>
                                     <button class="float-end border-0 me-1  bg-white"><i class="fa fa-pencil text-warning" aria-hidden="true"></i></button>
                                     <button class="float-end border-0 me-1 bg-white"><i class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
                                     <button class="float-end border-0 me-1  bg-white"><i class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
-                                    <button id="reply" class="float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
+                                    <button  id="${data.comment.id}" class="reply float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
 
                                     <br >
                                    ${data.comment.comment}
@@ -386,16 +386,72 @@
                 });
             });
         </script>
+        <script></script>
+        <script>
+            $(document).ready(function() {
+                $('#commentParent').submit(function(e) {
+                    console.log('test');
+                    e.preventDefault();
+                    var id = $('#post_id').val();
+                    var user = $('#user_id').val();
+                    var comment = $('#comments').val();
+                    var parent_id = $('#parent_id').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "/post/yorum",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "parent_id": parent_id,
+                            "id": id,
+                            "user": user,
+                            "comment": comment,
+                        },
+                        success: function(data) {
+                            $('#parent_detail').html(` <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
+                                <img class="img-avatar img-avatar32 img-avatar-thumb"
+                                    src="${data.user.avatar}" alt="">
+                                     </a>
+                                <div class="flex-grow-1">
+                                    <p class="mb-1">
+                                        <a class="fw-semibold" href="javascript:void(0)">@${data.user.username}</a>
+                                        <button class="float-end border-0 btn-outline-dark bg-white"><i class="fa text-danger fa-trash" aria-hidden="true"></i></button>
+                                        <button class="float-end border-0 me-1 bg-white"><i class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
+                                        <button class="float-end border-0 me-1  bg-white"><i class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
+                                        <button class="float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
+                                        <br >
+                                        ${data.comment.comment}
+                                    </p>
+                                    <p>
+                                        <a class="me-1" href="javascript:void(0)">Like</a>
+                                        <a href="javascript:void(0)">Comment</a>
+                                    </p>
+                                </div>`);
 
+                            iziToast.show({
+                                theme: 'dark',
+                                icon: 'icon-person',
+                                iconColor: 'white',
+                                timeout: 1000,
+                                title: 'Hey',
+                                message: 'Yorumun gönderildi..',
+                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: 'rgb(0, 255, 184)',
+                            });
+                            $('#commentParent').addClass('btn-primary');
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            });
+        </script>
 
-<script>
-    $(document).ready(function(){
-        $('.reply').click(function(){
-            var id = $(this).attr('id');
-            var reply_form = $('#reply_form'+id);
-            reply_form.toggle();
-        });
-    });
-</script>
+        <script>
+                 $('.reply').click(function() {
+                        var id = $(this).attr('id');
+                        $('#reply_form' + id).toggle();
+                    });
+        </script>
     @endpush
 </x-app-layout>

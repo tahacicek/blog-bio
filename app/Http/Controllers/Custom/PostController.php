@@ -92,6 +92,7 @@ class PostController extends Controller
         $bookmark = $postAction->bookmarkUrlCountPost($post->id);
 
         $comment = Comment::where('post_id', $post->id)->with('user')->get();
+
         return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comment'));
 
 
