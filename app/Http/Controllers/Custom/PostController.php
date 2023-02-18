@@ -91,9 +91,26 @@ class PostController extends Controller
         $dislike = $postAction->dislikeCountPost($post->id);
         $bookmark = $postAction->bookmarkUrlCountPost($post->id);
 
-        $comment = Comment::where('post_id', $post->id)->with('user')->get();
+        $comments = Comment::where('post_id', $post->id)->with('user', 'children')->get()->sortBy('created_at');
 
-        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comment'));
+
+        $parent = $comments->where('parent_id', null);
+        $child = $comments->where('parent_id', '!=', null);
+        //parent_id olanları diziye atıyoruz,
+        $parentArray = [];
+        foreach($parent as $p){
+            $parentArray[] = $p;
+        }
+        //parent_id olmayanları diziye atıyoruz,
+        $childArray = [];
+        foreach($child as $c){
+            $childArray[] = $c;
+        }
+
+
+
+
+        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comments', 'parentArray', 'childArray'));
 
 
 

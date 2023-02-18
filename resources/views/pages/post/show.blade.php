@@ -171,15 +171,19 @@
 
                     </form>
                     <div class="pt-1 fs-sm">
-                        @foreach ($comment as $comment)
-                            @include('pages.post.includes.comment')
+
+
+                        @foreach ($parentArray as $comment)
+                        @include('pages.post.includes.comment')
+
                         @endforeach
+                       {{-- paginate --}}
+
                         <div id="comment_detail">
 
                         </div>
                     </div>
                 </div>
-                <!-- END Comments -->
             </div>
         </div>
     </div>
@@ -448,10 +452,10 @@
         </script>
 
         <script>
-                 $('.reply').click(function() {
-                        var id = $(this).attr('id');
-                        $('#reply_form' + id).toggle();
-                    });
+            $('.reply').click(function() {
+                var id = $(this).attr('id');
+                $('#reply_form' + id).toggle();
+            });
         </script>
     @endpush
 </x-app-layout>
