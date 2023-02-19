@@ -41,4 +41,25 @@ class CommentController extends Controller
 
     }
 
+    public function delete(Request $request){
+        $comment = Comment::where('id', $request->id)->first();
+        $parent = Comment::where('parent_id', $request->id)->first();
+        //eğer gelen id'nin parent_id'si varsa onu silme
+        if($comment->comment == 0){
+           $message = 0;
+        }else{
+        if($parent->id == null){
+            $comment->delete();
+        }else{
+            $comment->comment = 0;
+            $comment->save();
+        }
+    }
+        return response()->json([
+            'success' => true,
+            'comment' => $comment,
+            'message' => $message,
+        ]);
+    }
+
 }

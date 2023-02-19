@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/bookmark', [PostActionController::class, 'bookmarkPost'])->name('post.bookmark');
 
     Route::post('/post/yorum', [CommentController::class, 'comment'])->name('post.comment');
+    Route::post('/post/yorum/sil', [CommentController::class, 'delete'])->name('post.comment.delete');
 
     Route::get('/biolog/username', [CommentController::class, 'user_get'])->name('user.get');
 });

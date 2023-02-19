@@ -1,41 +1,5 @@
 <x-app-layout>
     @push('style')
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/at.js/1.5.4/css/jquery.atwho.css"
-            integrity="sha512-FxoYOd5BCVZgDp8KmIHKd4oabBeOyCwDlc6Sv9t2PL9pXv/CIJGORjlnlLg4Oanu+AKuVh3HN8MsNZ+ucurilw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <style>
-            #quote-1 {
-                height: 75px;
-            }
-
-            p span {
-                border: 0 solid black;
-                padding: 12px;
-                position: relative;
-            }
-
-            #text {
-                text-align: center;
-                font-family: 'Pacifico', cursive;
-                font-size: 25px;
-                margin-top: 20px;
-            }
-
-            .card {
-                border-radius: 40px 0px 40px 0px !important;
-                background-color: #f8f9fa !important;
-                border: 4px black solid !important;
-            }
-
-            .card:hover {
-                border-radius: 40px 0px 40px 0px !important;
-                background-color: #f8f9fa !important;
-                border: 4px white solid !important;
-                background-color: black !important;
-                color: white !important;
-                transition: 0.5s;
-            }
-        </style>
     @endpush
     <div class="bg-image" style="background-image: url('{{ asset($post->cover_image) }}');">
         <div class="hero bg-black-50">
@@ -63,7 +27,6 @@
                                 </span>
                             </a>
                         @endforeach
-
                     </p>
                     <div>
                         <a class="btn btn-primary" href="#example-blog-post">
@@ -77,13 +40,9 @@
     <div id="example-blog-post" class="content content-full">
         <div class="row justify-content-center">
             <div class="col-sm-8 py-5">
-                <!-- Story -->
-                <!-- Magnific Popup (.js-gallery class is initialized in Helpers.jqMagnific()) -->
-                <!-- For more info and examples you can check out http://dimsemenov.com/plugins/magnific-popup/ -->
                 <article id="article" class="js-gallery story">
                     {!! $post->content !!}
                 </article>
-
                 <div class="mt-5 d-flex justify-content-between push">
                     <div class="btn-group" role="group">
                         <button data-id="{{ $post->id }}" data-user="{{ Auth::user()->id }}" id="like"
@@ -151,11 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- END Actions -->
-
-                <!-- Comments -->
                 <div class="px-4 pt-4 pb-4 rounded bg-body-extra-light">
-
                     <p class="fs-sm">
                         <i class="fa fa-thumbs-up text-info"></i><span id="likec"
                             class="me-1">{{ $like }}</span>
@@ -175,392 +130,28 @@
                                 <input data-id="{{ Auth::user()->id }}" id="comment" type="text"
                                     class="form-control form-control-alt" name="comment"
                                     placeholder="Bir yorum yaz..">
-
                                 <button type="submit" class="btn btn-secondary"><i class="fa fa-comment"
                                         aria-hidden="true"></i></button>
-
                             </div>
                             <div class="row">
                                 <div class="col-md-12 m-2" id="userList">
-
                                 </div>
                             </div>
                         </div>
-
                     </form>
                     <div class="pt-1 fs-sm">
-
-
                         @foreach ($parentArray as $comment)
                             @include('pages.post.includes.comment')
                         @endforeach
-                        {{-- paginate --}}
-
                         <div id="comment_detail">
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @vite(['resources/css/post.css', 'resources/js/post.js'])
 
     @push('script')
-        <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
-            crossorigin="anonymous"></script>
-
-        <script>
-            //if click like
-            $('#like').click(function() {
-                //data-id al
-                var id = $(this).data('id');
-                var user = $(this).data('user');
-                //ajax
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('post.like') }}",
-                    data: {
-                        id: id,
-                        user: user,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        console.log(data.likeCount);
-                        //likec +1
-                        $('#likec').html(+data.likeCount);
-
-                        if (data.success == true) {
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Gönderi beğenildi..',
-                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                        } else {
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Bunu zaten beğendiğini düşünüyoruz..',
-                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                        }
-                    }
-                });
-            });
-
-            $('#dislike').click(function() {
-                var id = $(this).data('id');
-                var user = $(this).data('user');
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('post.dislike') }}",
-                    data: {
-                        id: id,
-                        user: user,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        if (data.success == true) {
-                            $('#dlikec').html(+data.disslikeCount);
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Başarıyla beğenmedin..',
-                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                        } else {
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Bunu zaten beğenmediğini düşünüyoruz.. Ne istiyorsun ?',
-                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                        }
-                    }
-                });
-            });
-
-            $('#bookmark').click(function() {
-                //data-id al
-                var id = $(this).data('id');
-                var user = $(this).data('user');
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('post.bookmark') }}",
-                    data: {
-                        id: id,
-                        user: user,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        if (data.success == true) {
-                            $('#bookc').html(+data.bookmarkCount);
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Gönderi kaydedildi..',
-                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                            //change text
-                            $('#bookmark').addClass('btn-primary');
-                        } else {
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Kendi gönderini kaydedemezsin..',
-                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                            $('#bookmark').removeClass('btn-primary');
-                        }
-                    }
-                });
-            });
-
-            //comment form submit
-
-            $('#commentForm').submit(function(e) {
-                e.preventDefault();
-                var id = $('#post_id').val();
-                var user = $('#user_id').val();
-                var comment = $('#comment').val();
-                $.ajax({
-                    type: "post",
-                    url: '/post/yorum',
-                    data: {
-                        id: id,
-                        user: user,
-                        comment: comment,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        if (data.success == true) {
-                            console.log(data.comment.comment, data.user.avatar);
-                            //gelen datayı yazdır
-                            $('#comment_detail').html(`<div class="d-flex">
-                            <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar32 img-avatar-thumb"
-                                    src="${data.user.avatar}" alt="">
-                            </a>
-                            <div class="flex-grow-1">
-                                <p class="mb-1">
-                                    <a class="fw-semibold" id="user" href="javascript:void(0)">@${data.user.username}</a> diyo ki
-                                    <button class="float-end border-0 btn-outline-dark bg-white"><i class="fa text-danger fa-trash" aria-hidden="true"></i></button>
-                                    <button class="float-end border-0 me-1  bg-white"><i class="fa fa-pencil text-warning" aria-hidden="true"></i></button>
-                                    <button class="float-end border-0 me-1 bg-white"><i class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
-                                    <button class="float-end border-0 me-1  bg-white"><i class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
-                                    <button  id="${data.comment.id}" class="reply float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
-
-                                    <br >
-                                   ${data.comment.comment}
-                                </p>
-                            </div>
-                        </div>`);
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Yorumun gönderildi..',
-                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                            $('#commentForm').addClass('btn-primary');
-                        } else {
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Bir şeyler ters gitti..',
-                                position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                            $('#commentForm').removeClass('btn-primary');
-                        }
-                    }
-                });
-            });
-        </script>
-        <script></script>
-        <script>
-            $(document).ready(function() {
-                $('#commentParent').submit(function(e) {
-                    console.log('test');
-                    e.preventDefault();
-                    var id = $('#post_id').val();
-                    var user = $('#user_id').val();
-                    var comment = $('#comments').val();
-                    var parent_id = $('#parent_id').val();
-                    $.ajax({
-                        type: "POST",
-                        url: "/post/yorum",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "parent_id": parent_id,
-                            "id": id,
-                            "user": user,
-                            "comment": comment,
-                        },
-                        success: function(data) {
-                            $('#parent_detail').html(` <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar32 img-avatar-thumb"
-                                    src="${data.user.avatar}" alt="">
-                                     </a>
-                                <div class="flex-grow-1">
-                                    <p class="mb-1">
-                                        <a class="fw-semibold" href="javascript:void(0)">@${data.user.username}</a>
-                                        <button class="float-end border-0 btn-outline-dark bg-white"><i class="fa text-danger fa-trash" aria-hidden="true"></i></button>
-                                        <button class="float-end border-0 me-1 bg-white"><i class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
-                                        <button class="float-end border-0 me-1  bg-white"><i class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
-                                        <button class="float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
-                                        <br >
-                                        ${data.comment.comment}
-                                    </p>
-                                    <p>
-                                        <a class="me-1" href="javascript:void(0)">Like</a>
-                                        <a href="javascript:void(0)">Comment</a>
-                                    </p>
-                                </div>`);
-
-                            iziToast.show({
-                                theme: 'dark',
-                                icon: 'icon-person',
-                                iconColor: 'white',
-                                timeout: 1000,
-                                title: 'Hey',
-                                message: 'Yorumun gönderildi..',
-                                position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                                progressBarColor: 'rgb(0, 255, 184)',
-                            });
-                            $('#commentParent').addClass('btn-primary');
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                });
-            });
-        </script>
-
-        <script>
-            //jquery keyup event
-            // JavaScript
-            $(document).ready(function() {
-                $('#comment').on('input', function() {
-                    var inputText = $(this).val();
-                    if (inputText.includes('@')) {
-                        $.ajax({
-                            url: '/biolog/username', // Sunucu tarafında kullanıcı adlarını getiren bir PHP dosyası
-                            method: 'GET',
-                            data: {
-                                search: inputText.substring(1)
-                            },
-                            success: function(response) {
-                                var userList = $('#userList');
-                                userList.empty();
-                                $.each(response, function(index, users) {
-                                    console.log(users);
-                                    for (var i = 0; i < users.length; i++) {
-                                        userList.append(
-                                            `<button href="${users[i].username}" id="users" class="text-center me-3 text-primary">${users[i].username}</button>`
-                                            );
-                                    }
-
-                                });
-                                $('#users').click(function() {
-                                    $('#comment').val('');
-                                    var username = $(this).text();
-                                    var inputText = $('#comment').val();
-                                    var index = inputText.indexOf('@');
-                                    var str1 = inputText.substring(0, index);
-                                    var str2 = inputText.substring(index + 1);
-                                    var id = $(this).attr('id');
-                                    $('#comment').val(str1 + '@' + username + ' ');
-                                    $('#userList').empty();
-                                });
-                            }
-                        });
-                    } else {
-                        $('#userList').empty();
-                    }
-                });
-                $('#comments').on('input', function() {
-                    var inputText = $(this).val();
-                    if (inputText.includes('@')) {
-                        $.ajax({
-                            url: '/biolog/username', // Sunucu tarafında kullanıcı adlarını getiren bir PHP dosyası
-                            method: 'GET',
-                            data: {
-                                search: inputText.substring(1)
-                            },
-                            success: function(response) {
-                                var userList = $('#userList2');
-                                userList.empty();
-                                $.each(response, function(index, users) {
-                                    console.log(users);
-                                    for (var i = 0; i < users.length; i++) {
-                                        userList.append(
-                                            `<button href="${users[i].username}" id="users" class="text-center me-3 text-primary">${users[i].username}</button>`
-                                            );
-                                    }
-
-                                });
-                                $('#users').click(function() {
-                                    $('#comments').val('');
-                                    var username = $(this).text();
-                                    var inputText = $('#comments').val();
-                                    var index = inputText.indexOf('@');
-                                    var str1 = inputText.substring(0, index);
-                                    var str2 = inputText.substring(index + 1);
-                                    var id = $(this).attr('id');
-                                    $('#comments').val(str1 + '@' + username + '');
-                                    $('#userList2').empty();
-                                });
-                            }
-                        });
-                    } else {
-                        $('#userList2').empty();
-                    }
-                });
-
-            });
-        </script>
-        <script>
-            //html'deki @ ile başlayan kelimeleri mavi renk yapan fonskiyonu ver bana
-            $(document).ready(function() {
-            });
-        </script>
-        <script>
-            $('.reply').click(function() {
-                var id = $(this).attr('id');
-                $('#reply_form' + id).toggle();
-            });
-        </script>
     @endpush
 </x-app-layout>
