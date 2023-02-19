@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/bookmark', [PostActionController::class, 'bookmarkPost'])->name('post.bookmark');
 
     Route::post('/post/yorum', [CommentController::class, 'comment'])->name('post.comment');
+
+    Route::get('/biolog/username', [CommentController::class, 'user_get'])->name('user.get');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

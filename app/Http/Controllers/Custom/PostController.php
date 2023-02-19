@@ -108,11 +108,17 @@ class PostController extends Controller
         }
 
 
+    //yorumlarda @ ile başlayanları bulup link olarak değiştiriyoruz
+    foreach($comments as $comment){
+        $comment->comment = preg_replace('/@([A-Za-z0-9_]+)/', '<a href="/$1">@$1</a>', $comment->comment);
+        foreach($comment->children as $child){
+            $child->comment = preg_replace('/@([A-Za-z0-9_]+)/', '<a href="/$1">@$1</a>', $child->comment);
+        }
+    }
+
 
 
         return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comments', 'parentArray', 'childArray'));
-
-
 
     }
 }

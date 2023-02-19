@@ -1,5 +1,8 @@
 <x-app-layout>
     @push('style')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/at.js/1.5.4/css/jquery.atwho.css"
+            integrity="sha512-FxoYOd5BCVZgDp8KmIHKd4oabBeOyCwDlc6Sv9t2PL9pXv/CIJGORjlnlLg4Oanu+AKuVh3HN8MsNZ+ucurilw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             #quote-1 {
                 height: 75px;
@@ -102,6 +105,14 @@
                             data-bs-toggle="tooltip" title="Bunu Kaydet">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </button>
+                        {{-- reblog --}}
+                        <button id="reblog" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
+                            type="button"
+                            class="btn btn-alt-secondary
+                        @if ($postAction->bookmark_url != null) text-danger @endif"
+                            data-bs-toggle="tooltip" title="REBİOBLOG">
+                            <i class="fa fa-retweet" aria-hidden="true"></i>
+                        </button>
                         <div class="btn-group float-end" role="group" data-bs-toggle="tooltip"
                             title="Bunu Paylaşmak İstiyorum">
                             <button type="button" class="btn btn-alt-secondary dropdown-toggle"
@@ -164,8 +175,15 @@
                                 <input data-id="{{ Auth::user()->id }}" id="comment" type="text"
                                     class="form-control form-control-alt" name="comment"
                                     placeholder="Bir yorum yaz..">
+
                                 <button type="submit" class="btn btn-secondary"><i class="fa fa-comment"
                                         aria-hidden="true"></i></button>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 m-2" id="userList">
+
+                                </div>
                             </div>
                         </div>
 
@@ -174,10 +192,9 @@
 
 
                         @foreach ($parentArray as $comment)
-                        @include('pages.post.includes.comment')
-
+                            @include('pages.post.includes.comment')
                         @endforeach
-                       {{-- paginate --}}
+                        {{-- paginate --}}
 
                         <div id="comment_detail">
 
@@ -451,6 +468,94 @@
             });
         </script>
 
+        <script>
+            //jquery keyup event
+            // JavaScript
+            $(document).ready(function() {
+                $('#comment').on('input', function() {
+                    var inputText = $(this).val();
+                    if (inputText.includes('@')) {
+                        $.ajax({
+                            url: '/biolog/username', // Sunucu tarafında kullanıcı adlarını getiren bir PHP dosyası
+                            method: 'GET',
+                            data: {
+                                search: inputText.substring(1)
+                            },
+                            success: function(response) {
+                                var userList = $('#userList');
+                                userList.empty();
+                                $.each(response, function(index, users) {
+                                    console.log(users);
+                                    for (var i = 0; i < users.length; i++) {
+                                        userList.append(
+                                            `<button href="${users[i].username}" id="users" class="text-center me-3 text-primary">${users[i].username}</button>`
+                                            );
+                                    }
+
+                                });
+                                $('#users').click(function() {
+                                    $('#comment').val('');
+                                    var username = $(this).text();
+                                    var inputText = $('#comment').val();
+                                    var index = inputText.indexOf('@');
+                                    var str1 = inputText.substring(0, index);
+                                    var str2 = inputText.substring(index + 1);
+                                    var id = $(this).attr('id');
+                                    $('#comment').val(str1 + '@' + username + ' ');
+                                    $('#userList').empty();
+                                });
+                            }
+                        });
+                    } else {
+                        $('#userList').empty();
+                    }
+                });
+                $('#comments').on('input', function() {
+                    var inputText = $(this).val();
+                    if (inputText.includes('@')) {
+                        $.ajax({
+                            url: '/biolog/username', // Sunucu tarafında kullanıcı adlarını getiren bir PHP dosyası
+                            method: 'GET',
+                            data: {
+                                search: inputText.substring(1)
+                            },
+                            success: function(response) {
+                                var userList = $('#userList2');
+                                userList.empty();
+                                $.each(response, function(index, users) {
+                                    console.log(users);
+                                    for (var i = 0; i < users.length; i++) {
+                                        userList.append(
+                                            `<button href="${users[i].username}" id="users" class="text-center me-3 text-primary">${users[i].username}</button>`
+                                            );
+                                    }
+
+                                });
+                                $('#users').click(function() {
+                                    $('#comments').val('');
+                                    var username = $(this).text();
+                                    var inputText = $('#comments').val();
+                                    var index = inputText.indexOf('@');
+                                    var str1 = inputText.substring(0, index);
+                                    var str2 = inputText.substring(index + 1);
+                                    var id = $(this).attr('id');
+                                    $('#comments').val(str1 + '@' + username + '');
+                                    $('#userList2').empty();
+                                });
+                            }
+                        });
+                    } else {
+                        $('#userList2').empty();
+                    }
+                });
+
+            });
+        </script>
+        <script>
+            //html'deki @ ile başlayan kelimeleri mavi renk yapan fonskiyonu ver bana
+            $(document).ready(function() {
+            });
+        </script>
         <script>
             $('.reply').click(function() {
                 var id = $(this).attr('id');

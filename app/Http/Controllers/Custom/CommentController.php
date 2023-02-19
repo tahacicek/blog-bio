@@ -21,9 +21,21 @@ class CommentController extends Controller
 
         $user = User::where('id', $comment->user_id)->first();
 
+
         return response()->json([
             'comment' => $comment,
             'user' => $user,
+            'success' => true,
+        ]);
+
+    }
+
+    public function user_get(Request $request){
+
+        //request->search'a göre kullanıcıları getir
+        $users = User::where('username', 'like', '%' . $request->search . '%')->get();
+        return response()->json([
+            'users' => $users,
             'success' => true,
         ]);
 
