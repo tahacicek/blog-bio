@@ -45,25 +45,24 @@ class CommentActionController extends Controller
         $comment = Comment::where('id', $comment_id)->first();
         if ($comment->comment != 0) {
             $commentAction = CommentAction::where('comment_id', $comment_id)->first();
+            if ($commentAction->action == 'dislike') {
+                return response()->json(['success' => false]);
+            } else {
+                $commentAction->action = 'dislike';
+                $commentAction->user_id = $user_id;
+                $commentAction->save();
+            }
         } else {
             $message = 0;
+            return response()->json(['message' => $message, 'success' => false]);
         }
 
-        if ($commentAction->action == 'dislike') {
-            return response()->json(['success' => false]);
-        } else {
-            $commentAction->action = 'dislike';
-            $commentAction->user_id = $user_id;
-            $commentAction->save();
-        }
+
 
         $disslikeCount = CommentAction::where('comment_id', $comment_id)
             ->where('action', 'dislike')
             ->count();
-        if ($disslikeCount > 0) {
             return response()->json(['success' => true, 'disslikeCount' => $disslikeCount]);
-        } else {
-            return response()->json(['success' => false, 'disslikeCount' => $disslikeCount]);
-        }
+
     }
 }

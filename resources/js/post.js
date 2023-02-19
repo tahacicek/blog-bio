@@ -363,6 +363,7 @@ $(document).ready(function () {
                             id: id,
                         },
                         success: function (data) {
+                            console.log(data.message);
                             if(data.message != 0){
                                 iziToast.show({
                                     theme: 'dark',
@@ -448,11 +449,31 @@ $(document).ready(function () {
                         });
                 }
                 if(data.success == true){
-                    $('#comment_like' + id).html('Beğendin');
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        iconColor: 'white',
+                        timeout: 1000,
+                        title: 'Hey',
+                        message: 'Yorum beğenildi..',
+                        position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                    });
+                    $('.like_point' + id).text(data.likeCount);
                     $('.comment_likes' + id).removeClass('text-secondary');
                     $('.comment_likes' + id).addClass('text-primary');
+                }if(data.success == false && data.message == 0){
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        iconColor: 'white',
+                        timeout: 1000,
+                        title: 'Hey',
+                        message: 'Yorumu beğendiğini düşünüyoruz..',
+                        position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                    });
                 }
-                $('#comment_like_count' + id).html(data.like_count);
             },
             error: function (error) {
                 console.log(error);
@@ -476,15 +497,43 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if(data.message == 0){
-                    $('#comment_dislike' + id).html('Beğenme');
-                    $('#comment_dislike' + id).removeClass('btn-danger');
-                    $('#comment_dislike' + id).addClass('btn-outline-danger');
-                }else{
-                    $('#comment_dislike' + id).html('Beğenmedin');
-                    $('#comment_dislike' + id).removeClass('btn-outline-danger');
-                    $('#comment_dislike' + id).addClass('btn-danger');
-                }
-                $('#comment_dislike_count' + id).html(data.dislike_count);
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        iconColor: 'white',
+                        timeout: 1000,
+                        title: 'Hey',
+                        message: 'Silinmiş bir yorumu beğenemezsiniz..',
+                        position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                    });
+            }
+            if(data.success == true){
+                iziToast.show({
+                    theme: 'dark',
+                    icon: 'icon-person',
+                    iconColor: 'white',
+                    timeout: 1000,
+                    title: 'Hey',
+                    message: 'Yorumu başarıyla beğenmedin..',
+                    position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                    progressBarColor: 'rgb(0, 255, 184)',
+                });
+                $('.dislike_point' + id).text(data.disslikeCount);
+                $('.comment_dislikes' + id).removeClass('text-secondary');
+                $('.comment_dislikes' + id).addClass('text-danger');
+            }if(data.success == false && data.message != 0){
+                iziToast.show({
+                    theme: 'dark',
+                    icon: 'icon-person',
+                    iconColor: 'white',
+                    timeout: 1000,
+                    title: 'Hey',
+                    message: 'Yorumu zaten beğenmemiştin ? Neden tekrar beğenmemeye çalışıyorsun ?',
+                    position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                    progressBarColor: 'rgb(0, 255, 184)',
+                });
+            }
             },
             error: function (error) {
                 console.log(error);
