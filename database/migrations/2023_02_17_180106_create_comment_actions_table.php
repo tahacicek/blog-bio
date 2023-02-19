@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id'); // This is the only difference from the post_actions table (and the reason for the new migration)
             $table->unsignedBigInteger('comment_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->enum('action', ['like', 'dislike'])->nullable();
             $table->string('report_reason')->nullable();
             $table->string('reblog')->nullable();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\CommentAction;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,13 @@ class CommentController extends Controller
         }
         $comment->comment = $request->comment;
         $comment->save();
+
+
+        $commentAction = new CommentAction();
+        $commentAction->post_id = $request->id;
+        $commentAction->comment_id = $comment->id;
+        $commentAction->save();
+
 
         $user = User::where('id', $comment->user_id)->first();
 
@@ -44,15 +52,18 @@ class CommentController extends Controller
     public function delete(Request $request){
         $comment = Comment::where('id', $request->id)->first();
         $parent = Comment::where('parent_id', $request->id)->first();
+
         //eğer gelen id'nin parent_id'si varsa onu silme
         if($comment->comment == 0){
            $message = 0;
         }else{
-        if($parent->id == null){
+        if($parent == null){
             $comment->delete();
+            $message = 1;
         }else{
             $comment->comment = 0;
             $comment->save();
+            $message = 2;
         }
     }
         return response()->json([

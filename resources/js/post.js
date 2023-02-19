@@ -340,7 +340,6 @@ $(document).ready(function () {
         }
     });
 
-    //if click child_trash
     $('.comment_trash').click(function () {
         //with question
         var id = $(this).attr('id');
@@ -417,5 +416,79 @@ $(document).ready(function () {
     $('.reply').click(function () {
         var id = $(this).attr('id');
         $('#reply_form' + id).toggle();
+    });
+
+    //if click comment_like
+    $('.comment_like').click(function () {
+        var id = $(this).attr('id');
+        var user = $(this).attr('user');
+        var post = $(this).attr('post');
+        console.log(id, user);
+
+        $.ajax({
+            type: "POST",
+            url: "/post/yorum/begen",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: id,
+                user: user,
+                post: post,
+            },
+            success: function (data) {
+                if(data.message == 0){
+                        iziToast.show({
+                            theme: 'dark',
+                            icon: 'icon-person',
+                            iconColor: 'white',
+                            timeout: 1000,
+                            title: 'Hey',
+                            message: 'Silinmiş bir yorumu beğenemezsiniz..',
+                            position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: 'rgb(0, 255, 184)',
+                        });
+                }
+                if(data.success == true){
+                    $('#comment_like' + id).html('Beğendin');
+                    $('.comment_likes' + id).removeClass('text-secondary');
+                    $('.comment_likes' + id).addClass('text-primary');
+                }
+                $('#comment_like_count' + id).html(data.like_count);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+    //if click comment_dislike
+    $('.comment_dislike').click(function () {
+        var id = $(this).attr('id');
+        var user = $(this).attr('user');
+        var post = $(this).attr('post');
+        $.ajax({
+            type: "POST",
+            url: "/post/yorum/begenme",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: id,
+                user: user,
+                post: post,
+            },
+            success: function (data) {
+                if(data.message == 0){
+                    $('#comment_dislike' + id).html('Beğenme');
+                    $('#comment_dislike' + id).removeClass('btn-danger');
+                    $('#comment_dislike' + id).addClass('btn-outline-danger');
+                }else{
+                    $('#comment_dislike' + id).html('Beğenmedin');
+                    $('#comment_dislike' + id).removeClass('btn-outline-danger');
+                    $('#comment_dislike' + id).addClass('btn-danger');
+                }
+                $('#comment_dislike_count' + id).html(data.dislike_count);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     });
 });

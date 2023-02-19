@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Custom\CommentActionController;
 use App\Http\Controllers\Custom\CommentController;
 use App\Http\Controllers\Custom\PostActionController;
 use App\Http\Controllers\Custom\PostController;
 use App\Http\Controllers\custom\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\CommentAction;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/yorum/sil', [CommentController::class, 'delete'])->name('post.comment.delete');
 
     Route::get('/biolog/username', [CommentController::class, 'user_get'])->name('user.get');
+
+    Route::post('/post/yorum/begen', [CommentActionController::class, 'likeComment'])->name('comment.like');
+    Route::post('/post/yorum/begenme', [CommentActionController::class, 'dislikeComment'])->name('comment.dislike');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

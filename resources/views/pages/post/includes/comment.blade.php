@@ -26,10 +26,10 @@
                                     <button type="button" id="{{ $comment->id }}" class="comment_trash float-end border-0 btn-outline-dark bg-white"><i
                                             class="fa text-danger fa-trash" aria-hidden="true"></i></button>
                                 @endif
-                                <button class="float-end border-0 me-1 bg-white"><i
-                                        class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
-                                <button class="float-end border-0 me-1  bg-white"><i
-                                        class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
+                                <button type="button" id="{{ $comment->id }}" user="{{ Auth::user()->id }}" post="{{ $comment->post_id }}" class=" comment_dislike float-end border-0 me-1 bg-white"><i
+                                        class="fa  fa-thumbs-down comment_dislikes{{ $comment->id }} text-secondary" aria-hidden="true"></i></button>
+                                <button id="{{ $comment->id }}" user="{{ Auth::user()->id }}"  post="{{ $comment->post_id }}" class="comment_like float-end border-0 me-1  bg-white"><i
+                                        class="fa fa-thumbs-up comment_likes{{ $comment->id }} text-secondary" aria-hidden="true"></i></button>
                                 <button id="{{ $comment->id }}"
                                     class="float-end border-0 me-1 text-center bg-white reply"><i
                                         class="fa fa-reply text-black" aria-hidden="true"></i></button>
@@ -73,11 +73,11 @@
                                             <button type="button" id="{{ $child->id }}" class="comment_trash float-end border-0 btn-outline-dark bg-white"><i
                                                         class="fa text-danger fa-trash" aria-hidden="true"></i></button>
                                             @endif
-                                            <button class="float-end border-0 me-1 bg-white"><i
-                                                    class="fa  fa-thumbs-down text-secondary"
+                                            <button id="{{ $child->id }}" user="{{ Auth::user()->id }}"  post="{{ $child->post_id }}" class=" comment_dislike float-end border-0 me-1 bg-white"><i
+                                                    class="fa comment_dislikes{{ $child->id }} fa-thumbs-down text-secondary"
                                                     aria-hidden="true"></i></button>
-                                            <button class="float-end border-0 me-1  bg-white"><i
-                                                    class="fa fa-thumbs-up text-secondary"
+                                            <button id="{{ $child->id }}" user="{{ Auth::user()->id }}"  post="{{ $child->post_id }}" class="comment_like float-end border-0 me-1  bg-white"><i
+                                                    class="fa comment_likes{{ $child->id }} fa-thumbs-up text-secondary"
                                                     aria-hidden="true"></i></button>
                                         </div>
                                     </li>
