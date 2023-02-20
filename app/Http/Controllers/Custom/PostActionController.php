@@ -98,8 +98,9 @@ class PostActionController extends Controller
         $postAction->reblog_count = $postAction->reblog_count + 1;
         $postAction->save();
 
+        //yorum sayısını almak için
 
-       //get column reblog_count from post_actions table
+
          $reblogCount = $postAction->reblog_count;
 
         return response()->json(['success' => true, 'reblogCount' => $reblogCount]);

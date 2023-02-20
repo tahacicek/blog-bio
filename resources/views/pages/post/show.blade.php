@@ -117,11 +117,37 @@
                         <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">{{ $dislike }}</span>
                         <i class="fa fa-bookmark" aria-hidden="true"></i> <span
                             id="bookc">{{ $bookmark }}</span>
-                        <i class="fa fa-retweet" aria-hidden="true"></i> <span id="reblogc">{{ $reblog }}</span>
-                        beğendi
-                          @foreach ($uniqUsernames as $user)
-                          <a class="fw-semibold" href="javascript:void(0)">ss</a>
-                          @endforeach
+                        <i class="fa fa-retweet" aria-hidden="true"></i> <span
+                            id="reblogc">{{ $reblog }}</span>
+                        <i class="fa fa-eye text-dark"></i><span id="likec"
+                            class="me-1">{{ count($readUsers) }}</span>
+                        <i class="fa fa-comment text-dark"></i><span id="likec"
+                            class="me-1">{{ $commentCount }}</span>
+                        @foreach ($uniqUsernames as $user)
+                            @php
+                                $total_user = count($uniqUsernames) - 2;
+                            @endphp
+                            {{-- sondaki virgülü göstermeden --}}
+                            {{-- sadece iki kişi yazdırıyoruz diğerleri modal --}}
+                            @if (count($uniqUsernames) <= 2)
+                                @if ($loop->last)
+                                    <a href="{{ $user->username }}">{{ $user->username }}</a>
+                                    @if ($total_user > 3)
+                                        ve diğer {{ $total_user }} kişi beğendi
+                                    @else
+                                        bu yazıda bir işlemler yaptı.
+                                    @endif
+                                @else
+                                    <a href="/{{ $user->username }}">{{ $user->username }}</a>,
+                                @endif
+                            @else
+                                @if ($loop->last)
+                                    ve diğer <button id="detail_post" class="p-1 m-0 btn btn-alt-info text-dark btn-sm">{{ $total_user }}</button> kişi beğendi
+                                @else
+                                    <a href="/{{ $user->username }}">{{ $user->username }}</a>,
+                                @endif
+                            @endif
+                        @endforeach
 
                     </p>
                     <form id="commentForm" method="POST" onsubmit="return false;">

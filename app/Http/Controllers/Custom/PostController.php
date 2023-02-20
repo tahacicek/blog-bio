@@ -130,9 +130,8 @@ class PostController extends Controller
 
         $uniqUsernames = [];
         foreach ($readUsers as $readUser) {
-            $uniqUser[] = User::Where('id', $readUser->user_id)->first();
+            $uniqUsernames[] = User::Where('id', $readUser->user_id)->first();
         }
-
 
 
         //bunları bir diziye atıyoruz
@@ -188,9 +187,19 @@ class PostController extends Controller
         //         $duplicatesUsers[] = User::where('id', $duplicate)->first();
         //     }
 
+        //yorum sayısını buluyoruz
+        $commentCount = Comment::where('post_id', $post->id)->count();
+        //yoruma cevap veren kullanıcıları buluyoruz
+        $commentUsers = Comment::where('post_id', $post->id)->with('user')->get();
+        //yorumu yapan kullanıcıları buluyoruz
+        $commentUsers = Comment::where('post_id', $post->id)->with('user')->get();
+
+        //uniqUsernames sadece iki kişi gönder
 
 
 
-        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comments', 'parentArray', 'childArray', 'reblog', 'reblogUsers', 'likeUsers', 'dislikeUsers', 'readUsers', 'bookmarkUsers', 'usernames', 'uniqUsernames'));
+
+
+        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comments', 'parentArray', 'childArray', 'reblog', 'reblogUsers', 'likeUsers', 'dislikeUsers', 'readUsers', 'bookmarkUsers', 'usernames', 'uniqUsernames', 'commentCount'));
     }
 }
