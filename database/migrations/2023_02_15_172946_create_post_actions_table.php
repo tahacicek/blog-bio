@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('bookmark_url')->nullable();
             $table->string('report_reason')->nullable();
             $table->string('reblog')->nullable();
+            $table->integer('reblog_count')->nullable()->default(0);
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -18,7 +18,7 @@ $(document).ready(function () {
         //ajax
         $.ajax({
             type: "post",
-            url: "{{ route('post.like') }}",
+            url: "/post/begen",
             data: {
                 id: id,
                 user: user,
@@ -26,9 +26,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data.likeCount);
-                //likec +1
                 $('#likec').html(+data.likeCount);
-
                 if (data.success == true) {
                     iziToast.show({
                         theme: 'dark',
@@ -61,7 +59,7 @@ $(document).ready(function () {
         var user = $(this).data('user');
         $.ajax({
             type: "post",
-            url: "{{ route('post.dislike') }}",
+            url: "/post/begenme",
             data: {
                 id: id,
                 user: user,
@@ -102,7 +100,7 @@ $(document).ready(function () {
         var user = $(this).data('user');
         $.ajax({
             type: "post",
-            url: "{{ route('post.bookmark') }}",
+            url:  '/post/bookmark',
             data: {
                 id: id,
                 user: user,
@@ -135,6 +133,51 @@ $(document).ready(function () {
                         progressBarColor: 'rgb(0, 255, 184)',
                     });
                     $('#bookmark').removeClass('btn-primary');
+                }
+            }
+        });
+    });
+
+    //reblog
+    $('#reblog').click(function () {
+        //data-id al
+        var id = $(this).data('id');
+        var user = $(this).data('user');
+        $.ajax({
+            type: "post",
+            url:  '/post/reblog',
+            data: {
+                id: id,
+                user: user,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    $('#reblogc').html(+data.reblogCount);
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        iconColor: 'white',
+                        timeout: 1000,
+                        title: 'Hey',
+                        message: 'Gönderi rebloglandı..',
+                        position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                    });
+                    //change text
+                    $('.reblog').addClass('text-danger');
+                } else {
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        iconColor: 'white',
+                        timeout: 1000,
+                        title: 'Hey',
+                        message: 'Kendi gönderini rebloglayamazsın..',
+                        position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                    });
+                    $('#reblog').removeClass('btn-primary');
                 }
             }
         });

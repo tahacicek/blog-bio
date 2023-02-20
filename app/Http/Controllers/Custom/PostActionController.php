@@ -84,4 +84,24 @@ class PostActionController extends Controller
             ->count();
         return response()->json(['success' => true, 'bookmarkCount' => $bookmarkCount]);
     }
+
+    public function reblogPost(Request $request)
+    {
+        $postId = $request->id;
+        $userId = $request->user;
+
+        $postAction = PostAction::where('post_id', $postId)
+            ->where('user_id', $userId)
+            ->first();
+
+        $postAction->reblog = 'reblog';
+        $postAction->reblog_count = $postAction->reblog_count + 1;
+        $postAction->save();
+
+
+       //get column reblog_count from post_actions table
+         $reblogCount = $postAction->reblog_count;
+
+        return response()->json(['success' => true, 'reblogCount' => $reblogCount]);
+    }
 }

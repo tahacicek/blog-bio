@@ -68,9 +68,9 @@
                         <button id="reblog" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
                             type="button"
                             class="btn btn-alt-secondary
-                        @if ($postAction->bookmark_url != null) text-danger @endif"
-                            data-bs-toggle="tooltip" title="REBİOBLOG">
-                            <i class="fa fa-retweet" aria-hidden="true"></i>
+                        @if ($postAction->reblog != null) text-danger @endif"
+                            data-bs-toggle="tooltip" title="RBB">
+                            <i class="fa fa-retweet reblog" aria-hidden="true"></i>
                         </button>
                         <div class="btn-group float-end" role="group" data-bs-toggle="tooltip"
                             title="Bunu Paylaşmak İstiyorum">
@@ -117,9 +117,12 @@
                         <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">{{ $dislike }}</span>
                         <i class="fa fa-bookmark" aria-hidden="true"></i> <span
                             id="bookc">{{ $bookmark }}</span>
-                        beğendi <a class="fw-semibold" href="javascript:void(0)">Brian Stevens</a>,
-                        <a class="fw-semibold" href="javascript:void(0)">Megan Fuller</a>
-                        <a class="fw-semibold" href="javascript:void(0)">ve 350 Kişi..</a>
+                        <i class="fa fa-retweet" aria-hidden="true"></i> <span id="reblogc">{{ $reblog }}</span>
+                        beğendi
+                          @foreach ($uniqUsernames as $user)
+                          <a class="fw-semibold" href="javascript:void(0)">ss</a>
+                          @endforeach
+
                     </p>
                     <form id="commentForm" method="POST" onsubmit="return false;">
                         <input type="hidden" id="post_id" value="{{ $post->id }}">
