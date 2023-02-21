@@ -20,11 +20,16 @@ class CommentActionController extends Controller
         $comment = Comment::where('id', $comment_id)->first();
         if ($comment->comment != 0) {
             $commentAction = CommentAction::where('comment_id', $comment_id)->first();
-            if ($commentAction->action == 'like') {
-                return response()->json(['success' => false]);
-            } else {
-                $commentAction->action = 'like';
+            if($commentAction){
+                if ($commentAction->action == 'like') {
+                    return response()->json(['success' => false]);
+                }
+            }else{
+                $commentAction = new CommentAction();
+                $commentAction->comment_id = $comment_id;
+                $commentAction->post_id = $post_id;
                 $commentAction->user_id = $user_id;
+                $commentAction->action = 'like';
                 $commentAction->save();
             }
         } else {
@@ -47,11 +52,15 @@ class CommentActionController extends Controller
         $comment = Comment::where('id', $comment_id)->first();
         if ($comment->comment != 0) {
             $commentAction = CommentAction::where('comment_id', $comment_id)->first();
-            if ($commentAction->action == 'dislike') {
-                return response()->json(['success' => false]);
-            } else {
-                $commentAction->action = 'dislike';
+            if($commentAction){
+                if ($commentAction->action == 'dislike') {
+                    return response()->json(['success' => false]);
+                }
+            }else{
+                $commentAction = new CommentAction();
+                $commentAction->comment_id = $comment_id;
                 $commentAction->user_id = $user_id;
+                $commentAction->action = 'dislike';
                 $commentAction->save();
             }
         } else {
@@ -79,9 +88,8 @@ class CommentActionController extends Controller
 
         $uniqUsernames = [];
         foreach ($readUsers as $readUser) {
-            $uniqUsernames[] = User::Where('id', $readUser->user_id)->with('postActions')->first();
+            $uniqUsernames[] = User::Where('id', $readUser->user_id)->with('postActions', 'comments')->first();
         }
-
         return response()->json(['success' => true, 'data', view('pages.post.includes.comment_detail', ['uniqUsernames' => $uniqUsernames])->render()], 200);
     }
 }

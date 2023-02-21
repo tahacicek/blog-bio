@@ -33,4 +33,10 @@ class Comment extends Model
         return $this->hasOne(CommentAction::class);
     }
 
+    //parent action
+    public function parentComments()
+    {
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
+    }
+
 }

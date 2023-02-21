@@ -29,16 +29,32 @@
             <a class="text-primary mt-2" href="/{{ $uniq->username }}">
                 <img src="{{ $uniq->avatar }}" alt="" class="avatar rounded-circle mt-1 me-1">
                 <div class="text-primary text-sm">{{ '@' . $uniq->username }}
-                 <div class="float-end">
-                    <i class="fa text-danger fa-retweet" aria-hidden="true"></i>
-                    <i class="fa fa-thumbs-up text-success" aria-hidden="true"></i>
-                    <i class="fa fa-bookmark text-danger" aria-hidden="true"></i>
-                    <i class="fa fa-thumbs-down text-danger" aria-hidden="true"></i>
+            </a>
 
+
+                 <div class="float-end">
+                    @if ($uniq->postActions[0]->action == 'like')
+                        <i class="fa fa-thumbs-up text-success" aria-hidden="true"></i>
+                    @endif
+                    @if ($uniq->postActions[0]->action == 'dislike')
+                        <i class="fa fa-thumbs-down text-danger" aria-hidden="true"></i>
+                    @endif
+                    @if ($uniq->postActions[0]->bookmark_url != null)
+                        <i class="fa fa-bookmark text-primary" aria-hidden="true"></i>
+                    @endif
+                    @if ($uniq->postActions[0]->reblog != null)
+                        <i class="fa fa-retweet text-primary" aria-hidden="true"></i>
+                    @endif
+                    @php
+                        $commentCount = count($uniq->comments)
+                    @endphp
+                    @if ($commentCount > 0)
+                        <i class="fa fa-comment text-primary text-sm" aria-hidden="true"></i>
+                        <span class="text-primary">{{ $commentCount }}</span>
+                    @endif
                  </div>
                 </div>
 
-            </a>
             <span class="text-xs text-secondary"><i>18 dakika önce</i></span>
         </div>
         <hr>

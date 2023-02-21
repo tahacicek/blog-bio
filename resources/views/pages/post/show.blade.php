@@ -144,7 +144,7 @@
                                 @if ($loop->last)
                                     ve diğer <button data-id="{{ $post->id }}" data-bs-toggle="modal"
                                         data-bs-target="#modal-block-popin" id="detail_post"
-                                        class="p-1 m-0 btn btn-alt-info text-dark btn-sm">{{ $total_user }}</button>
+                                        class="p-1 btn btn-outline-dark btn-lg">{{ $total_user }} kişi </button>
                                     bu yazıda bir işlemler yaptı.
                                 @else
                                     <a href="/{{ $user->username }}">{{ $user->username }}</a>,

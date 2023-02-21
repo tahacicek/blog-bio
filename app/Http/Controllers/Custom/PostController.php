@@ -99,7 +99,6 @@ class PostController extends Controller
         $reblog = $postAction->reblogCountPost($post->id);
         $comments = Comment::where('post_id', $post->id)->with('user', 'children', 'commentAction')->get()->sortBy('created_at');
 
-
         $parent = $comments->where('parent_id', null);
         $child = $comments->where('parent_id', '!=', null);
         //parent_id olanları diziye atıyoruz,
@@ -131,7 +130,7 @@ class PostController extends Controller
 
         $uniqUsernames = [];
         foreach ($readUsers as $readUser) {
-            $uniqUsernames[] = User::Where('id', $readUser->user_id)->first();
+            $uniqUsernames[] = User::Where('id', $readUser->user_id)->with('comments', 'commentActions', )->first();
         }
 
 
