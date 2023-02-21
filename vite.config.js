@@ -10,7 +10,7 @@ export default defineConfig({
                 'resources/css/project.css',
                 'resources/js/app.js',
                 'resources/js/post.js',
-                'resources/css/project.js',
+                'resources/js/project.js',
 
             ],
             refresh: true,

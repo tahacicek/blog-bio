@@ -71,8 +71,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/post/comment/detail', [CommentActionController::class, 'comment_detail'])->name('comment.detail');
 
-    //project routes
-    Route::get('/proje/{username}', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/proje/olustur/{username}', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/proje/{username}/{slug}', [ProjectController::class, 'show'])->name('project.show');
     Route::post('/proje/func', [ProjectController::class, 'func'])->name('project.func');
 });
 

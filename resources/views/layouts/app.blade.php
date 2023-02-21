@@ -7,12 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/app.css', 'resources/js/app.js'])
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('style')
 </head>
-
 <body>
 
     @if (Route::currentRouteName() != 'user.homepage')
@@ -46,11 +43,7 @@
     <script>
         Dashmix.helpersOnLoad('jq-sparkline');
     </script>
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
-
     @stack('script')
-
-
 </body>
 
 </html>

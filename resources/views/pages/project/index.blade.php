@@ -5,7 +5,7 @@
         'https://cutewallpaper.org/21/5120-x-1440-wallpaper/3840x10805760x10805120x1440-Milky-Way-multiwall.jpg')
     @section('header_content')
         <h1 class="fs-2 text-white my-2">
-            <i class="fa fa-plus text-white-50 me-1"></i> Yeni Proje
+            <i class="fa fa-check text-white-50 me-1"></i> Yeni Proje
         </h1>
     @endsection
     <!-- END Hero -->
@@ -97,7 +97,7 @@
                         <div class="col-lg-8 col-xl-5 offset-lg-4">
                             <div class="mb-4">
                                 <button type="submit" class="btn btn-alt-primary">
-                                    <i class="fa fa-check-circle me-1 opacity-50"></i> Create Project
+                                    <i class="fa fa-check-circle me-1 opacity-50"></i> Projeyi Oluştur
                                 </button>
                             </div>
                         </div>
@@ -114,13 +114,6 @@
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
             crossorigin="anonymous"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script>
-            $("#tags").select2({
-                tags: true,
-                tokenSeparators: [',', ' ']
-            });
-        </script>
         <script>
             ClassicEditor
                 .create(document.querySelector('#project-editor'))
