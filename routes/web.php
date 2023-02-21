@@ -4,6 +4,7 @@ use App\Http\Controllers\Custom\CommentActionController;
 use App\Http\Controllers\Custom\CommentController;
 use App\Http\Controllers\Custom\PostActionController;
 use App\Http\Controllers\Custom\PostController;
+use App\Http\Controllers\Custom\ProjectController;
 use App\Http\Controllers\custom\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -69,6 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/post/yorum/detay', [CommentActionController::class, 'action_detail'])->name('comment.detay');
 
     Route::post('/post/comment/detail', [CommentActionController::class, 'comment_detail'])->name('comment.detail');
+
+    //project routes
+    Route::get('/proje/{username}', [ProjectController::class, 'index'])->name('project.index');
+    Route::post('/proje/func', [ProjectController::class, 'func'])->name('project.func');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

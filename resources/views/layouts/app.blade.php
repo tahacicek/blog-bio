@@ -29,8 +29,11 @@
             <main id="main-container">
 
                 @if (Route::currentRouteName() != 'post.show')
+
                     @include('layouts.app.main')
+
                 @endif
+
                 {{ $slot }}
             </main>
             @include('layouts.app.footer')
