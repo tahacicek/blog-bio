@@ -43,7 +43,7 @@
                         <i class="fa fa-bookmark text-primary" aria-hidden="true"></i>
                     @endif
                     @if ($uniq->postActions[0]->reblog != null)
-                        <i class="fa fa-retweet text-primary" aria-hidden="true"></i>
+                        <i class="fa fa-retweet text-primary" aria-hidden="true"></i><span class="text-primary text-sm">{{ $uniq->postActions[0]->reblog_count }}</span>
                     @endif
                     @php
                         $commentCount = count($uniq->comments)

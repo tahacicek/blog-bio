@@ -7,31 +7,56 @@ use App\Models\Comment;
 use App\Models\CommentAction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     public function comment(Request $request)
     {
-        $comment = new Comment();
-        $comment->post_id = $request->id;
-        $comment->user_id = $request->user;
-        if ($request->parent_id) {
-            $comment->parent_id = $request->parent_id;
-        }
-        $comment->comment = $request->comment;
-        $comment->save();
+        try {
+            //validate incoming request
+            $this->validate($request, [
+                'comment' => 'required',
+            ], [
+                'comment.required' => 'Bir yorum yazmalısınız..',
+            ]);
+            $comment = new Comment();
+            $comment->post_id = $request->id;
+            $comment->user_id = $request->user;
+            if ($request->parent_id) {
+                $comment->parent_id = $request->parent_id;
+            }
+            $comment->comment = $request->comment;
+            $comment->save();
 
-        $commentAction = new CommentAction();
-        $commentAction->post_id = $request->id;
-        $commentAction->comment_id = $comment->id;
-        $commentAction->save();
+            $commentAction = new CommentAction();
+            $commentAction->post_id = $request->id;
+            $commentAction->comment_id = $comment->id;
+            $commentAction->save();
+
+            $user = User::where('id', $comment->user_id)->first();
+
+            return response()->json([
+                'comment' => $comment,
+                'user' => $user,
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+
 
         $user = User::where('id', $comment->user_id)->first();
-
+        $active = Auth::user()->id;
         return response()->json([
             'comment' => $comment,
             'user' => $user,
             'success' => true,
+            'active' => $active,
+            'message' => 'Comment posted successfully',
         ]);
     }
 

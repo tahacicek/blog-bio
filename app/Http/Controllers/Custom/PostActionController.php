@@ -30,7 +30,11 @@ class PostActionController extends Controller
         $likeCount = PostAction::where('post_id', $postId)
             ->where('action', 'like')
             ->count();
-        return response()->json(['success' => true, 'likeCount' => $likeCount]);
+
+        $disslikeCount = PostAction::where('post_id', $postId)
+            ->where('action', 'dislike')
+            ->count();
+        return response()->json(['success' => true, 'likeCount' => $likeCount, 'disslikeCount' => $disslikeCount]);
     }
 
     public function dislikePost(Request $request)
@@ -52,8 +56,11 @@ class PostActionController extends Controller
         $disslikeCount = PostAction::where('post_id', $postId)
             ->where('action', 'dislike')
             ->count();
+        $likeCount = PostAction::where('post_id', $postId)
+            ->where('action', 'like')
+            ->count();
         if ($disslikeCount > 0) {
-            return response()->json(['success' => true, 'disslikeCount' => $disslikeCount]);
+            return response()->json(['success' => true, 'disslikeCount' => $disslikeCount, 'likeCount' => $likeCount]);
         } else {
             return response()->json(['success' => false, 'disslikeCount' => $disslikeCount]);
         }

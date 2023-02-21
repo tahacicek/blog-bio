@@ -182,7 +182,6 @@
             </div>
         </div>
     </div>
-
     <!-- Pop In Block Modal -->
     <div class="modal fade" id="modal-block-popin" tabindex="-1" role="dialog"
         aria-labelledby="modal-block-popin" aria-hidden="true">
@@ -202,4 +201,7 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+
 </x-app-layout>

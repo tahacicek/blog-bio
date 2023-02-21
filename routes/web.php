@@ -11,6 +11,7 @@ use App\Models\CommentAction;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,8 @@ require __DIR__.'/auth.php';
 
 //sayfa yenilendiğinde cache clear edilir.
 
-
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
+require base_path('routes/channels.php');
 
 Route::get('/index', [HomeController::class, 'index'])->name('user.index');
 

@@ -3,7 +3,10 @@ $(document).ready(function () {
     $('#like').click(function () {
         var id = $(this).data('id');
         var user = $(this).data('user');
-        //ajax
+
+        socket.emit('like', {
+            id : id,
+        });
         $.ajax({
             type: "post",
             url: "/post/begen",
@@ -13,8 +16,8 @@ $(document).ready(function () {
                 _token: $('meta[name="csrf-token"]').attr('content'),
             },
             success: function (data) {
-                console.log(data.likeCount);
                 $('#likec').html(+data.likeCount);
+                $('#dlikec').html(+data.disslikeCount);
                 if (data.success == true) {
                     iziToast.show({
                         theme: 'dark',
@@ -56,6 +59,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.success == true) {
                     $('#dlikec').html(+data.disslikeCount);
+                    $('#likec').html(+data.likeCount);
                     iziToast.show({
                         theme: 'dark',
                         icon: 'icon-person',
@@ -189,7 +193,6 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data.success == true) {
-                    console.log(data.comment.comment, data.user.avatar);
                     //gelen datayı yazdır
                     $('#comment_detail').html(`<div class="d-flex">
                 <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
@@ -222,13 +225,14 @@ $(document).ready(function () {
                     });
                     $('#commentForm').addClass('btn-primary');
                 } else {
+                    console.log(data);
                     iziToast.show({
                         theme: 'dark',
                         icon: 'icon-person',
                         iconColor: 'white',
                         timeout: 1000,
                         title: 'Hey',
-                        message: 'Bir şeyler ters gitti..',
+                        message: data.message,
                         position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                         progressBarColor: 'rgb(0, 255, 184)',
                     });
@@ -239,7 +243,6 @@ $(document).ready(function () {
     });
 
     $('#commentParent').submit(function (e) {
-        console.log('test');
         e.preventDefault();
         var id = $('#post_id').val();
         var user = $('#user_id').val();
@@ -256,26 +259,7 @@ $(document).ready(function () {
                 "comment": comment,
             },
             success: function (data) {
-                $('#parent_detail').html(` <a class="flex-shrink-0 img-link me-2" href="javascript:void(0)">
-                    <img class="img-avatar img-avatar32 img-avatar-thumb"
-                        src="${data.user.avatar}" alt="">
-                         </a>
-                    <div class="flex-grow-1">
-                        <p class="mb-1">
-                            <a class="fw-semibold" href="javascript:void(0)">@${data.user.username}</a>
-                            <button class="float-end border-0 btn-outline-dark bg-white"><i class="fa text-danger fa-trash" aria-hidden="true"></i></button>
-                            <button class="float-end border-0 me-1 bg-white"><i class="fa  fa-thumbs-down text-secondary" aria-hidden="true"></i></button>
-                            <button class="float-end border-0 me-1  bg-white"><i class="fa fa-thumbs-up text-secondary" aria-hidden="true"></i></button>
-                            <button class="float-end border-0 me-1 text-center bg-white"><i class="fa fa-reply text-black" aria-hidden="true"></i></button>
-                            <br >
-                            ${data.comment.comment}
-                        </p>
-                        <p>
-                            <a class="me-1" href="javascript:void(0)">Like</a>
-                            <a href="javascript:void(0)">Comment</a>
-                        </p>
-                    </div>`);
-
+                if (data.success == true) {
                 iziToast.show({
                     theme: 'dark',
                     icon: 'icon-person',
@@ -287,9 +271,19 @@ $(document).ready(function () {
                     progressBarColor: 'rgb(0, 255, 184)',
                 });
                 $('#commentParent').addClass('btn-primary');
-            },
-            error: function (error) {
-                console.log(error);
+            }else{
+            }
+                iziToast.show({
+                    theme: 'dark',
+                    icon: 'icon-person',
+                    iconColor: 'white',
+                    timeout: 1000,
+                    title: 'Hey',
+                    message: data.message,
+                    position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                    progressBarColor: 'rgb(0, 255, 184)',
+                });
+                $('#commentParent').removeClass('btn-primary');
             }
         });
     });
@@ -307,7 +301,6 @@ $(document).ready(function () {
                     var userList = $('#userList');
                     userList.empty();
                     $.each(response, function (index, users) {
-                        console.log(users);
                         for (var i = 0; i < users.length; i++) {
                             userList.append(
                                 `<button href="${users[i].username}" id="users" class="text-center me-3 text-primary">${users[i].username}</button>`
@@ -345,7 +338,6 @@ $(document).ready(function () {
                     var userList = $('#userList2');
                     userList.empty();
                     $.each(response, function (index, users) {
-                        console.log(users);
                         for (var i = 0; i < users.length; i++) {
                             userList.append(
                                 `<button href="${users[i].username}" id="users" class="text-center me-3 text-primary">${users[i].username}</button>`
@@ -394,7 +386,6 @@ $(document).ready(function () {
                             id: id,
                         },
                         success: function (data) {
-                            console.log(data.message);
                             if(data.message != 0){
                                 iziToast.show({
                                     theme: 'dark',
@@ -455,7 +446,6 @@ $(document).ready(function () {
         var id = $(this).attr('id');
         var user = $(this).attr('user');
         var post = $(this).attr('post');
-        console.log(id, user);
 
         $.ajax({
             type: "POST",
@@ -583,7 +573,17 @@ $(document).ready(function () {
             },
             success: function(data) {
                 $('#modal-block-popin').find('.comment_detail').html(data[1]);
+                //socket emit
+                var socket = io.connect('http://localhost:3000');
+                socket.on('comment', function(data) {
+                    $('#comment_list').append(data[1]);
+                } );
             }
         });
     });
+
+    //socket emit
+
 });
+
+
