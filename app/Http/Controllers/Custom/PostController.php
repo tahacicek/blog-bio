@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\CommentAction;
 use App\Models\Post;
 use App\Models\PostAction;
 use App\Models\Tag;
@@ -96,7 +97,7 @@ class PostController extends Controller
         $dislike = $postAction->dislikeCountPost($post->id);
         $bookmark = $postAction->bookmarkUrlCountPost($post->id);
         $reblog = $postAction->reblogCountPost($post->id);
-        $comments = Comment::where('post_id', $post->id)->with('user', 'children')->get()->sortBy('created_at');
+        $comments = Comment::where('post_id', $post->id)->with('user', 'children', 'commentAction')->get()->sortBy('created_at');
 
 
         $parent = $comments->where('parent_id', null);
@@ -195,8 +196,6 @@ class PostController extends Controller
         $commentUsers = Comment::where('post_id', $post->id)->with('user')->get();
 
         //uniqUsernames sadece iki kişi gönder
-
-
 
 
 

@@ -1,6 +1,6 @@
 <x-app-layout>
-    @push('style')
-    @endpush
+    @vite(['resources/css/post.css', 'resources/js/post.js'])
+
     <div class="bg-image" style="background-image: url('{{ asset($post->cover_image) }}');">
         <div class="hero bg-black-50">
             <div class="hero-inner">
@@ -138,11 +138,14 @@
                                         bu yazıda bir işlemler yaptı.
                                     @endif
                                 @else
-                                    <a href="/{{ $user->username }}">{{ $user->username }}</a>,
+                                    <a href="/{{ $user->username }}">{{ $user->username }}</a>
                                 @endif
                             @else
                                 @if ($loop->last)
-                                    ve diğer <button id="detail_post" class="p-1 m-0 btn btn-alt-info text-dark btn-sm">{{ $total_user }}</button> kişi beğendi
+                                    ve diğer <button data-id="{{ $post->id }}" data-bs-toggle="modal"
+                                        data-bs-target="#modal-block-popin" id="detail_post"
+                                        class="p-1 m-0 btn btn-alt-info text-dark btn-sm">{{ $total_user }}</button>
+                                    bu yazıda bir işlemler yaptı.
                                 @else
                                     <a href="/{{ $user->username }}">{{ $user->username }}</a>,
                                 @endif
@@ -179,8 +182,24 @@
             </div>
         </div>
     </div>
-    @vite(['resources/css/post.css', 'resources/js/post.js'])
 
-    @push('script')
-    @endpush
+    <!-- Pop In Block Modal -->
+    <div class="modal fade" id="modal-block-popin" tabindex="-1" role="dialog"
+        aria-labelledby="modal-block-popin" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popin modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="block block-transparent bg-dark mb-0">
+                    <div class="block-content">
+                        <div class="row">
+                            <div class="comment_detail col-md-12">
+
+                            </div>
+                            {{-- close button --}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>

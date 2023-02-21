@@ -1,6 +1,15 @@
 import './bootstrap';
 
+
 import Alpine from 'alpinejs';
+
+
+window.Alpine = Alpine;
+Alpine.start();
+
+
+
+
 
 import '../../public/custom/assets/js/dashmix.app.min.js';
 
@@ -10,12 +19,4 @@ import '../../public/custom/assets/js/plugins/jquery-sparkline/jquery.sparkline.
 import '../../public/custom/assets/js/plugins/highlightjs/highlight.pack.min.js';
 import '../../public/custom/assets/js/plugins/magnific-popup/jquery.magnific-popup.min.js';
 import '../../public/custom/assets/js/pages/be_comp_chat.min.js';
-
-
-
-
-
-window.Alpine = Alpine;
-
-Alpine.start();
 

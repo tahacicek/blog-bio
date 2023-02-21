@@ -28,4 +28,24 @@ class CommentAction extends Model
     public function post(){
         return $this->belongsTo('App\Models\Post');
     }
+
+    //like
+    public function like(){
+        return $this->where('action', 'like')->count();
+    }
+
+    public function likeCountComment($id){
+        return $this->where('action', 'like')->where('comment_id', $id)->count();
+    }
+
+    public function dislike(){
+        return $this->where('action', 'dislike')->count();
+    }
+
+    public function dislikeCountComment($id){
+        return $this->where('action', 'dislike')->where('comment_id', $id)->count();
+    }
+
+
+
 }

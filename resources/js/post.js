@@ -1,18 +1,6 @@
-import './bootstrap';
-import jQuery from "jquery";
-import Alpine from 'alpinejs';
-
-window.$ = jQuery;
-window.Alpine = Alpine;
-
-Alpine.start();
-
 
 $(document).ready(function () {
-
-
     $('#like').click(function () {
-        //data-id al
         var id = $(this).data('id');
         var user = $(this).data('user');
         //ajax
@@ -580,6 +568,21 @@ $(document).ready(function () {
             },
             error: function (error) {
                 console.log(error);
+            }
+        });
+    });
+
+    $('#detail_post').click(function() {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "/post/comment/detail",
+            data: {
+                id: id,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function(data) {
+                $('#modal-block-popin').find('.comment_detail').html(data[1]);
             }
         });
     });

@@ -27,4 +27,10 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
+    //comment_action
+    public function commentAction()
+    {
+        return $this->hasOne(CommentAction::class);
+    }
+
 }

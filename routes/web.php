@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/post/yorum/begen', [CommentActionController::class, 'likeComment'])->name('comment.like');
     Route::post('/post/yorum/begenme', [CommentActionController::class, 'dislikeComment'])->name('comment.dislike');
+    Route::get('/post/yorum/detay', [CommentActionController::class, 'action_detail'])->name('comment.detay');
+
+    Route::post('/post/comment/detail', [CommentActionController::class, 'comment_detail'])->name('comment.detail');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');
