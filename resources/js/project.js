@@ -83,4 +83,11 @@ $(document).ready(function () {
         });
     });
 
+    $('#create_key').click(function() {
+        console.log('test')
+        var key = 'BIO' + '-' + Math.random().toString(36).substring(2, 5).toUpperCase() + Math.random()
+            .toString(36).substring(2, 5).toUpperCase() + '-' + 'BLOG';
+        $('#invite_code').val(key);
+    });
+
 });

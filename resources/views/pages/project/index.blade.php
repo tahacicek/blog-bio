@@ -107,9 +107,6 @@
             </div>
         </div>
     </div>
-    <!-- END Page Content -->
-
-
     @push('script')
         <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
             crossorigin="anonymous"></script>
@@ -125,6 +122,26 @@
                     console.error(error);
                 });
         </script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#project-edit-description'))
 
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+
+        <script>
+                $('#create_key').click(function() {
+        console.log('test')
+        var key = 'BIO' + '-' + Math.random().toString(36).substring(2, 5).toUpperCase() + Math.random()
+            .toString(36).substring(2, 5).toUpperCase() + '-' + 'BLOG';
+        $('#invite_code').val(key);
+    });
+
+        </script>
     @endpush
 </x-app-layout>

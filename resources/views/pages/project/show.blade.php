@@ -310,10 +310,6 @@
                             <div class="block-content body bg-dark text-white">
 
                             </div>
-                            <div class="block-content block-content-full text-end bg-primary-dark">
-                                <button type="button" class="btn btn-sm btn-alt-secondary text-dark"
-                                    data-bs-dismiss="modal">Done</button>
-                            </div>
                         </div>
                     </div>
                 </div>
