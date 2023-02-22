@@ -129,4 +129,61 @@ $(document).ready(function () {
             }
         });
     });
-});
+
+    $('.js-task-remove').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        iziToast.question({
+            timeout: 20000,
+            close: false,
+            overlay: true,
+            displayMode: 'once',
+            id: 'question',
+            zindex: 999,
+            title: 'Uyarı',
+            message: 'Görevi silmek istediğinize emin misiniz?',
+            position: 'center',
+            buttons: [
+                ['<button><b>Evet</b></button>', function (instance, toast) {
+                    instance.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast, 'button');
+                    $.ajax({
+                        method: "POST",
+                        url: "/todo/func",
+                        data: {
+                            'id': id,
+                            status: 'remove',
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            iziToast.success({
+                                title: 'Başarılı',
+                                message: 'Görev başarıyla silindi.',
+                                position: 'topRight'
+                            });
+                        },
+                        error: function (data) {
+                        location.reload();
+                            iziToast.error({
+                                title: 'Hata',
+                                message: response.message,
+                                position: 'topRight'
+                            });
+
+                        }
+                    });
+                }
+               ],
+                ['<button>HAYIR</button>', function (instance, toast) {
+                    instance.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast);
+                    location.reload();
+                }
+                ],
+            ]
+        });
+    });
+    });
+

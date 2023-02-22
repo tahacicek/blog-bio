@@ -94,8 +94,8 @@
                             <input type="hidden" id="project_id" value="{{ $project->id }}">
                             <input type="hidden" id="status" value="create-todo">
                             <input class="form-control form-control-lg fs-base" type="text" id="js-task-input"
-                                name="js-task-input" placeholder="Add a task and press enter..">
-                            <button type="submit" class="btn btn-secondary">Submit</button>
+                                name="js-task-input" placeholder="Yaz ve enter'la..">
+                            <button type="submit" class="btn btn-dark">Kaydet</button>
                         </div>
 
                     </form>
@@ -129,12 +129,12 @@
                                             class="js-task-content fw-semibold ps-0 todo-edit">
                                             {{ $todo->title }}
                                         </td>
-                                        <td class="text-end" style="width: 100px;">
+                                        <td class="text-end">
                                             <button type="button" data-id="{{ $todo->id }}"
                                                 class="js-task-star btn btn-sm btn-link text-warning">
                                                 <i class="far fa-star fa-fw"></i>
                                             </button>
-                                            <button type="button"
+                                            <button data-id="{{ $todo->id }}" type="button"
                                                 class="js-task-remove btn btn-sm btn-link text-danger">
                                                 <i class="fa fa-times fa-fw"></i>
                                             </button>
@@ -168,11 +168,11 @@
                                         class="js-task-content fw-semibold ps-0 todo-edit">
                                         {{ $todo->title }}
                                     </td>
-                                    <td class="text-end" style="width: 100px;">
+                                    <td class="text-end">
                                         <button  data-id="{{ $todo->id }}" type="button" class="js-task-star btn btn-sm btn-link text-warning">
                                             <i class="fa fa-star"></i>
                                         </button>
-                                        <button type="button" class="js-task-remove btn btn-sm btn-link text-danger">
+                                        <button data-id="{{ $todo->id }}" type="button" class="js-task-remove btn btn-sm btn-link text-danger">
                                             <i class="fa fa-times fa-fw"></i>
                                         </button>
                                     </td>
@@ -210,11 +210,11 @@
                                         </del>
                                         <del>  {{ $todo->title }}
                                     </td>
-                                    <td class="text-end" style="width: 100px;">
-                                        <button  data-id="{{ $todo->id }}" type="button" class="js-task-star btn btn-sm btn-link text-warning">
+                                    <td class="text-end">
+                                        <button data-id="{{ $todo->id }}" type="button" class="js-task-star btn btn-sm btn-link text-warning">
                                             <i class="far fa-star fa-fw"></i>
                                         </button>
-                                        <button type="button" class="js-task-remove btn btn-sm btn-link text-danger">
+                                        <button data-id="{{ $todo->id }}" type="button" class="js-task-remove btn btn-sm btn-link text-danger">
                                             <i class="fa fa-times fa-fw"></i>
                                         </button>
                                     </td>
@@ -263,5 +263,6 @@
         <script src="{{ asset('custom') }}/assets/js/dashmix.app.min.js"></script>
         <script src="{{ asset('custom') }}/assets/js/lib/jquery.min.js"></script>
         <script src="{{ asset('custom') }}/assets/js/pages/be_pages_projects_tasks.min.js"></script>
+
     @endpush
 </x-app-layout>

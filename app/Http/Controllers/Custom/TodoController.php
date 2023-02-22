@@ -96,6 +96,20 @@ class TodoController extends Controller
                 $todo->save();
                 return response()->json(['success' => true, 'data' => $todo->status], 200);
                 break;
+                case 'completed';
+                $id = $request->id;
+                $todo = Todo::where('id', $id)->firstOrFail();
+                $todo->status == 'active' ? $todo->status = 'completed' : $todo->status = 'active';
+                $todo->save();
+                return response()->json(['success' => true, 'data' => $todo->status], 200);
+                break;
+                case 'remove';
+                $id = $request->id;
+                //delete todo
+                $todo = Todo::where('id', $id)->firstOrFail();
+                $todo->delete();
+                return response()->json(['success' => true], 200);
+                break;
             default:
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
                 break;
