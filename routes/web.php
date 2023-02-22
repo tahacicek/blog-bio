@@ -5,6 +5,7 @@ use App\Http\Controllers\Custom\CommentController;
 use App\Http\Controllers\Custom\PostActionController;
 use App\Http\Controllers\Custom\PostController;
 use App\Http\Controllers\Custom\ProjectController;
+use App\Http\Controllers\Custom\TodoController;
 use App\Http\Controllers\custom\UserDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -74,6 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/proje/olustur/{username}', [ProjectController::class, 'index'])->name('project.index');
     Route::get('/proje/{username}/{slug}', [ProjectController::class, 'show'])->name('project.show');
     Route::post('/proje/func', [ProjectController::class, 'func'])->name('project.func');
+
+    Route::get('/todo/{username}', [TodoController::class, 'index'])->name('todo.index');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

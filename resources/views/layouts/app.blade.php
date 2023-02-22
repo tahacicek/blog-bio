@@ -7,6 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="stylesheet" id="css-main" href="{{ asset('custom') }}/assets/css/dashmix.min.css">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('style')
 </head>
@@ -40,9 +42,9 @@
     @if (Route::currentRouteName() == 'user.homepage')
         {{ $slot }}
     @endif
-    <script>
-        Dashmix.helpersOnLoad('jq-sparkline');
-    </script>
+    <script src="{{ asset('custom') }}/assets/js/dashmix.app.min.js"></script>
+    <script src="{{ asset('custom') }}assets/js/plugins/chart.js/chart.min.js"></script>
+    <script src="{{ asset('custom') }}/assets/js/pages/be_pages_dashboard.min.js"></script>
     @stack('script')
 </body>
 

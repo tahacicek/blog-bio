@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +70,44 @@ class ProjectController extends Controller
 
                 return response()->json(['success' => 'Proje oluşturuldu.', 'slug' => $project->slug], 200);
                 break;
-            case 'load-docs':
+            case 'create-todo':
+                //validate
+                $request->validate([
+                    'title' => 'required|string|max:255',
+                    'project_id' => 'required|integer',
+                ], [
+                    'title.required' => 'Yapılacak adı boş bırakılamaz.',
+                    'title.string' => 'Yapılacak adı geçersiz.',
+                    'title.max' => 'Yapılacak adı 255 karakterden uzun olamaz.',
+                    'project_id.required' => 'Proje id boş bırakılamaz.',
+                    'project_id.integer' => 'Proje id geçersiz.',
+                ]);
+
+                $results = [
+                    'success' => [],
+                    'error' => []
+                ];
+
+                //try catch with error validation messages
+                try {
+                    $project = Project::where('id', $request->project_id)->firstOrFail();
+                    $project->user_id != Auth::user()->id ? abort(404) : null;
+                    $todo = new Todo();
+                    $todo->title = $request->title;
+                    $todo->slug = Str::slug($request->title, '-') . "-" . rand(1000, 9999);
+                    $todo->user_id = Auth::user()->id;
+                    $todo->project_id = $request->project_id;
+                    $todo->save();
+                } catch (\Exception $e) {
+                    $results['error'][] = $e->getMessage();
+                }
+
+                if (count($results['error']) > 0) {
+                    return response()->json(['error' => $results['error']], 400);
+                }
+
+                return response()->json(['success' => 'Yapılacak oluşturuldu.', 'slug' => $project->slug], 200);
+                break;
             default:
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
                 break;
@@ -84,6 +122,8 @@ class ProjectController extends Controller
         $user->username != Auth::user()->username ? abort(404) : null;
         $project = Project::where('slug', $slug)->firstOrFail();
         $project->user_id != Auth::user()->id ? abort(404) : null;
-        return view('pages.project.show', compact('project'));
+
+        $todos = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'pending')->get();
+        return view('pages.project.show', compact('project', 'todos'));
     }
 }
