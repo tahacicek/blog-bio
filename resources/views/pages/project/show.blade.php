@@ -43,7 +43,8 @@
                     <div class="progress push">
                         <div class="progress-bar @if($completedPercent == 100) bg-success @elseif($completedPercent < 60) bg-warning @endif" role="progressbar" style="width: {{ $completedPercent }}%;" aria-valuenow="30"
                             aria-valuemin="0" aria-valuemax="100">
-                            <span class="fs-sm fw-semibold">%{{ $completedPercent }}</span>
+                            {{-- sadece ilk dört sayıyı al --}}
+                            <span class="fs-sm fw-semibold">%{{ substr($completedPercent, 0, 4) }}</span>
                         </div>
                     </div>
                     <!-- END Completion -->

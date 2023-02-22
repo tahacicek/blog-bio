@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/proje/olustur/{username}', [ProjectController::class, 'index'])->name('project.index');
     Route::get('/proje/{username}/{slug}', [ProjectController::class, 'show'])->name('project.show');
     Route::post('/proje/func', [ProjectController::class, 'func'])->name('project.func');
+    Route::get('/projeler/{username}', [ProjectController::class, 'list'])->name('project.list');
 
     Route::get('/todo/{username}', [TodoController::class, 'index'])->name('todo.index');
     Route::post('/todo/func', [TodoController::class, 'func'])->name('todo.func');

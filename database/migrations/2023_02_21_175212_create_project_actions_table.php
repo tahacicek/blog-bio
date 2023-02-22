@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('project_actions', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('user_id');
             $table->enum('status', ['posted', 'completed', 'canceled'])->nullable();
-            // $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

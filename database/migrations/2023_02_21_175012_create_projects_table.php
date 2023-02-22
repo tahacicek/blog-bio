@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'star', 'completed'])->default('active');
             $table->boolean('is_public')->default(false);
             $table->string('invite_code')->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

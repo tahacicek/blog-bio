@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
 class ProjectController extends Controller
 {
     public function index($username)
@@ -115,8 +116,6 @@ class ProjectController extends Controller
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
                 break;
         }
-
-
     }
 
     public function show($username, $slug)
@@ -127,18 +126,31 @@ class ProjectController extends Controller
         $project->user_id != Auth::user()->id ? abort(404) : null;
         // with model active, star, completed count
         $todoAction = Todo::where('user_id', Auth::user()->id)->first();
-        $active =  $todoAction->activeCount($project->id);
-        $star =  $todoAction->starCount($project->id);
-        $completed =  $todoAction->completedCount($project->id);
-        $total = $star + $active + $completed;
-        //totalın 0 olması durumunda 1 yaparak 0'a bölme hatasını önlemek için
-        $total == 0 ? $total = 1 : null;
-        //toplamın yüzde kaçı tamamlanmış
-        $completedPercent = ($completed * 100) / $total;
+
+        if ($todoAction) {
+            $active =  $todoAction->activeCount($project->id);
+            $star =  $todoAction->starCount($project->id);
+            $completed =  $todoAction->completedCount($project->id);
+            $total = $star + $active + $completed;
+            //totalın 0 olması durumunda 1 yaparak 0'a bölme hatasını önlemek için
+            $total == 0 ? $total = 1 : null;
+            //toplamın yüzde kaçı tamamlanmış
+            $completedPercent = ($completed * 100) / $total;
+        } else {
+            $completedPercent = 0;
+        }
         // todos send to view - with acitve, star, completed
         $todos = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'active')->get();
         $todostar = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'star')->get();
         $todocompleted = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'completed')->get();
         return view('pages.project.show', compact('project', 'todos', 'todostar', 'todocompleted', 'completedPercent'));
+    }
+
+    public function list($username)
+    {
+        $user = User::where('username', $username)->firstOrFail();
+        // $user->username != Auth::user()->username ? abort(404) : null;
+        $projects = Project::where('user_id', Auth::user()->id)->get();
+        return view('pages.project.list', compact('projects'));
     }
 }
