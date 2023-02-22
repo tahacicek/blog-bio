@@ -23,9 +23,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('color')->nullable();
             $table->date('deadline')->nullable();
-            $table->enum('status', ['pending', 'completed', 'active']);
+            $table->enum('status', ['active', 'star', 'completed'])->default('active');
             $table->boolean('is_public')->default(false);
-            $table->boolean('priority')->default(false);
             $table->string('invite_code')->nullable();
 
             $table->timestamps();

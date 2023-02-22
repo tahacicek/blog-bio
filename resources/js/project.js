@@ -14,7 +14,7 @@ $(document).ready(function () {
                    message: 'Proje başarıyla oluşturuldu.',
                    position: 'topRight'
                 });
-                window.location.href = "/proje/" + response.slug;
+                window.location.href = "/proje/" + response.username +'/'+ response.slug;
             },
             error: function (response) {
                 iziToast.error({
@@ -90,4 +90,43 @@ $(document).ready(function () {
         $('#invite_code').val(key);
     });
 
+    //if click js-task-star post id
+    $('.js-task-star').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        console.log(id);
+        $.ajax({
+            method: "POST",
+            url: "/todo/func",
+            data: {
+                'id': id,
+                status: 'star',
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                console.log(data.data);
+            if(data.data == 'star'){
+                iziToast.success({
+                    title: 'Başarılı',
+                    message: 'Görev başarıyla favorilere eklendi.',
+                    position: 'topRight'
+                });
+            }else{
+                iziToast.success({
+                    title: 'Başarılı',
+                    message: 'Görev başarıyla favorilerden çıkarıldı.',
+                    position: 'topRight'
+                });
+
+            }
+            },
+            error: function (data) {
+                iziToast.error({
+                    title: 'Hata',
+                    message: response.message,
+                    position: 'topRight'
+                });
+            }
+        });
+    });
 });

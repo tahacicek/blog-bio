@@ -23,8 +23,7 @@ return new class extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->dateTime('warning_date')->nullable();
-            $table->enum('priority', ['normal', 'starred'])->default('normal');
-            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
+            $table->enum('status', ['active', 'star', 'completed'])->default('active');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();

@@ -68,7 +68,9 @@ class ProjectController extends Controller
                     return response()->json(['error' => $results['error']], 400);
                 }
 
-                return response()->json(['success' => 'Proje oluşturuldu.', 'slug' => $project->slug], 200);
+                $username = Auth::user()->username;
+
+                return response()->json(['success' => 'Proje oluşturuldu.', 'slug' => $project->slug, 'username' => $username], 200);
                 break;
             case 'create-todo':
                 //validate
@@ -108,6 +110,7 @@ class ProjectController extends Controller
 
                 return response()->json(['success' => 'Yapılacak oluşturuldu.', 'slug' => $project->slug], 200);
                 break;
+
             default:
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
                 break;
@@ -122,8 +125,20 @@ class ProjectController extends Controller
         $user->username != Auth::user()->username ? abort(404) : null;
         $project = Project::where('slug', $slug)->firstOrFail();
         $project->user_id != Auth::user()->id ? abort(404) : null;
-
-        $todos = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'pending')->get();
-        return view('pages.project.show', compact('project', 'todos'));
+        // with model active, star, completed count
+        $todoAction = Todo::where('user_id', Auth::user()->id)->first();
+        $active =  $todoAction->activeCount($project->id);
+        $star =  $todoAction->starCount($project->id);
+        $completed =  $todoAction->completedCount($project->id);
+        $total = $star + $active + $completed;
+        //totalın 0 olması durumunda 1 yaparak 0'a bölme hatasını önlemek için
+        $total == 0 ? $total = 1 : null;
+        //toplamın yüzde kaçı tamamlanmış
+        $completedPercent = ($completed * 100) / $total;
+        // todos send to view - with acitve, star, completed
+        $todos = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'active')->get();
+        $todostar = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'star')->get();
+        $todocompleted = Todo::where('project_id', $project->id)->where('user_id', Auth::user()->id)->where('status', 'completed')->get();
+        return view('pages.project.show', compact('project', 'todos', 'todostar', 'todocompleted', 'completedPercent'));
     }
 }

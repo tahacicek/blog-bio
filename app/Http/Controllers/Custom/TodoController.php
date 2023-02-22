@@ -89,6 +89,13 @@ class TodoController extends Controller
 
                 return response()->json($results);
                 break;
+                case 'star';
+                $id = $request->id;
+                $todo = Todo::where('id', $id)->firstOrFail();
+                $todo->status == 'active' ? $todo->status = 'star' : $todo->status = 'active';
+                $todo->save();
+                return response()->json(['success' => true, 'data' => $todo->status], 200);
+                break;
             default:
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
                 break;
