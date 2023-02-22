@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/proje/func', [ProjectController::class, 'func'])->name('project.func');
 
     Route::get('/todo/{username}', [TodoController::class, 'index'])->name('todo.index');
+    Route::post('/todo/func', [TodoController::class, 'func'])->name('todo.func');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');

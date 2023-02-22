@@ -103,31 +103,38 @@
                     </h2>
                     <div class="js-task-list">
                         @foreach ($todos as $todo)
-                        <div class="js-task block block-rounded mb-2 animated fadeIn" data-task-id="{{ $todo->id }}"
-                            data-task-completed="false" data-task-starred="false">
-                            <table class="table table-borderless table-vcenter mb-0">
-                                <tr>
-                                    <td class="text-center pe-0" style="width: 38px;">
-                                        <div class="js-task-status form-check">
-                                            <input type="checkbox" class="form-check-input" id="tasks-cb-id{{ $todo->id }}"
-                                                name="tasks-cb-id{{ $todo->id }}">
-                                            <label class="form-check-label" for="tasks-cb-id{{ $todo->id }}"></label>
-                                        </div>
-                                    </td>
-                                    <td style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#modal-block-slideright" class="js-task-content fw-semibold ps-0">
-                                        {{ $todo->title }}
-                                    </td>
-                                    <td class="text-end" style="width: 100px;">
-                                        <button type="button" class="js-task-star btn btn-sm btn-link text-warning">
-                                            <i class="far fa-star fa-fw"></i>
-                                        </button>
-                                        <button type="button" class="js-task-remove btn btn-sm btn-link text-danger">
-                                            <i class="fa fa-times fa-fw"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                            <div class="js-task block block-rounded mb-2 animated fadeIn"
+                                data-task-id="{{ $todo->id }}" data-task-completed="false"
+                                data-task-starred="false">
+                                <table class="table table-borderless table-vcenter mb-0">
+                                    <tr>
+                                        <td class="text-center pe-0" style="width: 38px;">
+                                            <div class="js-task-status form-check">
+                                                <input type="checkbox" class="form-check-input"
+                                                    id="tasks-cb-id{{ $todo->id }}"
+                                                    name="tasks-cb-id{{ $todo->id }}">
+                                                <label class="form-check-label"
+                                                    for="tasks-cb-id{{ $todo->id }}"></label>
+                                            </div>
+                                        </td>
+                                        <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}" style="cursor: pointer" data-bs-toggle="modal"
+                                            data-bs-target="#modal-block-slideright"
+                                            class="js-task-content fw-semibold ps-0 todo-edit">
+                                            {{ $todo->title }}
+                                        </td>
+                                        <td class="text-end" style="width: 100px;">
+                                            <button type="button"
+                                                class="js-task-star btn btn-sm btn-link text-warning">
+                                                <i class="far fa-star fa-fw"></i>
+                                            </button>
+                                            <button type="button"
+                                                class="js-task-remove btn btn-sm btn-link text-danger">
+                                                <i class="fa fa-times fa-fw"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         @endforeach
                     </div>
                     <h2 class="content-heading pb-0 mb-3 border-0 d-flex align-items-top space-x-2">
@@ -285,31 +292,33 @@
                 <!-- END Tasks -->
             </div>
             <!-- END Main Content -->
-             <!-- Slide Right Block Modal -->
- <div class="modal fade" id="modal-block-slideright" tabindex="-1" role="dialog" aria-labelledby="modal-block-slideright" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-slideright" role="document">
-      <div class="modal-content">
-        <div class="block block-rounded block-themed block-transparent mb-0">
-          <div class="block-header bg-primary-dark">
-            <h3 class="block-title">Modal Title</h3>
-            <div class="block-options">
-              <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                <i class="fa fa-fw fa-times"></i>
-              </button>
+            <!-- Slide Right Block Modal -->
+            <div class="modal fade" id="modal-block-slideright" tabindex="-1" role="dialog"
+                aria-labelledby="modal-block-slideright" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-slideright modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="block block-rounded block-themed block-transparent mb-0">
+                            <div class="block-header bg-dark">
+                                <h3 class="block-title"></h3>
+                                <div class="block-options">
+                                    <button type="button" class="btn-block-option" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="block-content body bg-dark text-white">
+
+                            </div>
+                            <div class="block-content block-content-full text-end bg-primary-dark">
+                                <button type="button" class="btn btn-sm btn-alt-secondary text-dark"
+                                    data-bs-dismiss="modal">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="block-content">
-            <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-          </div>
-          <div class="block-content block-content-full text-end bg-body">
-            <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Done</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END Slide Right Block Modal -->
+            <!-- END Slide Right Block Modal -->
         </div>
     </div>
     <!-- END Page Content -->

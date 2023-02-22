@@ -30,8 +30,6 @@ $(document).ready(function () {
     $('#js-task-form').on('submit', function (e) {
         e.preventDefault();
         var task =jQuery(".js-task-content").html();
-        jQuery("#js-task-input").val("");
-        jQuery("#js-task-input").focus();
         $.ajax({
             method: "POST",
             url: "/proje/func",
@@ -49,6 +47,33 @@ $(document).ready(function () {
                 });
             },
             error: function (response) {
+                iziToast.error({
+                    title: 'Hata',
+                    message: response.message,
+                    position: 'topRight'
+                });
+            }
+        });
+    });
+
+    //if click todo-edit modal ajax
+    $('.todo-edit').on('click', function (e) {
+        e.preventDefault();
+        var todo = $(this).data('todo');
+        var project = $(this).data('project');
+        $.ajax({
+            method: "POST",
+            url: "/todo/func",
+            data: {
+                'todo_id': todo,
+                'project_id': project,
+                'status': 'todo-edit',
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                $('#modal-block-slideright').find('.body').html(data[1]);
+            },
+            error: function (data) {
                 iziToast.error({
                     title: 'Hata',
                     message: response.message,
