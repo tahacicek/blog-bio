@@ -10,11 +10,11 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function (response) {
                 iziToast.success({
-                   title: 'Başarılı',
-                   message: 'Proje başarıyla oluşturuldu.',
-                   position: 'topRight'
+                    title: 'Başarılı',
+                    message: 'Proje başarıyla oluşturuldu.',
+                    position: 'topRight'
                 });
-                window.location.href = "/proje/" + response.username +'/'+ response.slug;
+                window.location.href = "/proje/" + response.username + '/' + response.slug;
             },
             error: function (response) {
                 iziToast.error({
@@ -29,7 +29,7 @@ $(document).ready(function () {
     //js-task-form on submit
     $('#js-task-form').on('submit', function (e) {
         e.preventDefault();
-        var task =jQuery(".js-task-content").html();
+        var task = jQuery(".js-task-content").html();
         $.ajax({
             method: "POST",
             url: "/proje/func",
@@ -37,7 +37,7 @@ $(document).ready(function () {
                 'project_id': $('#project_id').val(),
                 title: task,
                 'status': $('#status').val(),
-                 _token: $('meta[name="csrf-token"]').attr('content')
+                _token: $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
                 iziToast.success({
@@ -83,7 +83,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#create_key').click(function() {
+    $('#create_key').click(function () {
         console.log('test')
         var key = 'BIO' + '-' + Math.random().toString(36).substring(2, 5).toUpperCase() + Math.random()
             .toString(36).substring(2, 5).toUpperCase() + '-' + 'BLOG';
@@ -105,20 +105,20 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data.data);
-            if(data.data == 'star'){
-                iziToast.success({
-                    title: 'Başarılı',
-                    message: 'Görev başarıyla favorilere eklendi.',
-                    position: 'topRight'
-                });
-            }else{
-                iziToast.success({
-                    title: 'Başarılı',
-                    message: 'Görev başarıyla favorilerden çıkarıldı.',
-                    position: 'topRight'
-                });
+                if (data.data == 'star') {
+                    iziToast.success({
+                        title: 'Başarılı',
+                        message: 'Görev başarıyla favorilere eklendi.',
+                        position: 'topRight'
+                    });
+                } else {
+                    iziToast.success({
+                        title: 'Başarılı',
+                        message: 'Görev başarıyla favorilerden çıkarıldı.',
+                        position: 'topRight'
+                    });
 
-            }
+                }
             },
             error: function (data) {
                 iziToast.error({
@@ -164,7 +164,7 @@ $(document).ready(function () {
                             });
                         },
                         error: function (data) {
-                        location.reload();
+                            location.reload();
                             iziToast.error({
                                 title: 'Hata',
                                 message: response.message,
@@ -174,7 +174,7 @@ $(document).ready(function () {
                         }
                     });
                 }
-               ],
+                ],
                 ['<button>HAYIR</button>', function (instance, toast) {
                     instance.hide({
                         transitionOut: 'fadeOutUp'
@@ -185,5 +185,40 @@ $(document).ready(function () {
             ]
         });
     });
+
+    //input checked with id todo id tasks-cb-id{{ $todo->id }}
+    $('.tasks-cb').on('change', function (e) {
+        e.preventDefault();
+
+        var id = $(this).data('id');
+        var type = $('#tasks-cb-id' + id).is(':checked');
+        console.log(id, type)
+        $.ajax({
+            method: "POST",
+            url: "/todo/func",
+            data: {
+                'id': id,
+                'type': type,
+                status: 'todo-status',
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                iziToast.success({
+                    title: 'Başarılı',
+                    message: 'Görev başarıyla güncellendi.',
+                    position: 'topRight'
+                });
+            },
+            error: function (data) {
+                iziToast.error({
+                    title: 'Hata',
+                    message: 'Görev güncellenemedi.',
+                    position: 'topRight'
+                });
+            }
+        });
     });
+
+
+});
 

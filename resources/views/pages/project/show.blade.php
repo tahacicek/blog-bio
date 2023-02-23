@@ -41,7 +41,8 @@
                         <p class="text-sm font-medium">İşlerini halledebilirsin dostum!</p>
                     @endif
                     <div class="progress push">
-                        <div class="progress-bar @if($completedPercent == 100) bg-success @elseif($completedPercent < 60) bg-warning @endif" role="progressbar" style="width: {{ $completedPercent }}%;" aria-valuenow="30"
+                        <div class="progress-bar @if ($completedPercent == 100) bg-success @elseif($completedPercent < 60) bg-warning @endif"
+                            role="progressbar" style="width: {{ $completedPercent }}%;" aria-valuenow="30"
                             aria-valuemin="0" aria-valuemax="100">
                             {{-- sadece ilk dört sayıyı al --}}
                             <span class="fs-sm fw-semibold">%{{ substr($completedPercent, 0, 4) }}</span>
@@ -118,14 +119,15 @@
                                     <tr>
                                         <td class="text-center pe-0" style="width: 38px;">
                                             <div class="js-task-status form-check">
-                                                <input type="checkbox" class="form-check-input"
-                                                    id="tasks-cb-id{{ $todo->id }}"
-                                                    name="tasks-cb-id{{ $todo->id }}">
+                                                <input type="checkbox" class="form-check-input tasks-cb"
+                                                    id="tasks-cb-id{{ $todo->id }}" data-id="{{ $todo->id }}"
+                                                    @if ($todo->status == 'completed') checked @endif name="tasks-cb-id">
                                                 <label class="form-check-label"
                                                     for="tasks-cb-id{{ $todo->id }}"></label>
                                             </div>
                                         </td>
-                                        <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}" style="cursor: pointer" data-bs-toggle="modal"
+                                        <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}"
+                                            style="cursor: pointer" data-bs-toggle="modal"
                                             data-bs-target="#modal-block-slideright"
                                             class="js-task-content fw-semibold ps-0 todo-edit">
                                             {{ $todo->title }}
@@ -152,34 +154,42 @@
                         </span>
                     </h2>
                     <div class="js-task-list-starred">
-                        @foreach($todostar as $todo)
-                        <div class="js-task block block-rounded mb-2 animated fadeIn" data-task-id="{{ $todo->id }}"
-                            data-task-completed="false" data-task-starred="true">
-                            <table class="table table-borderless table-vcenter mb-0">
-                                <tr>
-                                    <td class="text-center pe-0" style="width: 38px;">
-                                        <div class="js-task-status form-check">
-                                            <input type="checkbox" class="form-check-input" id="tasks-cb-id{{ $todo->id }}"
-                                                name="tasks-cb-id{{ $todo->id }}">
-                                            <label class="form-check-label" for="tasks-cb-id{{ $todo->id }}"></label>
-                                        </div>
-                                    </td>
-                                    <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}" style="cursor: pointer" data-bs-toggle="modal"
-                                        data-bs-target="#modal-block-slideright"
-                                        class="js-task-content fw-semibold ps-0 todo-edit">
-                                        {{ $todo->title }}
-                                    </td>
-                                    <td class="text-end">
-                                        <button  data-id="{{ $todo->id }}" type="button" class="js-task-star btn btn-sm btn-link text-warning">
-                                            <i class="fa fa-star"></i>
-                                        </button>
-                                        <button data-id="{{ $todo->id }}" type="button" class="js-task-remove btn btn-sm btn-link text-danger">
-                                            <i class="fa fa-times fa-fw"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                        @foreach ($todostar as $todo)
+                            <div class="js-task block block-rounded mb-2 animated fadeIn"
+                                data-task-id="{{ $todo->id }}" data-task-completed="false"
+                                data-task-starred="true">
+                                <table class="table table-borderless table-vcenter mb-0">
+                                    <tr>
+                                        <td class="text-center pe-0" style="width: 38px;">
+                                            <div class="js-task-status form-check">
+                                                <input type="checkbox" class="form-check-input tasks-cb"
+                                                    id="tasks-cb-id{{ $todo->id }}"
+                                                    data-id="{{ $todo->id }}"
+                                                    @if ($todo->status == 'completed') checked @endif
+                                                    name="tasks-cb-id">
+                                                <label class="form-check-label"
+                                                    for="tasks-cb-id{{ $todo->id }}"></label>
+                                            </div>
+                                        </td>
+                                        <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}"
+                                            style="cursor: pointer" data-bs-toggle="modal"
+                                            data-bs-target="#modal-block-slideright"
+                                            class="js-task-content fw-semibold ps-0 todo-edit">
+                                            {{ $todo->title }}
+                                        </td>
+                                        <td class="text-end">
+                                            <button data-id="{{ $todo->id }}" type="button"
+                                                class="js-task-star btn btn-sm btn-link text-warning">
+                                                <i class="fa fa-star"></i>
+                                            </button>
+                                            <button data-id="{{ $todo->id }}" type="button"
+                                                class="js-task-remove btn btn-sm btn-link text-danger">
+                                                <i class="fa fa-times fa-fw"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         @endforeach
                         <!-- END Task -->
                     </div>
@@ -193,35 +203,43 @@
                         </span>
                     </h2>
                     <div class="js-task-list-completed">
-                        @foreach($todocompleted as $todo)
-                        <div class="js-task block block-rounded mb-2 animated fadeIn" data-task-id="{{ $todo->id }}"
-                            data-task-completed="true" data-task-starred="false">
-                            <table class="table table-borderless table-vcenter bg-body mb-0">
-                                <tr>
-                                    <td class="text-center pe-0" style="width: 38px;">
-                                        <div class="js-task-status form-check">
-                                            <input type="checkbox" class="form-check-input" id="tasks-cb-id{{ $todo->id }}"
-                                                name="tasks-cb-id{{ $todo->id }}" checked>
-                                            <label class="form-check-label" for="tasks-cb-id{{ $todo->id }}"></label>
-                                        </div>
-                                    </td>
-                                    <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}" style="cursor: pointer" data-bs-toggle="modal"
-                                        data-bs-target="#modal-block-slideright"
-                                        class="js-task-content fw-semibold ps-0 todo-edit">
-                                        </del>
-                                        <del>  {{ $todo->title }}
-                                    </td>
-                                    <td class="text-end">
-                                        <button data-id="{{ $todo->id }}" type="button" class="js-task-star btn btn-sm btn-link text-warning">
-                                            <i class="far fa-star fa-fw"></i>
-                                        </button>
-                                        <button data-id="{{ $todo->id }}" type="button" class="js-task-remove btn btn-sm btn-link text-danger">
-                                            <i class="fa fa-times fa-fw"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                        @foreach ($todocompleted as $todo)
+                            <div class="js-task block block-rounded mb-2 animated fadeIn"
+                                data-task-id="{{ $todo->id }}" data-task-completed="true"
+                                data-task-starred="false">
+                                <table class="table table-borderless table-vcenter bg-body mb-0">
+                                    <tr>
+                                        <td class="text-center pe-0" style="width: 38px;">
+                                            <div class="js-task-status form-check">
+                                                <input type="checkbox" class="form-check-input tasks-cb"
+                                                    id="tasks-cb-id{{ $todo->id }}"
+                                                    data-id="{{ $todo->id }}"
+                                                    @if ($todo->status == 'completed') checked @endif
+                                                    name="tasks-cb-id">
+                                                <label class="form-check-label"
+                                                    for="tasks-cb-id{{ $todo->id }}"></label>
+                                            </div>
+                                        </td>
+                                        <td data-todo="{{ $todo->id }}" data-project="{{ $project->id }}"
+                                            style="cursor: pointer" data-bs-toggle="modal"
+                                            data-bs-target="#modal-block-slideright"
+                                            class="js-task-content fw-semibold ps-0 todo-edit">
+                                            </del>
+                                            <del> {{ $todo->title }}
+                                        </td>
+                                        <td class="text-end">
+                                            <button data-id="{{ $todo->id }}" type="button"
+                                                class="js-task-star btn btn-sm btn-link text-warning">
+                                                <i class="far fa-star fa-fw"></i>
+                                            </button>
+                                            <button data-id="{{ $todo->id }}" type="button"
+                                                class="js-task-remove btn btn-sm btn-link text-danger">
+                                                <i class="fa fa-times fa-fw"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         @endforeach
                         <!-- END Completed Task -->
                     </div>
@@ -264,6 +282,5 @@
         <script src="{{ asset('custom') }}/assets/js/dashmix.app.min.js"></script>
         <script src="{{ asset('custom') }}/assets/js/lib/jquery.min.js"></script>
         <script src="{{ asset('custom') }}/assets/js/pages/be_pages_projects_tasks.min.js"></script>
-
     @endpush
 </x-app-layout>

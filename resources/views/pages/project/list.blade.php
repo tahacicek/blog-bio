@@ -7,7 +7,7 @@
         <h1 class="flex-grow-1 fs-2 text-white my-2">
             <i class="fa fa-boxes text-white-50 me-1"></i> Tüm Projeleriniz
         </h1>
-        <a class="btn btn-primary my-2" href="be_pages_projects_create.html">
+        <a class="btn btn-primary my-2" href="{{url('proje/olustur/'.Auth::user()->username) }}">
             <i class="fa fa-fw fa-check opacity-50"></i>
             <span class="d-none d-sm-inline ms-1">Yeni Proje</span>
         </a>
@@ -115,7 +115,7 @@
                         <div class="block-content block-content-full">
                             <div class="row g-sm">
                                 <div class="col-6">
-                                    <a class="btn w-100 btn-alt-secondary" href="be_pages_projects_tasks.html">
+                                    <a class="btn w-100 btn-alt-secondary" href="{{ url('proje/'.Auth::user()->username. '/' . $project->slug) }}">
                                         <i class="fa fa-eye me-1 opacity-50"></i> Projeye Git
                                     </a>
                                 </div>
