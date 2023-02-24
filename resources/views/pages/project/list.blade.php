@@ -47,7 +47,7 @@
                     <!-- Project #1 -->
                     <div class="block block-rounded h-100 mb-0">
                         <div class="block-header">
-                            <div class="flex-grow-1 text-muted fs-sm fw-semibold">
+                            <div class="flex-grow-1 text-muted fs-sm fw-semibold ">
                                 <i class="fa fa-clock me-1"></i>
                                 {{ \Carbon\Carbon::parse($project->created_at)->format('d M') }}
                             </div>
@@ -99,20 +99,8 @@
                             </div>
                         </div>
                         <div class="block-content text-center">
-                            <a class="img-link m-1" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar48" src="assets/media/avatars/avatar2.jpg"
-                                    alt="">
-                            </a>
-                            <a class="img-link m-1" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar48" src="assets/media/avatars/avatar3.jpg"
-                                    alt="">
-                            </a>
-                            <a class="img-link m-1" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar48" src="assets/media/avatars/avatar9.jpg"
-                                    alt="">
-                            </a>
-                            <a class="img-link m-1" href="javascript:void(0)">
-                                <img class="img-avatar img-avatar48" src="assets/media/avatars/avatar10.jpg"
+                            <a class="img-link m-1" href="{{ url('/'. $project->user->username) }}">
+                                <img class="img-avatar img-avatar48" src="{{ asset($project->user->avatar) }}"
                                     alt="">
                             </a>
                         </div>
@@ -120,6 +108,86 @@
                             <div class="row g-sm">
                                 <div class="col-6">
                                     <a class="btn w-100 btn-alt-secondary" href="{{ url('proje/'.Auth::user()->username. '/' . $project->slug) }}">
+                                        <i class="fa fa-eye me-1 opacity-50"></i> Projeye Git
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn w-100 btn-alt-secondary" href="javascript:void(0)">
+                                        <i class="fa fa-archive me-1 opacity-50"></i> Arşivle
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Project #1 -->
+                </div>
+            @endforeach
+            @foreach ($projectActions as $project)
+                <div class="col-md-6 col-xl-4">
+                    <!-- Project #1 -->
+                    <div class="block block-rounded h-100 mb-0 bg-primary-dark text-white">
+                        <div class="block-header ">
+                            <div class="flex-grow-1 text-white fs-sm fw-semibold">
+                                <i class="fa fa-clock me-1"></i>
+                                {{ \Carbon\Carbon::parse($project->project->created_at)->format('d M') }} - <i>Misafir Proje</i>
+                            </div>
+                            <div class="block-options">
+                                <div class="dropdown">
+                                    <button type="button" class="btn-block-option text-white" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="javascript:void(0)">
+                                            <i class="fa fa-fw fa-users me-1"></i> People
+                                        </a>
+                                        <a class="dropdown-item" href="javascript:void(0)">
+                                            <i class="fa fa-fw fa-bell me-1"></i> Alerts
+                                        </a>
+                                        <a class="dropdown-item" href="javascript:void(0)">
+                                            <i class="fa fa-fw fa-check-double me-1"></i> Tasks
+                                        </a>
+                                        <div role="separator" class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="be_pages_projects_edit.html">
+                                            <i class="fa fa-fw fa-pencil-alt me-1"></i> Edit Project
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-content bg-body-light text-center">
+                            <h3 class="fs-4 fw-bold mb-1">
+                                <a href="be_pages_projects_tasks.html">{{ $project->project->title }}</a>
+                            </h3>
+                            <h4 class="fs-6 text-muted mb-3">
+                                @if ($project->project->category == 'personal')
+                                    Kişisel
+                                @elseif($project->project->category == 'work')
+                                    İş
+                                @elseif($project->project->category == 'other')
+                                    Diğer
+                                @endif
+                            </h4>
+                            <div class="push">
+                                @if ($project->project->status == 'active')
+                                    <span class="badge bg-success text-uppercase fw-bold py-2 px-3">Aktif</span>
+                                @elseif($project->project->status == 'star')
+                                    <span class="badge bg-danger text-uppercase fw-bold py-2 px-3">Önemli</span>
+                                @elseif($project->project->status == 'completed')
+                                    <span class="badge bg-success text-uppercase fw-bold py-2 px-3">Tamamlandı</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="block-content text-center">
+                            <a class="img-link m-1" href="{{ url('/'. $project->user->username) }}">
+                                <img class="img-avatar img-avatar48" src="{{ asset($project->user->avatar) }}"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <div class="row g-sm">
+                                <div class="col-6">
+                                    <a class="btn w-100 btn-alt-secondary" href="{{ url('proje/'.Auth::user()->username. '/' . $project->project->slug) }}">
                                         <i class="fa fa-eye me-1 opacity-50"></i> Projeye Git
                                     </a>
                                 </div>

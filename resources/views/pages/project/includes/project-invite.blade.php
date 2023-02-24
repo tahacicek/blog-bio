@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="text-white">
-              <form id="invite_form" action="{{ url('/proje/func') }}" method="POST">
+              <form id="invite_form" action="{{ route('project.func') }}" method="POST">
                 @csrf
                 <div class="form-group mb-3">
                     <div class="col-md-12">

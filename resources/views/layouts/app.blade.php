@@ -17,7 +17,6 @@
     @if (Route::currentRouteName() != 'user.homepage')
         <div id="page-container"
             class="enable-page-overlay side-scroll page-header-dark page-header-glass main-content-boxed">
-
             <aside id="side-overlay">
                 @include('layouts.app.aside')
             </aside>
@@ -45,6 +44,23 @@
     <script src="{{ asset('custom') }}/assets/js/dashmix.app.min.js"></script>
     <script src="{{ asset('custom') }}assets/js/plugins/chart.js/chart.min.js"></script>
     <script src="{{ asset('custom') }}/assets/js/pages/be_pages_dashboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+  <script>
+    var socket = io.connect('http://localhost:3000');
+
+        $(document).ready(function () {
+            //if click test
+            $("#test").click(function () {
+                console.log("test");
+                socket.emit("test",{
+                    message: "test"
+                });
+            });
+        });
+
+  </script> --}}
+
     @stack('script')
 </body>
 

@@ -63,11 +63,6 @@ class ProjectController extends Controller
                         $project->is_public = true;
                     }
                     $project->save();
-
-                    $projectAction = new ProjectAction();
-                    $projectAction->user_id = Auth::user()->id;
-                    $projectAction->project_id = $project->id;
-                    $projectAction->save();
                 } catch (\Exception $e) {
                     $results['error'][] = $e->getMessage();
                 }
@@ -127,7 +122,7 @@ class ProjectController extends Controller
                 $projectAction->user_id = $user_id;
                 $projectAction->project_id = $project->id;
                 $projectAction->save();
-                return redirect()->back();
+                return response()->json(['success' => true, 'data' => $project->title], 200);
                 break;
             default:
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
@@ -167,8 +162,10 @@ class ProjectController extends Controller
     {
         $user = User::where('username', $username)->firstOrFail();
         // $user->username != Auth::user()->username ? abort(404) : null;
-        $projects = Project::where('user_id', Auth::user()->id)->get();
-        return view('pages.project.list', compact('projects'));
+        $projects = Project::where('user_id', Auth::user()->id)->with('user')->get();
+        $projectActions = ProjectAction::where('user_id', Auth::user()->id)->with('project', 'user')->get();
+
+        return view('pages.project.list', compact('projects', 'projectActions'));
     }
 
     public function invite(Request $request){

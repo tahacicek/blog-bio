@@ -252,6 +252,40 @@ $(document).ready(function () {
     });
 
     //if invite_form submit
+    $('#invite_form').on('submit', function (e) {
+        e.preventDefault();
+        var code = $('#invite_code').val();
+        $.ajax({
+            method: "POST",
+            url: '/proje/func',
+            data:  {
+                code: code,
+                status: 'invite-control',
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                iziToast.success({
+                    title: 'Başarılı',
+                    message: `${data.data} projesine katıldınız galiba.. Lütfen biraz bekleyin.`,
+                    position: 'topRight'
+                });
+                location.reload(
+                    setTimeout(function () {
+                        $('#modal-block-slideleft').modal('hide');
+                    }, 1500)
+                );
+            },
+            error: function (data) {
+                iziToast.error({
+                    title: 'Hata',
+                    message: 'Davet gönderilemedi.',
+                    position: 'topRight'
+                });
+            }
+        });
+    });
 
 
 });
