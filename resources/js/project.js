@@ -112,12 +112,19 @@ $(document).ready(function () {
                         position: 'topRight'
                     });
                 } else {
+                    if(data.data == 'completed'){
+                        iziToast.error({
+                            title: 'Başarılı',
+                            message: 'Görev tamamlananlar arasında bulunuyor.',
+                            position: 'topRight'
+                        });
+                    }else{
                     iziToast.success({
                         title: 'Başarılı',
                         message: 'Görev başarıyla favorilerden çıkarıldı.',
                         position: 'topRight'
                     });
-
+                }
                 }
             },
             error: function (data) {
@@ -208,6 +215,7 @@ $(document).ready(function () {
                     message: 'Görev başarıyla güncellendi.',
                     position: 'topRight'
                 });
+                $('.statu').html(data.data);
             },
             error: function (data) {
                 iziToast.error({
@@ -218,6 +226,32 @@ $(document).ready(function () {
             }
         });
     });
+
+
+    //if click go_invite modal ajax
+    $('#go_invite').on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/proje/func",
+            data: {
+                status: 'invite',
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                $('#modal-block-slideleft').find('.invite-content').html(data.data);
+            },
+            error: function (data) {
+                iziToast.error({
+                    title: 'Hata',
+                    message: response.message,
+                    position: 'topRight'
+                });
+            }
+        });
+    });
+
+    //if invite_form submit
 
 
 });

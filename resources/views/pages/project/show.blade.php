@@ -9,10 +9,7 @@
             <h1 class="flex-grow-1 fs-2 text-white my-2">
                 {{ $project->title }} <span class="fs-base fw-medium text-white-75">{{ $project->category }}</span>
             </h1>
-            <a class="btn btn-dark my-2" href="be_pages_projects_edit.html">
-                <i class="fa fa-fw fa-pencil-alt opacity-50"></i>
-                <span class="d-none d-sm-inline ms-1">Edit Project</span>
-            </a>
+
         </div>
     @endsection
     <!-- Page Content -->
@@ -25,12 +22,14 @@
                     <button type="button" class="btn w-100 btn-hero btn-dark" data-toggle="class-toggle"
                         data-target="#side-content" data-class="d-none">
                         Project Details
+
                     </button>
                 </div>
                 <!-- END Toggle Side Content -->
 
                 <!-- Side Content -->
                 <div id="side-content" class="d-none d-md-block push">
+
                     <!-- Completion -->
                     <h2 class="h4 fw-normal mb-3">Tamamlanma Oranınız</h2>
                     @if ($completedPercent == 100)

@@ -93,6 +93,7 @@ class TodoController extends Controller
                 $id = $request->id;
                 $todo = Todo::where('id', $id)->firstOrFail();
                 $todo->status == 'active' ? $todo->status = 'star' : $todo->status = 'active';
+                $todo->status == 'completed' ? $todo->status = 'completed' : $todo->status = 'completed';
                 $todo->save();
                 return response()->json(['success' => true, 'data' => $todo->status], 200);
                 break;

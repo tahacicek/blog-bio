@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\ProjectAction;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class ProjectController extends Controller
 
     public function func(Request $request)
     {
+
         if (!isset($request->status)) return response()->json(['error' => 'Gecersiz istek.'], 400);
         switch ($request->status) {
             case 'create-project':
@@ -61,6 +63,11 @@ class ProjectController extends Controller
                         $project->is_public = true;
                     }
                     $project->save();
+
+                    $projectAction = new ProjectAction();
+                    $projectAction->user_id = Auth::user()->id;
+                    $projectAction->project_id = $project->id;
+                    $projectAction->save();
                 } catch (\Exception $e) {
                     $results['error'][] = $e->getMessage();
                 }
@@ -104,14 +111,24 @@ class ProjectController extends Controller
                 } catch (\Exception $e) {
                     $results['error'][] = $e->getMessage();
                 }
-
                 if (count($results['error']) > 0) {
                     return response()->json(['error' => $results['error']], 400);
                 }
-
                 return response()->json(['success' => 'Yapılacak oluşturuldu.', 'slug' => $project->slug], 200);
                 break;
-
+                case 'invite';
+                return response()->json(['success' => true, 'data' => view('pages.project.includes.project-invite')->render()], 200);
+                break;
+                case 'invite-control';
+                $code = $request->invite_code;
+                $user_id = Auth::user()->id;
+                $project = Project::where('invite_code', $code)->firstOrFail();
+                $projectAction = new ProjectAction();
+                $projectAction->user_id = $user_id;
+                $projectAction->project_id = $project->id;
+                $projectAction->save();
+                return redirect()->back();
+                break;
             default:
                 return response()->json(['error' => 'Gecersiz istek.'], 400);
                 break;
@@ -152,5 +169,9 @@ class ProjectController extends Controller
         // $user->username != Auth::user()->username ? abort(404) : null;
         $projects = Project::where('user_id', Auth::user()->id)->get();
         return view('pages.project.list', compact('projects'));
+    }
+
+    public function invite(Request $request){
+        dd($request->all());
     }
 }

@@ -11,6 +11,10 @@
             <i class="fa fa-fw fa-check opacity-50"></i>
             <span class="d-none d-sm-inline ms-1">Yeni Proje</span>
         </a>
+        <button id="go_invite" type="button" class="btn btn-dark my-2"  data-bs-toggle="modal" data-bs-target="#modal-block-slideleft">
+            <i class="fa fa-fw fa-users opacity-50"></i>
+            <span class="d-none d-sm-inline ms-1">Katıl</span>
+        </button>
     @endsection
 
     <!-- Page Content -->
@@ -133,7 +137,26 @@
         </div>
     </div>
     <!-- END Page Content -->
+ <!-- Slide Left Block Modal -->
+ <div class="modal fade" id="modal-block-slideleft" tabindex="-1" role="dialog" aria-labelledby="modal-block-slideleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideleft" role="document">
+      <div class="modal-content">
+        <div class="block block-rounded block-themed block-transparent mb-0">
+          <div class="block-header bg-dark">
+            <h3 class="block-title"></h3>
+            <div class="block-options">
+              <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fa fa-fw fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="block-content invite-content bg-dark">
+          </div>
 
+        </div>
+      </div>
+    </div>
+  </div>
     @push('script')
         <script src="{{ asset('custom') }}/assets/js/dashmix.app.min.js"></script>
     @endpush

@@ -41,8 +41,7 @@ require __DIR__.'/auth.php';
 
 //sayfa yenilendiğinde cache clear edilir.
 
-Broadcast::routes(['middleware' => ['auth:sanctum']]);
-require base_path('routes/channels.php');
+
 
 Route::get('/index', [HomeController::class, 'index'])->name('user.index');
 
@@ -73,12 +72,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/comment/detail', [CommentActionController::class, 'comment_detail'])->name('comment.detail');
 
     Route::get('/proje/olustur/{username}', [ProjectController::class, 'index'])->name('project.index');
-    Route::get('/proje/{username}/{slug}', [ProjectController::class, 'show'])->name('project.show');
     Route::post('/proje/func', [ProjectController::class, 'func'])->name('project.func');
-    Route::get('/projeler/{username}', [ProjectController::class, 'list'])->name('project.list');
 
-    Route::get('/todo/{username}', [TodoController::class, 'index'])->name('todo.index');
     Route::post('/todo/func', [TodoController::class, 'func'])->name('todo.func');
+    Route::get('/projeler/{username}', [ProjectController::class, 'list'])->name('project.list');
+    Route::get('/todo/{username}', [TodoController::class, 'index'])->name('todo.index');
+    Route::get('/proje/{username}/{slug}', [ProjectController::class, 'show'])->name('project.show');
 });
 
 Route::get('{username}', [HomeController::class, 'dashboard'])->name('user.dashboard');
