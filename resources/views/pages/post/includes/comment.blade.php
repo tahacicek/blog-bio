@@ -34,13 +34,13 @@
                                         class=" comment_dislike float-end border-0 me-1 bg-white"><i
                                             class="fa  fa-thumbs-down comment_dislikes{{ $comment->id }} text-secondary"
                                             aria-hidden="true"></i><span
-                                            class="badge text-dark badge-secondary p-2 dislike_point{{ $comment->id }}">{{ $comment->commentAction->where('action', 'dislike')->count() }}</span></button>
+                                            class="badge text-dark badge-secondary p-2 dislike_point{{ $comment->id }}">@if($comment->commentAction) {{ $comment->commentAction->where('action', 'dislike')->count() }} @else 0 @endif</span></button>
                                     <button id="{{ $comment->id }}" user="{{ Auth::user()->id }}"
                                         post="{{ $comment->post_id }}"
                                         class="comment_like float-end border-0 me-1  bg-white"><i
                                             class="fa fa-thumbs-up comment_likes{{ $comment->id }} text-secondary"
                                             aria-hidden="true"></i><span
-                                            class="badge text-dark badge-secondary p-2 like_point{{ $comment->id }}">{{ $comment->commentAction->where('action', 'like')->count() }}</span></button>
+                                            class="badge text-dark badge-secondary p-2 like_point{{ $comment->id }}">@if($comment->commentAction) {{ $comment->commentAction->where('action', 'like')->count() }} @else 0 @endif</span></button>
                                     <button id="{{ $comment->id }}"
                                         class="float-end border-0 me-1 text-center bg-white reply"><i
                                             class="fa fa-reply text-black" aria-hidden="true"></i></button>

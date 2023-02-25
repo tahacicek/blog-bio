@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Custom;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostAction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostActionController extends Controller
@@ -96,20 +97,20 @@ class PostActionController extends Controller
     {
         $postId = $request->id;
         $userId = $request->user;
+        $post = Post::find($postId);
+        $user = User::where('id', $post->user_id)->first();
+        // $postAction = PostAction::where('post_id', $postId)
+        //     ->where('user_id', $userId)
+        //     ->first();
 
-        $postAction = PostAction::where('post_id', $postId)
-            ->where('user_id', $userId)
-            ->first();
-
-        $postAction->reblog = 'reblog';
-        $postAction->reblog_count = $postAction->reblog_count + 1;
-        $postAction->save();
-
-        //yorum sayısını almak için
+        // $postAction->reblog = 'reblog';
+        // $postAction->reblog_count = $postAction->reblog_count + 1;
+        // $postAction->save();
 
 
-         $reblogCount = $postAction->reblog_count;
 
-        return response()->json(['success' => true, 'reblogCount' => $reblogCount]);
+        //  $reblogCount = $postAction->reblog_count;
+
+        return response()->json(['success' => true, 'data' => view('pages.post.includes.reblog', compact('post', 'user'))->render()], 200);
     }
 }

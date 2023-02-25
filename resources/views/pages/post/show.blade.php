@@ -65,7 +65,7 @@
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </button>
                         {{-- reblog --}}
-                        <button id="reblog" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
+                        <button  data-bs-toggle="modal" data-bs-target="#modal-block-popin2" id="reblog" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
                             type="button"
                             class="btn btn-alt-secondary
                         @if ($postAction->reblog != null) text-danger @endif"
@@ -201,6 +201,29 @@
             </div>
         </div>
     </div>
+
+
+          <!-- Pop In Block Modal -->
+          <div class="modal fade" id="modal-block-popin2" tabindex="-1" role="dialog" aria-labelledby="modal-block-popin2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-popin modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="block block-rounded block-themed block-transparent mb-0">
+                  <div class="block-header bg-dark">
+                    <h3 class="block-title"></h3>
+                    <div class="block-options">
+                      <button type="button" class="btn-block-option text-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-fw fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="block-content body-reblog bg-dark">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END Pop In Block Modal -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
 

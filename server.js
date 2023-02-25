@@ -7,7 +7,22 @@ const io = require('socket.io')(server, {
     cors: { origin: "http://127.0.0.1:8000" }
 });
 
+const mysql = require('mysql');
 
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'blogbio'
+});
+
+connection.connect(function (err) {
+    if (err) {
+        console.log('Error connecting to Db');
+        return;
+    }
+    console.log('Connection established');
+});
 
 io.on("connection",function (socket) {
     console.log("Ben Katıldım");

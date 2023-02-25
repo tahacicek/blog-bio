@@ -145,31 +145,9 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data.success == true) {
-                    $('#reblogc').html(+data.reblogCount);
-                    iziToast.show({
-                        theme: 'dark',
-                        icon: 'icon-person',
-                        iconColor: 'white',
-                        timeout: 1000,
-                        title: 'Hey',
-                        message: 'Gönderi rebloglandı..',
-                        position: 'bottomLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                        progressBarColor: 'rgb(0, 255, 184)',
-                    });
-                    //change text
-                    $('.reblog').addClass('text-danger');
+                    $('#modal-block-popin2').find('.body-reblog').html(data.data);
                 } else {
-                    iziToast.show({
-                        theme: 'dark',
-                        icon: 'icon-person',
-                        iconColor: 'white',
-                        timeout: 1000,
-                        title: 'Hey',
-                        message: 'Kendi gönderini rebloglayamazsın..',
-                        position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                        progressBarColor: 'rgb(0, 255, 184)',
-                    });
-                    $('#reblog').removeClass('btn-primary');
+
                 }
             }
         });
