@@ -65,8 +65,8 @@
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </button>
                         {{-- reblog --}}
-                        <button  data-bs-toggle="modal" data-bs-target="#modal-block-popin2" id="reblog" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
-                            type="button"
+                        <button data-bs-toggle="modal" data-bs-target="#modal-block-popin2" id="reblog"
+                            data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
                             class="btn btn-alt-secondary
                         @if ($postAction->reblog != null) text-danger @endif"
                             data-bs-toggle="tooltip" title="RBB">
@@ -203,28 +203,69 @@
     </div>
 
 
-          <!-- Pop In Block Modal -->
-          <div class="modal fade" id="modal-block-popin2" tabindex="-1" role="dialog" aria-labelledby="modal-block-popin2" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-popin modal-dialog-centered" role="document">
-              <div class="modal-content">
+    <!-- Pop In Block Modal -->
+    <div class="modal fade" id="modal-block-popin2" tabindex="-1" role="dialog"
+        aria-labelledby="modal-block-popin2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popin modal-dialog-centered" role="document">
+            <div class="modal-content">
                 <div class="block block-rounded block-themed block-transparent mb-0">
-                  <div class="block-header bg-dark">
-                    <h3 class="block-title"></h3>
-                    <div class="block-options">
-                      <button type="button" class="btn-block-option text-danger" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fa fa-fw fa-times"></i>
-                      </button>
+                    <div class="block-header bg-dark">
+                        <h3 class="block-title"></h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option text-danger" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
                     </div>
-                  </div>
-                  <div class="block-content body-reblog bg-dark">
-                  </div>
+                    <div class="block-content body-reblog bg-dark">
+                    </div>
 
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- END Pop In Block Modal -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+        </div>
+    </div>
+    @push('script')
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        BalloonEditor
+            .create( document.querySelector( '#body' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
+
+    <script>
+        $("#tags").select2({
+            tags: true,
+            tokenSeparators: [',', ' ']
+        });
+    </script>
+    @endpush
+
+
+{{-- @push('script')
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    BalloonEditor
+        .create( document.querySelector( '#body' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script>
+    $("#tags").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
+</script>
+@endpush --}}
 
 </x-app-layout>
