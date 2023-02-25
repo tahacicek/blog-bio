@@ -271,8 +271,21 @@
             crossorigin="anonymous"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
+
+<script>
+    BalloonEditor
+        .create( document.querySelector( '#body' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
         <script>
             $("#tags").select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });   $("#tags2").select2({
                 tags: true,
                 tokenSeparators: [',', ' ']
             });

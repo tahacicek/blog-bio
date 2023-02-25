@@ -1,4 +1,4 @@
-
+//CK
 $(document).ready(function () {
     $('#like').click(function () {
         var id = $(this).data('id');
@@ -560,8 +560,5 @@ $(document).ready(function () {
         });
     });
 
-    //socket emit
-
 });
-
 

@@ -225,31 +225,12 @@
             </div>
         </div>
     </div>
+
     @push('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <script>
-        BalloonEditor
-            .create( document.querySelector( '#body' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
-
-
-    <script>
-        $("#tags").select2({
-            tags: true,
-            tokenSeparators: [',', ' ']
-        });
-    </script>
-    @endpush
-
-
-{{-- @push('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     BalloonEditor
         .create( document.querySelector( '#body' ) )
@@ -257,15 +238,14 @@
             console.error( error );
         } );
 </script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 <script>
-    $("#tags").select2({
+    $("#tags2").select2({
         tags: true,
         tokenSeparators: [',', ' ']
     });
 </script>
-@endpush --}}
+@endpush
 
 </x-app-layout>
