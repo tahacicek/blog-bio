@@ -552,13 +552,12 @@ $(document).ready(function () {
             },
             success: function(data) {
                 $('#modal-block-popin').find('.comment_detail').html(data[1]);
-                //socket emit
-                var socket = io.connect('http://localhost:3000');
-                socket.on('comment', function(data) {
-                    $('#comment_list').append(data[1]);
-                } );
+
             }
         });
     });
+
+    //if rebloged form submit
+
 });
 

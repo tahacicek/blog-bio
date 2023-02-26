@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/post/begenme', [PostActionController::class, 'dislikePost'])->name('post.dislike');
     Route::post('/post/bookmark', [PostActionController::class, 'bookmarkPost'])->name('post.bookmark');
     Route::post('/post/reblog', [PostActionController::class, 'reblogPost'])->name('post.reblog');
+    Route::post('/post/reblog/form', [PostActionController::class, 'reblogForm'])->name('post.rebloged');
 
     Route::post('/post/yorum', [CommentController::class, 'comment'])->name('post.comment');
     Route::post('/post/yorum/sil', [CommentController::class, 'delete'])->name('post.comment.delete');

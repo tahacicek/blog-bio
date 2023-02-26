@@ -43,27 +43,58 @@
         vertical-align: bottom;
         white-space: nowrap;
     }
-    .ts-wrapper.multi .ts-control > div {
-    cursor: pointer;
-    margin: 0px 25px 3px 13px;
-    padding: 2px 6px;
-    background: #f2f2f2;
-    color: #303030;
-    border: 0px solid #d0d0d0;
-}
+
+    .ts-wrapper.multi .ts-control>div {
+        cursor: pointer;
+        margin: 0px 25px 3px 13px;
+        padding: 2px 6px;
+        background: #f2f2f2;
+        color: #303030;
+        border: 0px solid #d0d0d0;
+    }
 
     textarea {
         resize: none;
     }
 
-    .ts-wrapper.multi .ts-control > div {
-    cursor: pointer;
-    margin: 0px 25px 3px 13px;
-    padding: 2px 6px;
-    /* color: #ffffff; */
-    background: none;
-    border: 0px solid #d0d0d0;
-}
+    .ts-wrapper.multi .ts-control>div {
+        cursor: pointer;
+        margin: 0px 25px 3px 13px;
+        padding: 2px 6px;
+        color: #ffffff;
+        background: none;
+        border: 0px #343a40;
+    }
+
+    .ts-control,
+    .ts-wrapper.single.input-active .ts-control {
+        background: #343a40;
+        cursor: text;
+    }
+
+    .ts-control {
+        border: 0 solid #343a40;
+        padding: 8px 8px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+        box-shadow: none;
+        border-radius: 3px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .has-items .ts-control>input {
+        margin: 0px 4px !important;
+        color: white;
+    }
+
+    .ts-control>input:focus {
+        outline: none !important;
+        color: white;
+    }
 </style>
 
 <div class="container-fluid">
@@ -88,48 +119,45 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="input-group ">
-                            <textarea type="text" id="body" name="body"
-                                class="text-white bg-dark form-control-sm form-control form-control-alt " name="comment"
-                                placeholder="Yorumunuzu yazın..." rows="5" style="font-size: none"></textarea>
-                            <button type="submit" class="btn-sm btn-block btn btn-secondary">
-                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="input-group">
-                                    <input type="text" id="tags2"
-                                        class="text-white form-control-sm form-control bg-dark form-control-alt "
-                                        name="comment" placeholder="etiket bırakabilirsiniz" style="font-size: none">
-                                    <button type="submit" class="btn-sm btn-block btn btn-secondary"><i
-                                            class="fa fa-tag" aria-hidden="true"></i></button>
+                        <form id="reblog_form" method="POST" action="{{ route('post.rebloged') }}">
+                            @csrf
+                            <div class="input-group ">
+                                <textarea placeholder="yorumunuzu buraya yazın"
+                                    class="text-white bg-dark form-control-sm form-control form-control-alt " name="body" id="body"
+                                    cols="30" rows="5"></textarea>
+                                <button type="submit" class="btn-sm btn-block btn btn-secondary">
+                                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input type="text" id="tags2"
+                                            class="text-white form-control-sm form-control bg-dark form-control-alt "
+                                            name="comment" placeholder="etiket bırakabilirsiniz"
+                                            style="font-size: none">
+                                        <button type="submit" class="btn-sm btn-block btn btn-secondary"><i
+                                                class="fa fa-tag" aria-hidden="true"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <input type="text" name="post_id" id="post_id" value="{{ $post->id }}" hidden>
+                            <div class="block-content block-content-full text-end bg-dark">
+                                <button type="button" class="btn btn-sm text-danger"
+                                    data-bs-dismiss="modal">İptal</button>
+                                <button id="rebloged" type="submit" class="btn btn-sm btn-success"> <i
+                                        class="fa text-white fa-retweet" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="block-content block-content-full text-end bg-dark">
-                <button type="button" class="btn btn-sm text-danger" data-bs-dismiss="modal">İptal</button>
-                <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal"> <i
-                        class="fa text-white fa-retweet" aria-hidden="true"></i>
-                </button>
             </div>
         </div>
     </div>
 </div>
-<script></script>
 <script>
-    BalloonEditor
-        .create(document.querySelector('#body'))
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-<script>
-     new TomSelect("#tags2", {
-
+    new TomSelect("#tags2", {
         plugins: {
             remove_button: {
                 title: 'Remove this item',
@@ -141,18 +169,43 @@
         tags: '#',
         render: {
             option_create: function(data, escape) {
-                return '<div class="create">Bunu ekle <strong>' + escape('#'+data.input) + '</strong>&hellip;</div>';
+                return '<div class="create">Bunu ekle <strong>' + escape('#' + data.input) +
+                    '</strong>&hellip;</div>';
             },
             item: function(data, escape) {
                 return '<div class="item">#' + escape(data.text) + '</div>';
             },
-            no_results:function(data,escape){
-			return '<div class="no-results">Etiket bizde. Virgül ile ayırmaya bak.</div>';
-		},
+            no_results: function(data, escape) {
+                return '<div class="no-results">Etiket bizde. Virgül ile ayırmaya bak.</div>';
+            },
         },
         persist: false,
         createOnBlur: true,
         create: true,
-
+    });
+</script>
+<script>
+    $('#reblog_form').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var method = form.attr('method');
+        var data = form.serialize();
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function(response) {
+                if (response.success == true) {
+                    iziToast.success({
+                        title: 'Başarılı',
+                        message: 'Reblog başarılı',
+                        position: 'topRight'
+                    });
+                    $('#reblog_form').trigger("reset");
+                    $('#modal-block-popin2').modal('hide');
+                } else {}
+            },
+        });
     });
 </script>
