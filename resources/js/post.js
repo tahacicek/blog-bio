@@ -4,10 +4,6 @@ $(document).ready(function () {
     $('#like').click(function () {
         var id = $(this).data('id');
         var user = $(this).data('user');
-
-        socket.emit('like', {
-            id : id,
-        });
         $.ajax({
             type: "post",
             url: "/post/begen",

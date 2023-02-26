@@ -23,10 +23,10 @@
             <nav id="sidebar" aria-label="Main Navigation">
                 @include('layouts.app.sidebar')
             </nav>
+            @if (Route::currentRouteName() != 'post.show')
             @include('layouts.app.header')
             <main id="main-container">
 
-                @if (Route::currentRouteName() != 'post.show')
 
                     @include('layouts.app.main')
 
