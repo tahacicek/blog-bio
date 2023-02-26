@@ -1,4 +1,5 @@
-//CK
+//select2 js import
+import '../../public/custom/assets/js/plugins/select2/js/select2.min.js';
 $(document).ready(function () {
     $('#like').click(function () {
         var id = $(this).data('id');
@@ -559,6 +560,5 @@ $(document).ready(function () {
             }
         });
     });
-
 });
 

@@ -1,3 +1,6 @@
+@import '../../public/custom/assets/js/plugins/select2/css/select2.min.css';
+
+
 #quote-1 {
     height: 75px;
 }

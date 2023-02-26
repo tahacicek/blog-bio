@@ -1,6 +1,9 @@
 <x-app-layout>
     @vite(['resources/css/post.css', 'resources/js/post.js'])
+    @push('style')
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
 
+    @endpush
     <div class="bg-image" style="background-image: url('{{ asset($post->cover_image) }}');">
         <div class="hero bg-black-50">
             <div class="hero-inner">
@@ -204,7 +207,7 @@
 
 
     <!-- Pop In Block Modal -->
-    <div class="modal fade" id="modal-block-popin2" tabindex="-1" role="dialog"
+    <div class="modal fade" id="modal-block-popin2" role="dialog" z-index="-1"
         aria-labelledby="modal-block-popin2" aria-hidden="true">
         <div class="modal-dialog modal-dialog-popin modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -227,25 +230,9 @@
     </div>
 
     @push('script')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/balloon/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
-<script>
-    BalloonEditor
-        .create( document.querySelector( '#body' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
-
-
-<script>
-    $("#tags2").select2({
-        tags: true,
-        tokenSeparators: [',', ' ']
-    });
-</script>
-@endpush
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @endpush
 </x-app-layout>
