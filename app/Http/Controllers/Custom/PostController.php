@@ -79,8 +79,8 @@ class PostController extends Controller
     {
         $user = User::where('username', $username)->firstOrFail();
         $id = $user->id;
-        $post = Post::where('slug', $slug)->with('tags')->firstOrFail();
-        $postAction = PostAction::where('post_id', $post->id)->where('user_id', Auth::user()->id)->first();
+        $post = Post::where('slug', $slug)->with('tags', 'user')->firstOrFail();
+        $postAction = PostAction::where('post_id', $post->id)->where('user_id', $id)->first();
         $tags = Tag::where('post_id', $post->id)->get();
         $post->user_id != $id ? abort(404) : null;
         if ($postAction == null) {

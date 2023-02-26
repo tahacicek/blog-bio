@@ -75,6 +75,7 @@
                 margin: 2em auto;
                 box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.3);
                 border-radius: 10px;
+                margin-top: 75px;
             }
 
             h1,
@@ -366,260 +367,252 @@
 
         <h1>
 
-          <span><em class="capitalize">The</em> Design</span>
-          <span><em>of</em> Everyday</span>
-          <span>Things</span>
+            <span><em class="capitalize">{{ $post->title }}</em></span>
 
         </h1>
         <p class="author">
-          Don Norman
+            {{ '@'.$post->user->username }} yazdı.
+            <br>
+          <span class="text-sm"> {{ \Carbon\Carbon::parse($post->created_at)->format('d M, Y') }}</span> tarihinde, okuma süresi, {{ $post->reading_time }} dakika.
         </p>
-      </header>
+    </header>
 
-      <section class="share flex ">
+    <section class="share flex ">
         <ul class="row">
-         <div class="col-md-12">
-            <li>
-                <div class="mt-5 d-flex justify-content-between push">
-                    <div class="" role="group">
-                        <button data-id="{{ $post->id }}" data-user="{{ Auth::user()->id }}" id="like"
-                            type="button"
-                            class="btn btn-alt-secondary @if ($postAction->action == 'like') text-primary @endif"
-                            data-bs-toggle="tooltip" title="Bu Yazıyı Beğendim">
-                            <i class="fa fa-thumbs-up"></i>
-                        </button>
-                        <button id="dislike" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
-                            type="button"
-                            class="btn btn-alt-secondary @if ($postAction->action == 'dislike') text-primary @endif"
-                            data-bs-toggle="tooltip" title="Bunu Beğenmedim">
-                            <i class="fa fa-thumbs-down"></i>
-                        </button>
-                        <button id="bookmark" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
-                            type="button"
-                            class="btn btn-alt-secondary
-                        @if ($postAction->bookmark_url != null) text-danger @endif"
-                            data-bs-toggle="tooltip" title="Bunu Kaydet">
-                            <i class="fa fa-bookmark" aria-hidden="true"></i>
-                        </button>
-                        {{-- reblog --}}
-                        <button data-bs-toggle="modal" data-bs-target="#modal-block-popin2" id="reblog"
-                            data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
-                            class="btn btn-alt-secondary
-                        @if ($postAction->reblog != null) text-danger @endif"
-                            data-bs-toggle="tooltip" title="RBB">
-                            <i class="fa fa-retweet reblog" aria-hidden="true"></i>
-                        </button>
-                        <div class="btn-group float-end" role="group" data-bs-toggle="tooltip"
-                            title="Bunu Paylaşmak İstiyorum">
-                            <button type="button" class="btn btn-alt-secondary dropdown-toggle"
-                                id="dropdown-blog-report" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <i class="fa fa-share-alt opacity-50 me-1"></i> Share
+            <div class="col-md-12">
+                <li>
+                    <div class="mt-5 d-flex justify-content-between push">
+                        <div class="" role="group">
+                            <button data-id="{{ $post->id }}" data-user="{{ Auth::user()->id }}" id="like"
+                                type="button"
+                                class="btn btn-alt-secondary @if ($postAction->action == 'like') text-primary @endif"
+                                data-bs-toggle="tooltip" title="Bu Yazıyı Beğendim">
+                                <i class="fa fa-thumbs-up"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-report">
+                            <button id="dislike" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
+                                type="button"
+                                class="btn btn-alt-secondary @if ($postAction->action == 'dislike') text-primary @endif"
+                                data-bs-toggle="tooltip" title="Bunu Beğenmedim">
+                                <i class="fa fa-thumbs-down"></i>
+                            </button>
+                            <button id="bookmark" data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}"
+                                type="button"
+                                class="btn btn-alt-secondary
+                        @if ($postAction->bookmark_url != null) text-danger @endif"
+                                data-bs-toggle="tooltip" title="Bunu Kaydet">
+                                <i class="fa fa-bookmark" aria-hidden="true"></i>
+                            </button>
+                            {{-- reblog --}}
+                            <button data-bs-toggle="modal" data-bs-target="#modal-block-popin2" id="reblog"
+                                data-user="{{ Auth::user()->id }}" data-id="{{ $post->id }}" type="button"
+                                class="btn btn-alt-secondary
+                        @if ($postAction->reblog != null) text-danger @endif"
+                                data-bs-toggle="tooltip" title="RBB">
+                                <i class="fa fa-retweet reblog" aria-hidden="true"></i>
+                            </button>
+                            <div class="btn-group float-end" role="group" data-bs-toggle="tooltip"
+                                title="Bunu Paylaşmak İstiyorum">
+                                <button type="button" class="btn btn-alt-secondary dropdown-toggle"
+                                    id="dropdown-blog-report" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fa fa-share-alt opacity-50 me-1"></i> Share
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end fs-sm"
+                                    aria-labelledby="dropdown-blog-report">
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="fab fa-fw fa-facebook me-1"></i> Facebook
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="fab fa-fw fa-twitter me-1"></i> Twitter
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <i class="fab fa-fw fa-linkedin me-1"></i> LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-alt-secondary dropdown-toggle"
+                                id="dropdown-blog-story" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="fa  fa-flag opacity-50 me-1"></i> Raporla
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-story">
                                 <a class="dropdown-item" href="javascript:void(0)">
-                                    <i class="fab fa-fw fa-facebook me-1"></i> Facebook
+                                    <i class="fab fa-fw fa-facebook me-1"></i> Küfür, Hakaret
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)">
-                                    <i class="fab fa-fw fa-twitter me-1"></i> Twitter
+                                    <i class="fab fa-fw fa-twitter me-1"></i> Tehdit, Şiddet
                                 </a>
                                 <a class="dropdown-item" href="javascript:void(0)">
-                                    <i class="fab fa-fw fa-linkedin me-1"></i> LinkedIn
+                                    <i class="fab fa-fw fa-linkedin me-1"></i> Yalan, Sahte
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-blog-story"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa  fa-flag opacity-50 me-1"></i> Raporla
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-story">
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fab fa-fw fa-facebook me-1"></i> Küfür, Hakaret
-                            </a>
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fab fa-fw fa-twitter me-1"></i> Tehdit, Şiddet
-                            </a>
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="fab fa-fw fa-linkedin me-1"></i> Yalan, Sahte
-                            </a>
-                        </div>
-                    </div>
-                </div>
-         </div>
+            </div>
         </ul>
-      </section>
-      <section class="page-section post">
+    </section>
+    <section class="page-section post">
         <div class="wrap">
-          <p>
-            Anyone who designs anything to be used by humans -- from physical objects to computer programs to conceptual tools -- must read this book, and it is an equally tremendous read for anyone who has to use anything created by another human. It could forever
-            change how you experience and interact with your physical surroundings, open your eyes to the perversity of bad design and the desirability of good design, and raise your expectations about how things should be designed.
-          </p>
-          <blockquote>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non euismod velit. Vestibulum tristique augue non bibendum ultrices. Praesent vehicula luctus erat ut auctor. Maecenas enim ipsum, mattis eget faucibus sed, euismod eget magna. Duis elementum
-          </p>
+            <p>
+               {!! $post->content !!}
+            </p>
+            <blockquote>
+                <p>
+                   "{{ $post->excerpt }}"
+                </p>
             </blockquote>
-          <p>
-            Aenean ut tellus ut odio semper porttitor ac a sapien. Ut ultricies odio non eros auctor tincidunt. Ut a ultricies nunc, a porta urna. Sed augue turpis, sollicitudin vel viverra molestie, gravida et ipsum. Maecenas efficitur iaculis eros sit amet porttitor.
-            Cras vitae massa justo. Integer nulla ligula, fermentum at interdum ac, porta et mi.
-          </p>
-          <p>
-            Sed pharetra orci eu felis vulputate ullamcorper. Fusce aliquam varius tempor. Proin non varius tortor, vitae euismod elit. Vivamus facilisis tellus eu luctus fringilla. Sed sed risus erat. In risus lorem, commodo sit amet accumsan in, auctor quis neque.
-            Ut nec ipsum ac eros luctus vehicula. In efficitur eros id ultrices molestie. Integer semper, velit eu aliquam blandit, mauris dui lacinia urna, at tempus urna dui vitae turpis.
-          </p>
-
         </div>
-      </section>
-      <section class="page-section related">
+    </section>
+    <section class="page-section related">
         <h2 class="section-title">
-          <span>The Grid</span>
+            <span>The Grid</span>
         </h2>
         <div class="wrap row">
-          <article class="col-6">
-            <div class="post-wrap">
-                <figure class="feature-image">
-                  <img src="https://c6.staticflickr.com/8/7414/13947832357_3bc63f7a3c.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       All the light we cannot see
-                    </a>
-                </h3>
-              <p><em>by</em> Anthony Doerr</p>
-                  </div>
-            </div>
-          </article>
-          <article class="col-6">
-            <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c8.staticflickr.com/6/5472/10745290383_97eb4c6544.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       All the light we cannot see
-                    </a>
-                </h3>
-              <p><em>by</em> Anthony Doerr</p>
-                  </div>
-            </div>
-          </article>
+            <article class="col-6">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c6.staticflickr.com/8/7414/13947832357_3bc63f7a3c.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                All the light we cannot see
+                            </a>
+                        </h3>
+                        <p><em>by</em> Anthony Doerr</p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-6">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c8.staticflickr.com/6/5472/10745290383_97eb4c6544.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                All the light we cannot see
+                            </a>
+                        </h3>
+                        <p><em>by</em> Anthony Doerr</p>
+                    </div>
+                </div>
+            </article>
         </div>
 
-         <div class="wrap row">
-          <article class="col-4">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c4.staticflickr.com/8/7003/6798701043_2f5e28b0ed.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       All the light we cannot see
-                    </a>
-                </h3>
-              <p><em>by</em> Anthony Doerr</p>
-                  </div>
-            </div>
-           </article>
-          <article class="col-4">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c8.staticflickr.com/6/5472/10745290383_97eb4c6544.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       A walk in the woods
-                    </a>
-                </h3>
-              <p><em>by</em> Bill Bryson</p>
-                  </div>
-            </div>
-           </article>
-          <article class="col-4">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c4.staticflickr.com/8/7032/6536097779_a0e9213ae9.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       I am afraid I can't do that, Dave
-                    </a>
-                </h3>
-              <p><em>by</em> HAL</p>
-                  </div>
-            </div>
-           </article>
+        <div class="wrap row">
+            <article class="col-4">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c4.staticflickr.com/8/7003/6798701043_2f5e28b0ed.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                All the light we cannot see
+                            </a>
+                        </h3>
+                        <p><em>by</em> Anthony Doerr</p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-4">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c8.staticflickr.com/6/5472/10745290383_97eb4c6544.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                A walk in the woods
+                            </a>
+                        </h3>
+                        <p><em>by</em> Bill Bryson</p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-4">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c4.staticflickr.com/8/7032/6536097779_a0e9213ae9.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                I am afraid I can't do that, Dave
+                            </a>
+                        </h3>
+                        <p><em>by</em> HAL</p>
+                    </div>
+                </div>
+            </article>
         </div>
 
-         <div class="wrap row">
-          <article class="col-3">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c3.staticflickr.com/8/7224/7384323418_6793f7fb25.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       A monkey coded a website
-                    </a>
-                </h3>
-              <p><em>As told by</em> Monkey </p>
-                  </div>
-            </div>
-           </article>
-          <article class="col-3">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c6.staticflickr.com/8/7414/13947832357_3bc63f7a3c.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       Cats are plotting for mutiny
-                    </a>
+        <div class="wrap row">
+            <article class="col-3">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c3.staticflickr.com/8/7224/7384323418_6793f7fb25.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                A monkey coded a website
+                            </a>
+                        </h3>
+                        <p><em>As told by</em> Monkey </p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-3">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c6.staticflickr.com/8/7414/13947832357_3bc63f7a3c.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                Cats are plotting for mutiny
+                            </a>
 
-                </h3>
-                    <p><em>Seriously,</em> they are.</p>
-               </div>
-            </div>
-           </article>
-          <article class="col-3">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c3.staticflickr.com/8/7224/7384323418_6793f7fb25.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                <a href="#">This dog can dance, dude!</a>
-                </h3>
-                  <p>I am serious</p>
-                  </div>
-            </div>
-           </article>
-           <article class="col-3">
-             <div class="post-wrap">
-            <figure class="feature-image">
-                  <img src="https://c6.staticflickr.com/8/7414/13947832357_3bc63f7a3c.jpg" alt="" />
-                </figure>
-                <div class="post-detail">
-                <h3>
-                     <a href="#">
-                       All the light we cannot see
-                    </a>
-                </h3>
-              <p><em>by</em> Anthony Doerr</p>
-                  </div>
-            </div>
-           </article>
+                        </h3>
+                        <p><em>Seriously,</em> they are.</p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-3">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c3.staticflickr.com/8/7224/7384323418_6793f7fb25.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">This dog can dance, dude!</a>
+                        </h3>
+                        <p>I am serious</p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-3">
+                <div class="post-wrap">
+                    <figure class="feature-image">
+                        <img src="https://c6.staticflickr.com/8/7414/13947832357_3bc63f7a3c.jpg" alt="" />
+                    </figure>
+                    <div class="post-detail">
+                        <h3>
+                            <a href="#">
+                                All the light we cannot see
+                            </a>
+                        </h3>
+                        <p><em>by</em> Anthony Doerr</p>
+                    </div>
+                </div>
+            </article>
         </div>
-      </section>
-      <footer class="page-footer">
+    </section>
+    <footer class="page-footer">
         <div id="example-blog-post" class="content content-full">
             <div class="row justify-content-center">
                 <div class="col-sm-12 py-5">
@@ -628,7 +621,8 @@
                         <p class="fs-sm">
                             <i class="fa fa-thumbs-up text-info"></i><span id="likec"
                                 class="me-1">{{ $like }}</span>
-                            <i class="fa  fa-thumbs-down text-danger"></i><span id="dlikec">{{ $dislike }}</span>
+                            <i class="fa  fa-thumbs-down text-danger"></i><span
+                                id="dlikec">{{ $dislike }}</span>
                             <i class="fa fa-bookmark" aria-hidden="true"></i> <span
                                 id="bookc">{{ $bookmark }}</span>
                             <i class="fa fa-retweet" aria-hidden="true"></i> <span
@@ -739,7 +733,7 @@
                 </div>
             </div>
         </div>
-      </footer>
+    </footer>
     @push('script')
         <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
