@@ -1,13 +1,16 @@
-<footer id="page-footer" class="bg-body-light">
-    <div class="content py-0">
-        <div class="row fs-sm">
-            <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
-                Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold"
-                    href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+<footer class="iq-footer bg-white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="../dashboard/privacy-policy.html">Privacy
+                            Policy</a></li>
+                    <li class="list-inline-item"><a href="../dashboard/terms-of-service.html">Terms of
+                            Use</a></li>
+                </ul>
             </div>
-            <div class="col-sm-6 order-sm-1 text-center text-sm-start">
-                <a class="fw-semibold" href="https://1.envato.market/r6y" target="_blank">Dashmix 5.5</a>
-                &copy; <span data-toggle="year-copy"></span>
+            <div class="col-lg-6 d-flex justify-content-end">
+                Copyright 2020 <a href="#">SocialV</a> All Rights Reserved.
             </div>
         </div>
     </div>

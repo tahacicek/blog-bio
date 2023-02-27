@@ -80,6 +80,7 @@ class PostController extends Controller
         $user = User::where('username', $username)->firstOrFail();
         $id = $user->id;
         $post = Post::where('slug', $slug)->with('tags', 'user')->firstOrFail();
+        $lastPost = Post::where('user_id', $post->user_id)->with('tags')->orderBy('created_at', 'desc')->get();
         $postAction = PostAction::where('post_id', $post->id)->where('user_id', $id)->first();
         $tags = Tag::where('post_id', $post->id)->get();
         $post->user_id != $id ? abort(404) : null;
@@ -198,6 +199,6 @@ class PostController extends Controller
 
 
 
-        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comments', 'parentArray', 'childArray', 'reblog', 'reblogUsers', 'likeUsers', 'dislikeUsers', 'readUsers', 'bookmarkUsers', 'usernames', 'uniqUsernames', 'commentCount'));
+        return view('pages.post.show', compact('post', 'tags', 'postAction', 'user', 'read', 'like', 'dislike', 'bookmark', 'comments', 'parentArray', 'childArray', 'reblog', 'reblogUsers', 'likeUsers', 'dislikeUsers', 'readUsers', 'bookmarkUsers', 'usernames', 'uniqUsernames', 'commentCount', 'lastPost'));
     }
 }

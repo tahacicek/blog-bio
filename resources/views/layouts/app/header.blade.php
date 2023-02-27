@@ -1,203 +1,382 @@
-<header id="page-header">
-    <!-- Header Content -->
-    <div class="content-header">
-        <!-- Left Section -->
-        <div class="space-x-1">
-            <!-- Toggle Sidebar -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-            <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="sidebar_toggle">
-                <i class="fa fa-fw fa-bars"></i>
-            </button>
-            <!-- END Toggle Sidebar -->
-
-            <!-- Open Search Section -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="header_search_on">
-                <i class="fa fa-fw opacity-50 fa-search"></i> <span class="ms-1 d-none d-sm-inline-block">Search</span>
-            </button>
-            <!-- END Open Search Section -->
-        </div>
-        <!-- END Left Section -->
-
-        <!-- Right Section -->
-        <div class="space-x-1">
-            <!-- User Dropdown -->
-            <div class="dropdown d-inline-block">
-                <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-fw fa-user d-sm-none"></i>
-                    <span class="d-none d-sm-inline-block">Admin</span>
-                    <i class="fa fa-fw fa-angle-down opacity-50 ms-1 d-none d-sm-inline-block"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
-                    <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                        User Options
-                    </div>
-                    <div class="p-2">
-                        <a class="dropdown-item" href="be_pages_generic_profile.html">
-                            <i class="far fa-fw fa-user me-1"></i> Profile
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center justify-content-between"
-                            href="be_pages_generic_inbox.html">
-                            <span><i class="far fa-fw fa-envelope me-1"></i> Inbox</span>
-                            <span class="badge bg-primary rounded-pill">3</span>
-                        </a>
-                        <a class="dropdown-item" href="be_pages_generic_invoice.html">
-                            <i class="far fa-fw fa-file-alt me-1"></i> Invoices
-                        </a>
-                        <div role="separator" class="dropdown-divider"></div>
-
-                        <!-- Toggle Side Overlay -->
-                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout"
-                            data-action="side_overlay_toggle">
-                            <i class="far fa-fw fa-building me-1"></i> Settings
-                        </a>
-                        <! <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-
-                                <div role="separator" class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                    <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i> Profil
-                                </a>
-
-                                <div role="separator" class="dropdown-divider"></div>
-                                <button class="dropdown-item" :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                                    <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i> Sign Out
-                                </button>
-                            </form>
-
+<div class="iq-top-navbar">
+    <div class="iq-navbar-custom">
+        <nav class="navbar navbar-expand-lg navbar-light p-0">
+            <div class="iq-navbar-logo d-flex justify-content-between">
+                <a href="../dashboard/index.html">
+                    <img src="../assets/images/logo.png" class="img-fluid" alt="">
+                    <span>SocialV</span>
+                </a>
+                <div class="iq-menu-bt align-self-center">
+                    <div class="wrapper-menu">
+                        <div class="main-circle"><i class="ri-menu-line"></i></div>
                     </div>
                 </div>
             </div>
-            <!-- END User Dropdown -->
-
-            <!-- Notifications Dropdown -->
-            <div class="dropdown d-inline-block">
-                <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-fw fa-bell"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                    aria-labelledby="page-header-notifications-dropdown">
-                    <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                        Notifications
-                    </div>
-                    <ul class="nav-items my-2">
-                        <li>
-                            <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                                <div class="flex-shrink-0 mx-3">
-                                    <i class="fa fa-fw fa-check-circle text-success"></i>
-                                </div>
-                                <div class="flex-grow-1 fs-sm pe-2">
-                                    <div class="fw-semibold">App was updated to v5.6!</div>
-                                    <div class="text-muted">3 min ago</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                                <div class="flex-shrink-0 mx-3">
-                                    <i class="fa fa-fw fa-user-plus text-info"></i>
-                                </div>
-                                <div class="flex-grow-1 fs-sm pe-2">
-                                    <div class="fw-semibold">New Subscriber was added! You now have 2580!
-                                    </div>
-                                    <div class="text-muted">10 min ago</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                                <div class="flex-shrink-0 mx-3">
-                                    <i class="fa fa-fw fa-times-circle text-danger"></i>
-                                </div>
-                                <div class="flex-grow-1 fs-sm pe-2">
-                                    <div class="fw-semibold">Server backup failed to complete!</div>
-                                    <div class="text-muted">30 min ago</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                                <div class="flex-shrink-0 mx-3">
-                                    <i class="fa fa-fw fa-exclamation-circle text-warning"></i>
-                                </div>
-                                <div class="flex-grow-1 fs-sm pe-2">
-                                    <div class="fw-semibold">You are running out of space. Please consider
-                                        upgrading your plan.</div>
-                                    <div class="text-muted">1 hour ago</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                                <div class="flex-shrink-0 mx-3">
-                                    <i class="fa fa-fw fa-plus-circle text-primary"></i>
-                                </div>
-                                <div class="flex-grow-1 fs-sm pe-2">
-                                    <div class="fw-semibold">New Sale! + $30</div>
-                                    <div class="text-muted">2 hours ago</div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="p-2 border-top">
-                        <a class="btn btn-alt-primary w-100 text-center" href="javascript:void(0)">
-                            <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View All
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- END Notifications Dropdown -->
-
-            <!-- Toggle Side Overlay -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <button type="button" class="btn btn-alt-secondary" data-toggle="layout"
-                data-action="side_overlay_toggle">
-                <i class="far fa-fw fa-list-alt"></i>
-            </button>
-            <!-- END Toggle Side Overlay -->
-        </div>
-        <!-- END Right Section -->
-    </div>
-    <!-- END Header Content -->
-
-    <!-- Header Search -->
-    <div id="page-header-search" class="overlay-header bg-header-dark">
-        <div class="bg-white-10">
-            <div class="content-header">
-                <form class="w-100" action="be_pages_generic_search.html" method="POST">
-                    <div class="input-group">
-                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <button type="button" class="btn btn-alt-primary" data-toggle="layout"
-                            data-action="header_search_off">
-                            <i class="fa fa-fw fa-times-circle"></i>
-                        </button>
-                        <input type="text" class="form-control border-0" placeholder="Search or hit ESC.."
-                            id="page-header-search-input" name="page-header-search-input">
-                    </div>
+            <div class="iq-search-bar device-search">
+                <form action="#" class="searchbox">
+                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                    <input type="text" class="text search-input" placeholder="Search here...">
                 </form>
             </div>
-        </div>
-    </div>
-    <!-- END Header Search -->
-
-    <!-- Header Loader -->
-    <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
-    <div id="page-header-loader" class="overlay-header bg-header-dark">
-        <div class="bg-white-10">
-            <div class="content-header">
-                <div class="w-100 text-center">
-                    <i class="fa fa-fw fa-sun fa-spin text-white"></i>
-                </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-label="Toggle navigation">
+                <i class="ri-menu-3-line"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav  ms-auto navbar-list">
+                    <li>
+                        <a href="../dashboard/index.html" class="  d-flex align-items-center">
+                            <i class="ri-home-line"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" id="group-drop"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="ri-group-line"></i></a>
+                        <div class="sub-drop sub-drop-large dropdown-menu" aria-labelledby="group-drop">
+                            <div class="card shadow-none m-0">
+                                <div class="card-header d-flex justify-content-between bg-primary">
+                                    <div class="header-title">
+                                        <h5 class="mb-0 text-white">Friend Request</h5>
+                                    </div>
+                                    <small class="badge  bg-light text-dark ">4</small>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="iq-friend-request">
+                                        <div
+                                            class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/01.jpg" alt="">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 ">Jaques Amole</h6>
+                                                    <p class="mb-0">40 friends</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-primary rounded">Confirm</a>
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-secondary rounded">Delete
+                                                    Request</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="iq-friend-request">
+                                        <div
+                                            class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/02.jpg" alt="">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 ">Lucy Tania</h6>
+                                                    <p class="mb-0">12 friends</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-primary rounded">Confirm</a>
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-secondary rounded">Delete
+                                                    Request</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="iq-friend-request">
+                                        <div
+                                            class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/03.jpg" alt="">
+                                                <div class=" ms-3">
+                                                    <h6 class="mb-0 ">Manny Petty</h6>
+                                                    <p class="mb-0">3 friends</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-primary rounded">Confirm</a>
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-secondary rounded">Delete
+                                                    Request</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="iq-friend-request">
+                                        <div
+                                            class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/04.jpg" alt="">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 ">Marsha Mello</h6>
+                                                    <p class="mb-0">15 friends</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-primary rounded">Confirm</a>
+                                                <a href="javascript:void();"
+                                                    class="me-3 btn btn-secondary rounded">Delete
+                                                    Request</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="#" class=" btn text-primary">View More Request</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="search-toggle   dropdown-toggle" id="notification-drop"
+                            data-bs-toggle="dropdown">
+                            <i class="ri-notification-4-line"></i>
+                        </a>
+                        <div class="sub-drop dropdown-menu" aria-labelledby="notification-drop">
+                            <div class="card shadow-none m-0">
+                                <div class="card-header d-flex justify-content-between bg-primary">
+                                    <div class="header-title bg-primary">
+                                        <h5 class="mb-0 text-white">All Notifications</h5>
+                                    </div>
+                                    <small class="badge  bg-light text-dark">4</small>
+                                </div>
+                                <div class="card-body p-0">
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/01.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3 w-100">
+                                                <h6 class="mb-0 ">Emma Watson Bni</h6>
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0">95 MB</p>
+                                                    <small class="float-right font-size-12">Just
+                                                        Now</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/02.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3 w-100">
+                                                <h6 class="mb-0 ">New customer is join</h6>
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0">Cyst Bni</p>
+                                                    <small class="float-right font-size-12">5 days
+                                                        ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/03.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3 w-100">
+                                                <h6 class="mb-0 ">Two customer is left</h6>
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0">Cyst Bni</p>
+                                                    <small class="float-right font-size-12">2 days
+                                                        ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/04.jpg" alt="">
+                                            </div>
+                                            <div class="w-100 ms-3">
+                                                <h6 class="mb-0 ">New Mail from Fenny</h6>
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-0">Cyst Bni</p>
+                                                    <small class="float-right font-size-12">3 days
+                                                        ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" id="mail-drop"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-mail-line"></i>
+                        </a>
+                        <div class="sub-drop dropdown-menu" aria-labelledby="mail-drop">
+                            <div class="card shadow-none m-0">
+                                <div class="card-header d-flex justify-content-between bg-primary">
+                                    <div class="header-title bg-primary">
+                                        <h5 class="mb-0 text-white">All Message</h5>
+                                    </div>
+                                    <small class="badge bg-light text-dark">4</small>
+                                </div>
+                                <div class="card-body p-0 ">
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex  align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/01.jpg" alt="">
+                                            </div>
+                                            <div class=" w-100 ms-3">
+                                                <h6 class="mb-0 ">Bni Emma Watson</h6>
+                                                <small class="float-left font-size-12">13 Jun</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/02.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
+                                                <small class="float-left font-size-12">20 Apr</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/03.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Why do we use it?</h6>
+                                                <small class="float-left font-size-12">30 Jun</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/04.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Variations Passages</h6>
+                                                <small class="float-left font-size-12">12 Sep</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="avatar-40 rounded"
+                                                    src="../assets/images/user/05.jpg" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Lorem Ipsum generators</h6>
+                                                <small class="float-left font-size-12">5 Dec</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="   d-flex align-items-center dropdown-toggle"
+                            id="drop-down-arrow" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img src="../assets/images/user/1.jpg" class="img-fluid rounded-circle me-3"
+                                alt="user">
+                            <div class="caption">
+                                <h6 class="mb-0 line-height">Bni Cyst</h6>
+                            </div>
+                        </a>
+                        <div class="sub-drop dropdown-menu caption-menu"
+                            aria-labelledby="drop-down-arrow">
+                            <div class="card shadow-none m-0">
+                                <div class="card-header  bg-primary">
+                                    <div class="header-title">
+                                        <h5 class="mb-0 text-white">Hello Bni Cyst</h5>
+                                        <span class="text-white font-size-12">Available</span>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0 ">
+                                    <a href="../app/profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded card-icon bg-soft-primary">
+                                                <i class="ri-file-user-line"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">My Profile</h6>
+                                                <p class="mb-0 font-size-12">View personal profile details.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="../app/profile-edit.html"
+                                        class="iq-sub-card iq-bg-warning-hover">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded card-icon bg-soft-warning">
+                                                <i class="ri-profile-line"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Edit Profile</h6>
+                                                <p class="mb-0 font-size-12">Modify your personal details.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="../app/account-setting.html"
+                                        class="iq-sub-card iq-bg-info-hover">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded card-icon bg-soft-info">
+                                                <i class="ri-account-box-line"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Account settings</h6>
+                                                <p class="mb-0 font-size-12">Manage your account
+                                                    parameters.</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="../app/privacy-setting.html"
+                                        class="iq-sub-card iq-bg-danger-hover">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded card-icon bg-soft-danger">
+                                                <i class="ri-lock-line"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Privacy Settings</h6>
+                                                <p class="mb-0 font-size-12">Control your privacy
+                                                    parameters.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="d-inline-block w-100 text-center p-3">
+                                        <a class="btn btn-primary iq-sign-btn"
+                                            href="../dashboard/sign-in.html" role="button">Sign
+                                            out<i class="ri-login-box-line ms-2"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </nav>
     </div>
-    <!-- END Header Loader -->
-</header>
-<!-- END Header -->
-<!-- END Header -->
+</div>

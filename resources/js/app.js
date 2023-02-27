@@ -1,12 +1,14 @@
 
-import '../../public/custom/assets/js/dashmix.app.min.js';
-import '../../public/custom/assets/js/lib/jquery.min.js';
-import '../../public/custom/assets/js/lib/iziToast.min.js';
-import '../../public/custom/assets/js/plugins/jquery-sparkline/jquery.sparkline.min.js';
-import '../../public/custom/assets/js/plugins/highlightjs/highlight.pack.min.js';
-import '../../public/custom/assets/js/plugins/magnific-popup/jquery.magnific-popup.min.js';
-import '../../public/custom/assets/js/pages/be_comp_chat.min.js';
-import '../../public/custom/assets/js/pages/be_pages_projects_tasks.min.js';
+import '../../public/custom/assets/js/libs.min.js';
+import '../../public/custom/assets/js/slider.js';
+import '../../public/custom/assets/js/masonry.pkgd.min.js';
+import '../../public/custom/assets/js/enchanter.js';
+import '../../public/custom/assets/js/sweetalert.js';
+import '../../public/custom/assets/js/app.js';
+import '../../public/custom/assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js';
+import '../../public/custom/assets/js/charts/weather-chart.js';
+import '../../public/custom/assets/js/iziToast.min.js';
+import '../../public/custom/assets/js/lottie.js';
 
 
 

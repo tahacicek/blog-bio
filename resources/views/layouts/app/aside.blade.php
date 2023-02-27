@@ -1,90 +1,115 @@
-     <!-- Side Header -->
-     <div class="bg-primary">
-        <div class="content-header">
-            <!-- User Avatar -->
-            <a class="img-link me-1" href="javascript:void(0)">
-                <img class="img-avatar img-avatar32 img-avatar-thumb" src="assets/media/avatars/avatar5.jpg"
-                    alt="">
-            </a>
-            <!-- END User Avatar -->
-
-            <!-- User Info -->
-            <div class="ms-2">
-                <a class="text-white fw-semibold" href="javascript:void(0)">Danielle Jones</a>
+<div class="right-sidebar-mini right-sidebar">
+    <div class="right-sidebar-panel p-0">
+        <div class="card shadow-none">
+            <div class="card-body p-0">
+                <div class="media-height p-3" data-scrollbar="init">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/01.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Anna Sthesia</h6>
+                            <p class="mb-0">Just Now</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/02.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Paul Molive</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/03.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Anna Mull</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/04.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Paige Turner</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/11.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Bob Frapples</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/02.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Barb Ackue</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-online">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/03.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Greta Life</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-away">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/12.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Ira Membrit</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="iq-profile-avatar status-away">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/01.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Pete Sariya</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="iq-profile-avatar">
+                            <img class="rounded-circle avatar-50" src="../assets/images/user/02.jpg"
+                                alt="">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Monty Carlo</h6>
+                            <p class="mb-0">Admin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-sidebar-toggle bg-primary text-white mt-3">
+                    <i class="ri-arrow-left-line side-left-icon"></i>
+                    <i class="ri-arrow-right-line side-right-icon"><span class="ms-3 d-inline-block">Close
+                            Menu</span></i>
+                </div>
             </div>
-            <!-- END User Info -->
-
-            <!-- Close Side Overlay -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <a class="ms-auto text-white" href="javascript:void(0)" data-toggle="layout"
-                data-action="side_overlay_close">
-                <i class="fa fa-times-circle"></i>
-            </a>
-            <!-- END Close Side Overlay -->
         </div>
     </div>
-    <!-- END Side Header -->
-
-    <!-- Side Navigation -->
-    <div class="content-side content-side-full">
-        <ul class="nav-main">
-            <li class="nav-main-item">
-                <a class="nav-main-link active" href="db_minimal.html">
-                    <i class="nav-main-link-icon fa fa-coffee"></i>
-                    <span class="nav-main-link-name">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-main-heading">Pages</li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-rocket"></i>
-                    <span class="nav-main-link-name">Features</span>
-                </a>
-            </li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-shopping-bag"></i>
-                    <span class="nav-main-link-name">Pricing</span>
-                </a>
-            </li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-check"></i>
-                    <span class="nav-main-link-name">Plans</span>
-                </a>
-            </li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-life-ring"></i>
-                    <span class="nav-main-link-name">Support</span>
-                </a>
-            </li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-envelope"></i>
-                    <span class="nav-main-link-name">Contact</span>
-                </a>
-            </li>
-            <li class="nav-main-heading">More</li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-user"></i>
-                    <span class="nav-main-link-name">Account</span>
-                </a>
-            </li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="">
-                    <i class="nav-main-link-icon fa fa-cog"></i>
-                    <span class="nav-main-link-name">Settings</span>
-                </a>
-            </li>
-            <li class="nav-main-heading">Dashboards</li>
-            <li class="nav-main-item">
-                <a class="nav-main-link" href="be_pages_dashboard_all.html">
-                    <i class="nav-main-link-icon fa fa-arrow-left"></i>
-                    <span class="nav-main-link-name">Go Back</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- END Side Navigation -->
+</div>
