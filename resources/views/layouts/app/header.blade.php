@@ -1,6 +1,4 @@
-<div class="iq-top-navbar">
-    <div class="iq-navbar-custom">
-        <nav class="navbar navbar-expand-lg navbar-light p-0">
+
             <div class="iq-navbar-logo d-flex justify-content-between">
                 <a href="../dashboard/index.html">
                     <img src="../assets/images/logo.png" class="img-fluid" alt="">
@@ -31,9 +29,8 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle" id="group-drop"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                                class="ri-group-line"></i></a>
+                        <a href="#" class="dropdown-toggle" id="group-drop" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"><i class="ri-group-line"></i></a>
                         <div class="sub-drop sub-drop-large dropdown-menu" aria-labelledby="group-drop">
                             <div class="card shadow-none m-0">
                                 <div class="card-header d-flex justify-content-between bg-primary">
@@ -58,8 +55,7 @@
                                                 <a href="javascript:void();"
                                                     class="me-3 btn btn-primary rounded">Confirm</a>
                                                 <a href="javascript:void();"
-                                                    class="me-3 btn btn-secondary rounded">Delete
-                                                    Request</a>
+                                                    class="me-3 btn btn-secondary rounded">Delete Request</a>
                                             </div>
                                         </div>
                                     </div>
@@ -78,8 +74,7 @@
                                                 <a href="javascript:void();"
                                                     class="me-3 btn btn-primary rounded">Confirm</a>
                                                 <a href="javascript:void();"
-                                                    class="me-3 btn btn-secondary rounded">Delete
-                                                    Request</a>
+                                                    class="me-3 btn btn-secondary rounded">Delete Request</a>
                                             </div>
                                         </div>
                                     </div>
@@ -98,8 +93,7 @@
                                                 <a href="javascript:void();"
                                                     class="me-3 btn btn-primary rounded">Confirm</a>
                                                 <a href="javascript:void();"
-                                                    class="me-3 btn btn-secondary rounded">Delete
-                                                    Request</a>
+                                                    class="me-3 btn btn-secondary rounded">Delete Request</a>
                                             </div>
                                         </div>
                                     </div>
@@ -118,8 +112,7 @@
                                                 <a href="javascript:void();"
                                                     class="me-3 btn btn-primary rounded">Confirm</a>
                                                 <a href="javascript:void();"
-                                                    class="me-3 btn btn-secondary rounded">Delete
-                                                    Request</a>
+                                                    class="me-3 btn btn-secondary rounded">Delete Request</a>
                                             </div>
                                         </div>
                                     </div>
@@ -152,11 +145,9 @@
                                             </div>
                                             <div class="ms-3 w-100">
                                                 <h6 class="mb-0 ">Emma Watson Bni</h6>
-                                                <div
-                                                    class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex justify-content-between align-items-center">
                                                     <p class="mb-0">95 MB</p>
-                                                    <small class="float-right font-size-12">Just
-                                                        Now</small>
+                                                    <small class="float-right font-size-12">Just Now</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,11 +160,9 @@
                                             </div>
                                             <div class="ms-3 w-100">
                                                 <h6 class="mb-0 ">New customer is join</h6>
-                                                <div
-                                                    class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex justify-content-between align-items-center">
                                                     <p class="mb-0">Cyst Bni</p>
-                                                    <small class="float-right font-size-12">5 days
-                                                        ago</small>
+                                                    <small class="float-right font-size-12">5 days ago</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,11 +175,9 @@
                                             </div>
                                             <div class="ms-3 w-100">
                                                 <h6 class="mb-0 ">Two customer is left</h6>
-                                                <div
-                                                    class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex justify-content-between align-items-center">
                                                     <p class="mb-0">Cyst Bni</p>
-                                                    <small class="float-right font-size-12">2 days
-                                                        ago</small>
+                                                    <small class="float-right font-size-12">2 days ago</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -203,11 +190,9 @@
                                             </div>
                                             <div class="w-100 ms-3">
                                                 <h6 class="mb-0 ">New Mail from Fenny</h6>
-                                                <div
-                                                    class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex justify-content-between align-items-center">
                                                     <p class="mb-0">Cyst Bni</p>
-                                                    <small class="float-right font-size-12">3 days
-                                                        ago</small>
+                                                    <small class="float-right font-size-12">3 days ago</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -217,8 +202,8 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle" id="mail-drop"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" id="mail-drop" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <i class="ri-mail-line"></i>
                         </a>
                         <div class="sub-drop dropdown-menu" aria-labelledby="mail-drop">
@@ -304,8 +289,7 @@
                                 <h6 class="mb-0 line-height">Bni Cyst</h6>
                             </div>
                         </a>
-                        <div class="sub-drop dropdown-menu caption-menu"
-                            aria-labelledby="drop-down-arrow">
+                        <div class="sub-drop dropdown-menu caption-menu" aria-labelledby="drop-down-arrow">
                             <div class="card shadow-none m-0">
                                 <div class="card-header  bg-primary">
                                     <div class="header-title">
@@ -321,8 +305,7 @@
                                             </div>
                                             <div class="ms-3">
                                                 <h6 class="mb-0 ">My Profile</h6>
-                                                <p class="mb-0 font-size-12">View personal profile details.
-                                                </p>
+                                                <p class="mb-0 font-size-12">View personal profile details.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -334,8 +317,7 @@
                                             </div>
                                             <div class="ms-3">
                                                 <h6 class="mb-0 ">Edit Profile</h6>
-                                                <p class="mb-0 font-size-12">Modify your personal details.
-                                                </p>
+                                                <p class="mb-0 font-size-12">Modify your personal details.</p>
                                             </div>
                                         </div>
                                     </a>
@@ -347,8 +329,8 @@
                                             </div>
                                             <div class="ms-3">
                                                 <h6 class="mb-0 ">Account settings</h6>
-                                                <p class="mb-0 font-size-12">Manage your account
-                                                    parameters.</p>
+                                                <p class="mb-0 font-size-12">Manage your account parameters.
+                                                </p>
                                             </div>
                                         </div>
                                     </a>
@@ -360,8 +342,7 @@
                                             </div>
                                             <div class="ms-3">
                                                 <h6 class="mb-0 ">Privacy Settings</h6>
-                                                <p class="mb-0 font-size-12">Control your privacy
-                                                    parameters.
+                                                <p class="mb-0 font-size-12">Control your privacy parameters.
                                                 </p>
                                             </div>
                                         </div>
@@ -377,6 +358,3 @@
                     </li>
                 </ul>
             </div>
-        </nav>
-    </div>
-</div>
